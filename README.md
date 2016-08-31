@@ -21,7 +21,7 @@ Apache Kafka是一个高吞吐量的分布式的消息系统。Kafka在国内很
 
 
 ## Pull Request流程
-小伙伴[@numbbbbb](https://github.com/numbbbbb)在《The Swift Programming Language》对协作流程中进行了详细的介绍，小伙伴[@looly](https://github.com/looly)。
+小伙伴[@numbbbbb](https://github.com/numbbbbb)在《The Swift Programming Language》对协作流程中进行了详细的介绍，小伙伴[@looly](https://github.com/looly)在他的ES翻译中总结了一下。
 
 1. 首先fork我的项目 
 2. 把fork过去的项目也就是你的项目clone到你的本地 
