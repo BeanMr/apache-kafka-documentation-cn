@@ -11,7 +11,6 @@ Apache Kafka是一个高吞吐量的分布式的消息系统。Kafka在国内很
 
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
-
 ---
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
