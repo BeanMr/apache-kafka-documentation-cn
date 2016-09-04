@@ -21,6 +21,7 @@ Communication between the clients and the servers is done with a simple, high-pe
 Let's first dive into the high-level abstraction Kafka provides—the topic.
 
 A topic is a category or feed name to which messages are published. For each topic, the Kafka cluster maintains a partitioned log that looks like this:
+
 ![](/images/log_anatomy.png)
 
 Each partition is an ordered, immutable sequence of messages that is continually appended to—a commit log. The messages in the partitions are each assigned a sequential id number called the _offset_ that uniquely identifies each message within the partition.
