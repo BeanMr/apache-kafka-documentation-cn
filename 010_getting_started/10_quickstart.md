@@ -1,10 +1,10 @@
-### [1.3 Quick Start](#quickstart)
+### [**1.3 Quick Start**](http://kafka.apache.org/documentation.html#quickstart)
 
 This tutorial assumes you are starting fresh and have no existing Kafka or ZooKeeper data.
 
-#### [Step 1: Download the code](#quickstart_download)
+#### [**Step 1: Download the code**](http://kafka.apache.org/documentation.html#quickstart_download)
 
-[Download](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz "Kafka downloads") the 0.10.0.0 release and un-tar it.
+[**Download**](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz "Kafka downloads") the 0.10.0.0 release and un-tar it.
 
 ```
 > tar -xzf kafka_2.11-0.10.0.0.tgz
@@ -12,7 +12,7 @@ This tutorial assumes you are starting fresh and have no existing Kafka or ZooKe
 
 ```
 
-#### [Step 2: Start the server](#quickstart_startserver)
+#### [**Step 2: Start the server**](http://kafka.apache.org/documentation.html#quickstart_startserver)
 
 Kafka uses ZooKeeper so you need to first start a ZooKeeper server if you don't already have one. You can use the convenience script packaged with kafka to get a quick-and-dirty single-node ZooKeeper instance.
 
@@ -33,7 +33,7 @@ Now start the Kafka server:
 
 ```
 
-#### [Step 3: Create a topic](#quickstart_createtopic)
+#### [**Step 3: Create a topic**](http://kafka.apache.org/documentation.html#quickstart_createtopic)
 
 Let's create a topic named "test" with a single partition and only one replica:
 
@@ -52,7 +52,7 @@ test
 
 Alternatively, instead of manually creating topics you can also configure your brokers to auto-create topics when a non-existent topic is published to.
 
-#### [Step 4: Send some messages](#quickstart_send)
+#### [**Step 4: Send some messages**](http://kafka.apache.org/documentation.html#quickstart_send)
 
 Kafka comes with a command line client that will take input from a file or from standard input and send it out as messages to the Kafka cluster. By default each line will be sent as a separate message.
 
@@ -65,7 +65,7 @@ This is another message
 
 ```
 
-#### [Step 5: Start a consumer](#quickstart_consume)
+#### [**Step 5: Start a consumer**](http://kafka.apache.org/documentation.html#quickstart_consume)
 
 Kafka also has a command line consumer that will dump out messages to standard output.
 
@@ -80,7 +80,7 @@ If you have each of the above commands running in a different terminal then you 
 
 All of the command line tools have additional options; running the command with no arguments will display usage information documenting them in more detail.
 
-#### [Step 6: Setting up a multi-broker cluster](#quickstart_multibroker)
+#### [**Step 6: Setting up a multi-broker cluster**](http://kafka.apache.org/documentation.html#quickstart_multibroker)
 
 So far we have been running against a single broker, but that's no fun. For Kafka, a single broker is just a cluster of size one, so nothing much changes other than starting a few more broker instances. But just to get feel for it, let's expand our cluster to three nodes \(still all on our local machine\).
 
@@ -205,9 +205,9 @@ my test message 2
 
 ```
 
-#### [Step 7: Use Kafka Connect to import\/export data](#quickstart_kafkaconnect)
+#### [**Step 7: Use Kafka Connect to import\/export data**](http://kafka.apache.org/documentation.html#quickstart_kafkaconnect)
 
-Writing data from the console and writing it back to the console is a convenient place to start, but you'll probably want to use data from other sources or export data from Kafka to other systems. For many systems, instead of writing custom integration code you can use Kafka Connect to import or export data. Kafka Connect is a tool included with Kafka that imports and exports data to Kafka. It is an extensible tool that runs _connectors_, which implement the custom logic for interacting with an external system. In this quickstart we'll see how to run Kafka Connect with simple connectors that import data from a file to a Kafka topic and export data from a Kafka topic to a file. First, we'll start by creating some seed data to test with:
+Writing data from the console and writing it back to the console is a convenient place to start, but you'll probably want to use data from other sources or export data from Kafka to other systems. For many systems, instead of writing custom integration code you can use Kafka Connect to import or export data. Kafka Connect is a tool included with Kafka that imports and exports data to Kafka. It is an extensible tool that runs_connectors_, which implement the custom logic for interacting with an external system. In this quickstart we'll see how to run Kafka Connect with simple connectors that import data from a file to a Kafka topic and export data from a Kafka topic to a file. First, we'll start by creating some seed data to test with:
 
 ```
 > echo -e "foo\nbar" > test.txt
@@ -279,7 +279,7 @@ The connectors continue to process data, so we can add data to the file and see 
 
 You should see the line appear in the console consumer output and in the sink file.
 
-#### [Step 8: Use Kafka Streams to process data](#quickstart_kafkastreams)
+#### [**Step 8: Use Kafka Streams to process data**](http://kafka.apache.org/documentation.html#quickstart_kafkastreams)
 
 Kafka Streams is a client library of Kafka for real-time stream processing and analyzing data stored in Kafka brokers. This quickstart example will demonstrate how to run a streaming application coded in this library. Here is the gist of the `WordCountDemo` example code \(converted to use Java 8 lambda expressions for easy reading\).
 
@@ -361,9 +361,11 @@ summit  1
 
 ```
 
-Here, the first column is the Kafka message key, and the second column is the message value, both in in `java.lang.String` format. Note that the output is actually a continuous stream of updates, where each data record \(i.e. each line in the original output above\) is an updated count of a single word, aka record key such as "kafka". For multiple records with the same key, each later record is an update of the previous one.
+Here, the first column is the Kafka message key, and the second column is the message value, both in in`java.lang.String` format. Note that the output is actually a continuous stream of updates, where each data record \(i.e. each line in the original output above\) is an updated count of a single word, aka record key such as "kafka". For multiple records with the same key, each later record is an update of the previous one.
 
 Now you can write more input messages to the **streams-file-input** topic and observe additional messages added to **streams-wordcount-output** topic, reflecting updated word counts \(e.g., using the console producer and the console consumer, as described above\).
 
 You can stop the console consumer via **Ctrl-C**.
+
+
 
