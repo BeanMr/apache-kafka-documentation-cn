@@ -43,6 +43,7 @@
     * [Message format](050_implementation/01_implementation.md#messageformat)
     * [Log](050_implementation/01_implementation.md#log)
     * [Distribution](050_implementation/01_implementation.md#distributionimpl)
+
 * [Operations](060_operations/01_ops.md)
     * [Basic Kafka Operations](060_operations/01_ops.md#basic_ops)
         * [Adding and removing topics](060_operations/01_ops.md#basic_ops_add_topic)
