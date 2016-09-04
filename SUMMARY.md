@@ -1,5 +1,4 @@
 # Summary
-
 * [About Book](README.md)
 * [Getting Started](010_getting_started/01_introduction.md)
   * [Introduction](010_getting_started/01_introduction.md)
