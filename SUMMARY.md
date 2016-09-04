@@ -97,7 +97,6 @@
     * [Migrating the ZooKeeper Ensemble](070_security/01_security.md#zk_authz_ensemble)
 
 
-
 * [Kafka Connect](080_connect/01_connect.md)
   * [Overview](080_connect/01_connect.md#connect_overview)
   * [User Guide](080_connect/01_connect.md#connect_user)
