@@ -35,6 +35,7 @@
     * [Replication](040_design/01_design.md#replication)
     * [Log Compaction](040_design/01_design.md#compaction)
     * [Quotas](040_design/01_design.md#design_quotas)
+
 * [Implementation](050_implementation/01_implementation.md)
     * [API Design](050_implementation/01_implementation.md#apidesign)
     * [Network Layer](050_implementation/01_implementation.md#networklayer)
