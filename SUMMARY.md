@@ -87,6 +87,7 @@
     * [Overview](080_connect/01_connect.md#connect_overview)
     * [User Guide](080_connect/01_connect.md#connect_user)
     * [Connector Development Guide](080_connect/01_connect.md#connect_development)
+
 * [Kafka Streams](090_streams/01_streams.md)
     * [Overview](090_streams/01_streams.md#streams_overview)
     * [Developer Guide](090_streams/01_streams.md#streams_developer)
