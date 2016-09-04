@@ -1,131 +1,98 @@
 # Summary
 * [About Book](README.md)
 * [Getting Started](010_getting_started/01_introduction.md)
-  * [Introduction](010_getting_started/01_introduction.md)
-  * [Use Cases](010_getting_started/05_uses.md)
-  * [Quick Start](010_getting_started/10_quickstart.md)
-  * [Ecosystem](010_getting_started/15_ecosystem.md)
-  * [Upgrading](010_getting_started/20_upgrade.md)
-
+    * [Introduction](010_getting_started/01_introduction.md)
+    * [Use Cases](010_getting_started/05_uses.md)
+    * [Quick Start](010_getting_started/10_quickstart.md)
+    * [Ecosystem](010_getting_started/15_ecosystem.md)
+    * [Upgrading](010_getting_started/20_upgrade.md)
 * [API](020_api/01_api.md)
-
-  * [Producer API](020_api/01_api.md#producerapi)
-  * [Consumer API](020_api/01_api.md#consumerapi)
-
-    * [Old High Level Consumer API](020_api/01_api.md#highlevelconsumerapi)
-    * [Old Simple Consumer API](020_api/01_api.md#simpleconsumerapi)
-    * [New Consumer API](020_api/01_api.md#newconsumerapi)
-
-  * [Streams API](020_api/01_api.md#streamsapi)
-
-
+    * [Producer API](020_api/01_api.md#producerapi)
+    * [Consumer API](020_api/01_api.md#consumerapi)
+        * [Old High Level Consumer API](020_api/01_api.md#highlevelconsumerapi)
+        * [Old Simple Consumer API](020_api/01_api.md#simpleconsumerapi)
+        * [New Consumer API](020_api/01_api.md#newconsumerapi)
+    * [Streams API](020_api/01_api.md#streamsapi)
 
 * [Configuration](030_configuration/01_configuration.md)
+    * [Broker Configs](030_configuration/01_configuration.md#brokerconfigs)
+    * [Producer Configs](030_configuration/01_configuration.md#producerconfigs)
+    * [Consumer Configs](030_configuration/01_configuration.md#consumerconfigs)
+        * [Old Consumer Configs](030_configuration/01_configuration.md#oldconsumerconfigs)
+        * [New Consumer Configs](030_configuration/01_configuration.md#newconsumerconfigs)
+    * [Kafka Connect Configs](030_configuration/01_configuration.md#connectconfigs)
+    * [Kafka Streams Configs](030_configuration/01_configuration.md#streamsconfigs)
 
-  * [Broker Configs](030_configuration/01_configuration.md#brokerconfigs)
-  * [Producer Configs](030_configuration/01_configuration.md#producerconfigs)
-  * [Consumer Configs](030_configuration/01_configuration.md#consumerconfigs)
-
-    * [Old Consumer Configs](030_configuration/01_configuration.md#oldconsumerconfigs)
-    * [New Consumer Configs](030_configuration/01_configuration.md#newconsumerconfigs)
-
-  * [Kafka Connect Configs](030_configuration/01_configuration.md#connectconfigs)
-
-  * [Kafka Streams Configs](030_configuration/01_configuration.md#streamsconfigs)
-
-
+-----
 * [Design](040_design/01_design.md)
-
-  * [Motivation](040_design/01_design.md#majordesignelements)
-  * [Persistence](040_design/01_design.md#persistence)
-  * [Efficiency](040_design/01_design.md#maximizingefficiency)
-  * [The Producer](040_design/01_design.md#theproducer)
-  * [The Consumer](040_design/01_design.md#theconsumer)
-  * [Message Delivery Semantics](040_design/01_design.md#semantics)
-  * [Replication](040_design/01_design.md#replication)
-  * [Log Compaction](040_design/01_design.md#compaction)
-  * [Quotas](040_design/01_design.md#design_quotas)
-
+    * [Motivation](040_design/01_design.md#majordesignelements)
+    * [Persistence](040_design/01_design.md#persistence)
+    * [Efficiency](040_design/01_design.md#maximizingefficiency)
+    * [The Producer](040_design/01_design.md#theproducer)
+    * [The Consumer](040_design/01_design.md#theconsumer)
+    * [Message Delivery Semantics](040_design/01_design.md#semantics)
+    * [Replication](040_design/01_design.md#replication)
+    * [Log Compaction](040_design/01_design.md#compaction)
+    * [Quotas](040_design/01_design.md#design_quotas)
 * [Implementation](050_implementation/01_implementation.md)
-
-  * [API Design](050_implementation/01_implementation.md#apidesign)
-  * [Network Layer](050_implementation/01_implementation.md#networklayer)
-  * [Messages](050_implementation/01_implementation.md#messages)
-  * [Message format](050_implementation/01_implementation.md#messageformat)
-  * [Log](050_implementation/01_implementation.md#log)
-  * [Distribution](050_implementation/01_implementation.md#distributionimpl)
-
+    * [API Design](050_implementation/01_implementation.md#apidesign)
+    * [Network Layer](050_implementation/01_implementation.md#networklayer)
+    * [Messages](050_implementation/01_implementation.md#messages)
+    * [Message format](050_implementation/01_implementation.md#messageformat)
+    * [Log](050_implementation/01_implementation.md#log)
+    * [Distribution](050_implementation/01_implementation.md#distributionimpl)
 * [Operations](060_operations/01_ops.md)
+    * [Basic Kafka Operations](060_operations/01_ops.md#basic_ops)
+        * [Adding and removing topics](060_operations/01_ops.md#basic_ops_add_topic)
+        * [Modifying topics](060_operations/01_ops.md#basic_ops_modify_topic)
+        * [Graceful shutdown](060_operations/01_ops.md#basic_ops_restarting)
+        * [Balancing leadership](060_operations/01_ops.md#basic_ops_leader_balancing)
+        * [Checking consumer position](060_operations/01_ops.md#basic_ops_consumer_lag)
+        * [Mirroring data between clusters](060_operations/01_ops.md#basic_ops_mirror_maker)
+        * [Expanding your cluster](060_operations/01_ops.md#basic_ops_cluster_expansion)
+        * [Decommissioning brokers](060_operations/01_ops.md#basic_ops_decommissioning_brokers)
+        * [Increasing replication factor](060_operations/01_ops.md#basic_ops_increase_replication_factor)
+    * [Datacenters](060_operations/01_ops.md#datacenters)
+    * [Important Configs](060_operations/01_ops.md#config)
+        * [Important Server Configs](060_operations/01_ops.md#serverconfig)
+        * [Important Client Configs](060_operations/01_ops.md#clientconfig)
+        * [A Production Server Configs](060_operations/01_ops.md#prodconfig)
+    * [Java Version](060_operations/01_ops.md#java)
+    * [Hardware and OS](060_operations/01_ops.md#hwandos)
+        * [OS](060_operations/01_ops.md#os)
+        * [Disks and Filesystems](060_operations/01_ops.md#diskandfs)
+        * [Application vs OS Flush Management](060_operations/01_ops.md#appvsosflush)
+        * [Linux Flush Behavior](060_operations/01_ops.md#linuxflush)
+        * [Ext4 Notes](060_operations/01_ops.md#ext4)
+    * [Monitoring](060_operations/01_ops.md#monitoring)
+        * [Common monitoring metrics for producer\/consumer\/connect](060_operations/01_ops.md#selector_monitoring)
+        * [New producer monitoring](060_operations/01_ops.md#new_producer_monitoring)
+        * [New consumer monitoring](060_operations/01_ops.md#new_consumer_monitoring)
+    * [ZooKeeper](060_operations/01_ops.md#zk)
+        * [Stable Version](060_operations/01_ops.md#zkversion)
+        * [Operationalization](060_operations/01_ops.md#zkops)
 
-  * [Basic Kafka Operations](060_operations/01_ops.md#basic_ops)
-
-    * [Adding and removing topics](060_operations/01_ops.md#basic_ops_add_topic)
-    * [Modifying topics](060_operations/01_ops.md#basic_ops_modify_topic)
-    * [Graceful shutdown](060_operations/01_ops.md#basic_ops_restarting)
-    * [Balancing leadership](060_operations/01_ops.md#basic_ops_leader_balancing)
-    * [Checking consumer position](060_operations/01_ops.md#basic_ops_consumer_lag)
-    * [Mirroring data between clusters](060_operations/01_ops.md#basic_ops_mirror_maker)
-    * [Expanding your cluster](060_operations/01_ops.md#basic_ops_cluster_expansion)
-    * [Decommissioning brokers](060_operations/01_ops.md#basic_ops_decommissioning_brokers)
-    * [Increasing replication factor](060_operations/01_ops.md#basic_ops_increase_replication_factor)
-
-  * [Datacenters](060_operations/01_ops.md#datacenters)
-
-  * [Important Configs](060_operations/01_ops.md#config)
-
-    * [Important Server Configs](060_operations/01_ops.md#serverconfig)
-    * [Important Client Configs](060_operations/01_ops.md#clientconfig)
-    * [A Production Server Configs](060_operations/01_ops.md#prodconfig)
-
-  * [Java Version](060_operations/01_ops.md#java)
-
-  * [Hardware and OS](060_operations/01_ops.md#hwandos)
-
-    * [OS](060_operations/01_ops.md#os)
-    * [Disks and Filesystems](060_operations/01_ops.md#diskandfs)
-    * [Application vs OS Flush Management](060_operations/01_ops.md#appvsosflush)
-    * [Linux Flush Behavior](060_operations/01_ops.md#linuxflush)
-    * [Ext4 Notes](060_operations/01_ops.md#ext4)
-
-  * [Monitoring](060_operations/01_ops.md#monitoring)
-
-    * [Common monitoring metrics for producer\/consumer\/connect](060_operations/01_ops.md#selector_monitoring)
-    * [New producer monitoring](060_operations/01_ops.md#new_producer_monitoring)
-    * [New consumer monitoring](060_operations/01_ops.md#new_consumer_monitoring)
-
-  * [ZooKeeper](060_operations/01_ops.md#zk)
-
-    * [Stable Version](060_operations/01_ops.md#zkversion)
-    * [Operationalization](060_operations/01_ops.md#zkops)
-
-
-
+-----
 * [Security](070_security/01_security.md)
-  * [Security Overview](070_security/01_security.md#security_overview)
-  * [Encryption and Authentication using SSL](070_security/01_security.md#security_ssl)
-  * [Authentication using SASL](070_security/01_security.md#security_sasl)
-  * [Authorization and ACLs](070_security/01_security.md#security_authz)
-  * [Incorporating Security Features in a Running Cluster](070_security/01_security.md#security_rolling_upgrade)
-  * [ZooKeeper Authentication](070_security/01_security.md#zk_authz)
-    * [New Clusters](070_security/01_security.md#zk_authz_new)
-    * [Migrating Clusters](070_security/01_security.md#zk_authz_migration)
-    * [Migrating the ZooKeeper Ensemble](070_security/01_security.md#zk_authz_ensemble)
+    * [Security Overview](070_security/01_security.md#security_overview)
+    * [Encryption and Authentication using SSL](070_security/01_security.md#security_ssl)
+    * [Authentication using SASL](070_security/01_security.md#security_sasl)
+    * [Authorization and ACLs](070_security/01_security.md#security_authz)
+    * [Incorporating Security Features in a Running Cluster](070_security/01_security.md#security_rolling_upgrade)
+    * [ZooKeeper Authentication](070_security/01_security.md#zk_authz)
+        * [New Clusters](070_security/01_security.md#zk_authz_new)
+        * [Migrating Clusters](070_security/01_security.md#zk_authz_migration)
+        * [Migrating the ZooKeeper Ensemble](070_security/01_security.md#zk_authz_ensemble)
 
-
-
+-----
 * [Kafka Connect](080_connect/01_connect.md)
-
-  * [Overview](080_connect/01_connect.md#connect_overview)
-  * [User Guide](080_connect/01_connect.md#connect_user)
-  * [Connector Development Guide](080_connect/01_connect.md#connect_development)
-
+    * [Overview](080_connect/01_connect.md#connect_overview)
+    * [User Guide](080_connect/01_connect.md#connect_user)
+    * [Connector Development Guide](080_connect/01_connect.md#connect_development)
 * [Kafka Streams](090_streams/01_streams.md)
-
-  * [Overview](090_streams/01_streams.md#streams_overview)
-  * [Developer Guide](090_streams/01_streams.md#streams_developer)
-    * [Core Concepts](090_streams/01_streams.md#streams_concepts)
-    * [Low-Level Processor API](090_streams/01_streams.md#streams_processor)
-    * [High-Level Streams DSL](090_streams/01_streams.md#streams_dsl)
-
-
+    * [Overview](090_streams/01_streams.md#streams_overview)
+    * [Developer Guide](090_streams/01_streams.md#streams_developer)
+        * [Core Concepts](090_streams/01_streams.md#streams_concepts)
+        * [Low-Level Processor API](090_streams/01_streams.md#streams_processor)
+        * [High-Level Streams DSL](090_streams/01_streams.md#streams_dsl)
 
