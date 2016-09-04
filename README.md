@@ -13,7 +13,7 @@ Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公
 
 ---
 
-译者：D2Feng
+译者：[@D2Feng](https://github.com/BeanMr)
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
 
