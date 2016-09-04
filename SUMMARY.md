@@ -3,6 +3,7 @@
 * [About Book](README.md)
 * [Getting Started](010_getting_started/01_introduction.md)
     * [Introduction](010_getting_started/01_introduction.md)
+    * [简介](简介.md)
     * [Use Cases](010_getting_started/05_uses.md)
     * [Quick Start](010_getting_started/10_quickstart.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
@@ -83,10 +84,5 @@
     * [Overview](080_connect/01_connect.md#connect_overview)
     * [User Guide](080_connect/01_connect.md#connect_user)
     * [Connector Development Guide](080_connect/01_connect.md#connect_development)
-* [Kafka Streams](090_streams/01_streams.md)
-    * [Overview](090_streams/01_streams.md#streams_overview)
-    * [Developer Guide](090_streams/01_streams.md#streams_developer)
-        * [Core Concepts](090_streams/01_streams.md#streams_concepts)
-        * [Low-Level Processor API](090_streams/01_streams.md#streams_processor)
-        * [High-Level Streams DSL](090_streams/01_streams.md#streams_dsl)
+* 简介
 
