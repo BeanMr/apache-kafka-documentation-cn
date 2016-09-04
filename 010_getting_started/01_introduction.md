@@ -55,11 +55,8 @@ If all the consumer instances have different consumer groups, then this works li
 
 More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". Each group is composed of many consumer instances for scalability and fault tolerance. This is nothing more than publish-subscribe semantics where the subscriber is a cluster of consumers instead of a single process.
 
+<div style="float: right; margin: 20px; width: 500px" class="caption"> <img src="/images/consumer-groups.png"><br> A two server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.</div>
 
-
-
-
-A two server Kafka cluster hosting four partitions \(P0-P3\) with two consumer groups. Consumer group A has two consumer instances and group B has four.
 
 Kafka has stronger ordering guarantees than a traditional messaging system, too.
 
