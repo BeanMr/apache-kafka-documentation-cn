@@ -72,7 +72,6 @@
         * [Stable Version](060_operations/01_ops.md#zkversion)
         * [Operationalization](060_operations/01_ops.md#zkops)
 
------
 * [Security](070_security/01_security.md)
     * [Security Overview](070_security/01_security.md#security_overview)
     * [Encryption and Authentication using SSL](070_security/01_security.md#security_ssl)
