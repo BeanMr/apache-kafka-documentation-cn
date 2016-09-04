@@ -7,7 +7,7 @@ Apache Kafka是一个高吞吐量的分布式的消息系统。Kafka在国内很
 
 ---
 
-阅读地址：Apache Kafka 官方文档中文版
+阅读地址：[Apache Kafka 官方文档中文版](https://ddfeng.gitbooks.io/apache-kafka-documentation-cn/content/)
 
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
@@ -19,13 +19,13 @@ Apache Kafka是一个高吞吐量的分布式的消息系统。Kafka在国内很
 
 因为本人能力和精力有限，如果有翻译不准确之处欢迎指正；译文尽量保持原文的语义和结构，但是有时候因为有些句子直译会有些蹩脚，可能会进行一些调整。
 
-
 ## Pull Request流程
+
 小伙伴[@numbbbbb](https://github.com/numbbbbb)在《The Swift Programming Language》对协作流程中进行了详细的介绍，小伙伴[@looly](https://github.com/looly)在他的ES翻译中总结了一下，我抄过来并再次感谢他们的分享。
 
 1. 首先fork我的项目 
 2. 把fork过去的项目也就是你的项目clone到你的本地 
-3. 运行 `git remote add ddfeng ` 把我的库添加为远端库 
+3. 运行 `git remote add ddfeng` 把我的库添加为远端库 
 4. 运行 `git pull ddfeng master` 拉取并合并到本地 
 5. 翻译内容 
 6. commit后push到自己的库（`git push origin master`） 
