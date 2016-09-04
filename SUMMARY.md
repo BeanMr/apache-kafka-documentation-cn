@@ -23,7 +23,6 @@
     * [Kafka Connect Configs](030_configuration/01_configuration.md#connectconfigs)
     * [Kafka Streams Configs](030_configuration/01_configuration.md#streamsconfigs)
 
------
 * [Design](040_design/01_design.md)
     * [Motivation](040_design/01_design.md#majordesignelements)
     * [Persistence](040_design/01_design.md#persistence)
