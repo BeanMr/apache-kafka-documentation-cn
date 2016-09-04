@@ -11,7 +11,11 @@ First let's review some basic messaging terminology:
 * We'll call processes that subscribe to topics and process the feed of published messages _consumers_.
 * Kafka is run as a cluster comprised of one or more servers each of which is called a _broker_.
 
-So, at a high level, producers send messages over the network to the Kafka cluster which in turn serves them up to consumers like this:Communication between the clients and the servers is done with a simple, high-performance, language agnostic [TCP protocol](https://kafka.apache.org/protocol.html). We provide a Java client for Kafka, but clients are available in [many languages](https://cwiki.apache.org/confluence/display/KAFKA/Clients).
+So, at a high level, producers send messages over the network to the Kafka cluster which in turn serves them up to consumers like this:
+
+
+
+Communication between the clients and the servers is done with a simple, high-performance, language agnostic [TCP protocol](https://kafka.apache.org/protocol.html). We provide a Java client for Kafka, but clients are available in [many languages](https://cwiki.apache.org/confluence/display/KAFKA/Clients).
 
 #### [Topics and Logs](#intro_topics)
 
@@ -50,10 +54,6 @@ If all the consumer instances have the same consumer group, then this works just
 If all the consumer instances have different consumer groups, then this works like publish-subscribe and all messages are broadcast to all consumers.
 
 More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". Each group is composed of many consumer instances for scalability and fault tolerance. This is nothing more than publish-subscribe semantics where the subscriber is a cluster of consumers instead of a single process.
-
-
-
-
 
 A two server Kafka cluster hosting four partitions \(P0-P3\) with two consumer groups. Consumer group A has two consumer instances and group B has four.
 
