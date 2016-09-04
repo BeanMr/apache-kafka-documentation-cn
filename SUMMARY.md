@@ -2,7 +2,6 @@
 
 * [About Book](README.md)
 * [Getting Started](010_getting_started/01_introduction.md)
-
   * [Introduction](010_getting_started/01_introduction.md)
   * [Use Cases](010_getting_started/05_uses.md)
   * [Quick Start](010_getting_started/10_quickstart.md)
@@ -21,6 +20,7 @@
   * [Streams API](020_api/01_api.md#streamsapi)
 
 
+
 * [Configuration](030_configuration/01_configuration.md)
 
   * [Broker Configs](030_configuration/01_configuration.md#brokerconfigs)
@@ -33,6 +33,7 @@
   * [Kafka Connect Configs](030_configuration/01_configuration.md#connectconfigs)
 
   * [Kafka Streams Configs](030_configuration/01_configuration.md#streamsconfigs)
+
 
 * [Design](040_design/01_design.md)
 
@@ -97,6 +98,7 @@
 
     * [Stable Version](060_operations/01_ops.md#zkversion)
     * [Operationalization](060_operations/01_ops.md#zkops)
+
 
 
 * [Security](070_security/01_security.md)
