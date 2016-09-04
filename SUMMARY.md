@@ -6,6 +6,7 @@
     * [Quick Start](010_getting_started/10_quickstart.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
     * [Upgrading](010_getting_started/20_upgrade.md)
+
 * [API](020_api/01_api.md)
     * [Producer API](020_api/01_api.md#producerapi)
     * [Consumer API](020_api/01_api.md#consumerapi)
