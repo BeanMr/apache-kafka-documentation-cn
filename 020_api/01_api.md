@@ -1,8 +1,8 @@
-## [**2. API**](http://kafka.apache.org/documentation.html#api)
+## **2. API**
 
 Apache Kafka includes new java clients \(in the org.apache.kafka.clients package\). These are meant to supplant the older Scala clients, but for compatibility they will co-exist for some time. These clients are available in a separate jar with minimal dependencies, while the old Scala clients remain packaged with the server.
 
-### [**2.1 Producer API**](http://kafka.apache.org/documentation.html#producerapi)
+### <a id="producerapi" name="producerapi"></a>**2.1 Producer API**
 
 We encourage all new development to use the new Java producer. This client is production tested and generally both faster and more fully featured than the previous Scala client. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
 
@@ -19,11 +19,11 @@ Examples showing how to use the producer are given in the [**javadocs**](http://
 
 For those interested in the legacy Scala producer api, information can be found [**here**](http://kafka.apache.org/081/documentation.html#producerapi).
 
-### [**2.2 Consumer API**](http://kafka.apache.org/documentation.html#consumerapi)
+### <a id="consumerapi" name="consumerapi"></a>**2.2 Consumer API**
 
 As of the 0.9.0 release we have added a new Java consumer to replace our existing high-level ZooKeeper-based consumer and low-level consumer APIs. This client is considered beta quality. To ensure a smooth upgrade path for users, we still maintain the old 0.8 consumer clients that continue to work on an 0.9 Kafka cluster. In the following sections we introduce both the old 0.8 consumer APIs \(both high-level ConsumerConnector and low-level SimpleConsumer\) and the new Java consumer API respectively.
 
-#### [**2.2.1 Old High Level Consumer API**](http://kafka.apache.org/documentation.html#highlevelconsumerapi)
+#### <a id="highlevelconsumerapi" name="highlevelconsumerapi"></a>**2.2.1 Old High Level Consumer API**
 
 ```
 class Consumer {
@@ -98,7 +98,7 @@ public interface kafka.javaapi.consumer.ConsumerConnector {
 
 You can follow [**this example**](https://cwiki.apache.org/confluence/display/KAFKA/Consumer+Group+Example "Kafka 0.8 consumer example") to learn how to use the high level consumer api.
 
-#### <a id="simpleconsumerapi">**2.2.2 Old Simple Consumer API**</a>
+#### <a id="simpleconsumerapi" name="simpleconsumerapi"></a>**2.2.2 Old Simple Consumer API**
 
 ```
 class kafka.javaapi.consumer.SimpleConsumer {
@@ -136,7 +136,7 @@ class kafka.javaapi.consumer.SimpleConsumer {
 
 For most applications, the high level consumer Api is good enough. Some applications want features not exposed to the high level consumer yet \(e.g., set initial offset when restarting the consumer\). They can instead use our low level SimpleConsumer Api. The logic will be a bit more complicated and you can follow the example in [**here**](https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example "Kafka 0.8 SimpleConsumer example").
 
-#### [**2.2.3 New Consumer API**](http://kafka.apache.org/documentation.html#newconsumerapi)
+#### [**2.2.3 New Consumer API**](#newconsumerapi)
 
 This new unified consumer API removes the distinction between the 0.8 high-level and low-level consumer APIs. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
 
@@ -151,7 +151,7 @@ This new unified consumer API removes the distinction between the 0.8 high-level
 
 Examples showing how to use the consumer are given in the [**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html "Kafka 0.9.0 Javadoc").
 
-### [**2.3 Streams API**](http://kafka.apache.org/documentation.html#streamsapi)
+### [**2.3 Streams API**](#streamsapi)
 
 As of the 0.10.0 release we have added a new client library named **Kafka Streams** to let users implement their stream processing applications with data stored in Kafka topics. Kafka Streams is considered alpha quality and its public APIs are likely to change in future releases. You can use Kafka Streams by adding a dependency on the streams jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
 
