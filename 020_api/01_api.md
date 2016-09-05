@@ -98,7 +98,7 @@ public interface kafka.javaapi.consumer.ConsumerConnector {
 
 You can follow [**this example**](https://cwiki.apache.org/confluence/display/KAFKA/Consumer+Group+Example "Kafka 0.8 consumer example") to learn how to use the high level consumer api.
 
-#### [**2.2.2 Old Simple Consumer API**](http://kafka.apache.org/documentation.html#simpleconsumerapi)
+#### <a id="simpleconsumerapi">**2.2.2 Old Simple Consumer API**</a>
 
 ```
 class kafka.javaapi.consumer.SimpleConsumer {
