@@ -50,9 +50,7 @@ log的partition被分布到Kafka集群之中；每个服务器负责处理彼此
 
 ### [Producers](#intro_producers)<a id="intro_producers"></a>
 
-Producers publish data to the topics of their choice. The producer is responsible for choosing which message to assign to which partition within the topic. This can be done in a round-robin fashion simply to balance load or it can be done according to some semantic partition function \(say based on some key in the message\). More on the use of partitioning in a second.
-
-
+生产者将数据发布到它们选定的topics上。生产者负责决定哪个消息发送到topic的哪个partition上。这可以通过简单的轮询策略来实现从而实现负载均衡，也可以通过某种语义分区功能实现(基于某个消息的某个键)。关于partition功能的应用将在后文进一步介绍。
 
 ### [Consumers](#intro_consumers)<a id="intro_consumers"></a>
 
