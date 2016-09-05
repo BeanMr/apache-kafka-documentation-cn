@@ -44,16 +44,11 @@ Kafka集群会保存一个时间段内所有被发布出来的信息，无论这
 
 ### [分布式](#intro_distribution)<a id="intro_distribution"></a>
 
-log的partition被分布到Kafka集群之中；每个服务器负责处理彼此共享的partition的一部分数据和请求。每个partition被复制指定的份数散布到机器之中来提供故障转移能力。
+log的partition被分布到Kafka集群之中；每个服务器负责处理彼此共享的partition的一部分数据和请求。每个partition被复制成指定的份数散布到机器之中来提供故障转移能力。
 
-
-Each partition has one server which acts as the "leader" and zero or more servers which act as "followers". The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader. Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.
-
-
+对于每一个partition都会有一个服务器作为它的"leader"并且有零个或者多个服务器作为"followers"。leader服务器负责处理关于这个partition所有的读写请求，followers服务器则被动的复制leader服务器。如果有leader服务器失效，那么followers服务器将有一台被自动选举成为新的leader。每个服务器作为某些partition的leader的同时也作为其它服务器的follower，从而实现了集群的负载均衡。
 
 ### [Producers](#intro_producers)<a id="intro_producers"></a>
-
-
 
 Producers publish data to the topics of their choice. The producer is responsible for choosing which message to assign to which partition within the topic. This can be done in a round-robin fashion simply to balance load or it can be done according to some semantic partition function \(say based on some key in the message\). More on the use of partitioning in a second.
 
