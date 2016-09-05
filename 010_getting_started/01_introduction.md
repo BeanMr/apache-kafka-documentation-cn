@@ -34,7 +34,7 @@ This combination of features means that Kafka consumers are very cheap—they ca
 
 The partitions in the log serve several purposes. First, they allow the log to scale beyond a size that will fit on a single server. Each individual partition must fit on the servers that host it, but a topic may have many partitions so it can handle an arbitrary amount of data. Second they act as the unit of parallelism—more on that in a bit.
 
-#### [Distribution](#intro_distribution)
+#### <a id="intro_distribution">[Distribution]</a>
 
 The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
 
