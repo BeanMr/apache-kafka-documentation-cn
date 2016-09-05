@@ -1,4 +1,4 @@
-### [1.1 Introduction](#introduction)
+### [1.1 Introduction](#introduction)<a id="introduction"></a>
 
 Kafka is a distributed, partitioned, replicated commit log service. It provides the functionality of a messaging system, but with a unique design.
 
