@@ -1,6 +1,6 @@
-## [**9. Kafka Streams**](http://kafka.apache.org/documentation.html#streams)
+## [9. Kafka Streams](#streams)<a id="streams"></a>
 
-### [**9.1 Overview**](http://kafka.apache.org/documentation.html#streams_overview)
+### [9.1 Overview](#streams_overview)<a id="streams_overview"></a>
 
 Kafka Streams is a client library for processing and analyzing data stored in Kafka and either write the resulting data back to Kafka or send the final output to an external system. It builds upon important stream processing concepts such as properly distinguishing between event time and processing time, windowing support, and simple yet efficient management of application state. Kafka Streams has a **low barrier to entry**: You can quickly write and run a small-scale proof-of-concept on a single machine; and you only need to run additional instances of your application on multiple machines to scale up to high-volume production workloads. Kafka Streams transparently handles the load balancing of multiple instances of the same application by leveraging Kafka's parallelism model.
 
@@ -12,15 +12,15 @@ Some highlights of Kafka Streams:
 * Employs **one-record-at-a-time processing** to achieve low processing latency, and supports **event-time based windowing operations**.
 * Offers necessary stream processing primitives, along with a **high-level Streams DSL** and a **low-level Processor API**.
 
-### [**9.2 Developer Guide**](http://kafka.apache.org/documentation.html#streams_developer)
+### [9.2 Developer Guide](#streams_developer)<a id="streams_developer"></a>
 
 There is a [**quickstart**](http://kafka.apache.org/documentation.html#quickstart_kafkastreams) example that provides how to run a stream processing program coded in the Kafka Streams library. This section focuses on how to write, configure, and execute a Kafka Streams application.
 
-#### [**Core Concepts**](http://kafka.apache.org/documentation.html#streams_concepts)
+#### [Core Concepts](#streams_concepts)<a id="streams_concepts"></a>
 
 We first summarize the key concepts of Kafka Streams.
 
-##### [**Stream Processing Topology**](http://kafka.apache.org/documentation.html#streams_topology)
+##### [Stream Processing Topology](#streams_topology)<a id="streams_topology"></a>
 
 * A **stream**is the most important abstraction provided by Kafka Streams: it represents an unbounded, continuously updating data set. A stream is an ordered, replayable, and fault-tolerant sequence of immutable data records, where a **data record** is defined as a key-value pair.
 * A stream processing application written in Kafka Streams defines its computational logic through one or more **processor topologies**, where a processor topology is a graph of stream processors \(nodes\) that are connected by streams \(edges\).
@@ -28,7 +28,7 @@ We first summarize the key concepts of Kafka Streams.
 
 Kafka Streams offers two ways to define the stream processing topology: the [**Kafka Streams DSL**](http://kafka.apache.org/documentation.html#streams_dsl) provides the most common data transformation operations such as `map` and `filter`; the lower-level [**Processor API**](http://kafka.apache.org/documentation.html#streams_processor) allows developers define and connect custom processors as well as to interact with [**state stores**](http://kafka.apache.org/documentation.html#streams_state).
 
-##### [**Time**](http://kafka.apache.org/documentation.html#streams_time)
+##### [Time](#streams_time)<a id="streams_time"></a>
 
 A critical aspect in stream processing is the notion of **time**, and how it is modeled and integrated. For example, some operations such as **windowing** are defined based on time boundaries.
 
@@ -39,7 +39,7 @@ Common notions of time in streams are:
 
 Kafka Streams assigns a **timestamp** to every data record via the `TimestampExtractor` interface. Concrete implementations of this interface may retrieve or compute timestamps based on the actual contents of data records such as an embedded timestamp field to provide event-time semantics, or use any other approach such as returning the current wall-clock time at the time of processing, thereby yielding processing-time semantics to stream processing applications. Developers can thus enforce different notions of time depending on their business needs. For example, per-record timestamps describe the progress of a stream with regards to time \(although records may be out-of-order within the stream\) and are leveraged by time-dependent operations such as joins.
 
-##### [**States**](http://kafka.apache.org/documentation.html#streams_state)
+##### [States](#streams_state)<a id="streams_state"></a>
 
 Some stream processing applications don't require state, which means the processing of a message is independent from the processing of all other messages. However, being able to maintain state opens up many possibilities for sophisticated stream processing applications: you can join input streams, or group and aggregate data records. Many such stateful operators are provided by the [**Kafka Streams DSL**](http://kafka.apache.org/documentation.html#streams_dsl).
 
@@ -51,9 +51,9 @@ Kafka Streams provides so-called **state stores**, which can be used by stream p
 
 As we have mentioned above, the computational logic of a Kafka Streams application is defined as a [**processor topology**](http://kafka.apache.org/documentation.html#streams_topology). Currently Kafka Streams provides two sets of APIs to define the processor topology, which will be described in the subsequent sections.
 
-#### [**Low-Level Processor API**](http://kafka.apache.org/documentation.html#streams_processor)
+#### [Low-Level Processor API](#streams_processor)<a id="streams_processor"></a>
 
-##### [**Processor**](http://kafka.apache.org/documentation.html#streams_processor_process)
+##### [Processor](#streams_processor_process)<a id="streams_processor_process"></a>
 
 Developers can define their customized processing logic by implementing the `Processor` interface, which provides `process` and `punctuate` methods. The `process` method is performed on each of the received record; and the `punctuate` method is performed periodically based on elapsed time. In addition, the processor can maintain the current `ProcessorContext` instance variable initialized in the `init` method, and use the context to schedule the punctuation period \(`context().schedule`\), to forward the modified \/ new key-value pair to downstream processors \(`context().forward`\), to commit the current processing progress \(`context().commit`\), etc.
 
@@ -114,7 +114,7 @@ In the above implementation, the following actions are performed:
 
 
 
-##### [**Processor Topology**](http://kafka.apache.org/documentation.html#streams_processor_topology)
+##### [Processor Topology](#streams_processor_topology)<a id="streams_processor_topology"></a>
 
 With the customized processors defined in the Processor API, developers can use the `TopologyBuilder` to build a processor topology by connecting these processors together:
 
@@ -141,7 +141,7 @@ There are several steps in the above code to build the topology, and here is a q
 
 
 
-##### [**Local State Store**](http://kafka.apache.org/documentation.html#streams_processor_statestore)
+##### [Local State Store](#streams_processor_statestore)<a id="streams_processor_statestore"></a>
 
 Note that the Processor API is not limited to only accessing the current records as they arrive, but can also maintain local state stores that keep recently arrived records to use in stateful processing operations such as aggregation or windowed joins. To take advantage of this local states, developers can use the`TopologyBuilder.addStateStore` method when building the processor topology to create the local state and associate it with the processor nodes that needs to access it; or they can connect a created local state store with the existing processor nodes through`TopologyBuilder.connectProcessorAndStateStores`.
 
@@ -169,11 +169,11 @@ Note that the Processor API is not limited to only accessing the current records
 
 In the next section we present another way to build the processor topology: the Kafka Streams DSL.
 
-#### [**High-Level Streams DSL**](http://kafka.apache.org/documentation.html#streams_dsl)
+#### [High-Level Streams DSL](#streams_dsl)<a id="streams_dsl"></a>
 
 To build a processor topology using the Streams DSL, developers can apply the `KStreamBuilder` class, which is extended from the `TopologyBuilder`. A simple example is included with the source code for Kafka in the `streams/examples` package. The rest of this section will walk through some code to demonstrate the key steps in creating a topology using the Streams DSL, but we recommend developers to read the full example source codes for details.
 
-##### [**Create Source Streams from Kafka**](http://kafka.apache.org/documentation.html#streams_dsl_source)
+##### [Create Source Streams from Kafka](#streams_dsl_source)<a id="streams_dsl_source"></a>
 
 Either a **record stream** \(defined as `KStream`\) or a **changelog stream** \(defined as `KTable`\) can be created as a source stream from one or more Kafka topics \(for `KTable` you can only create the source stream from a single topic\).
 
@@ -185,7 +185,7 @@ Either a **record stream** \(defined as `KStream`\) or a **changelog stream** \(
 
 ```
 
-##### [**Transform a stream**](http://kafka.apache.org/documentation.html#streams_dsl_transform)
+##### [Transform a stream](#streams_dsl_transform)<a id="streams_dsl_transform"></a>
 
 There is a list of transformation operations provided for `KStream` and `KTable` respectively. Each of these operations may generate either one or more `KStream` and `KTable` objects and can be translated into one or more connected processors into the underlying processor topology. All these transformation methods can be chained together to compose a complex processor topology. Since `KStream` and `KTable` are strongly typed, all these transformation operations are defined as generics functions where users could specify the input and output data types.
 
@@ -213,7 +213,7 @@ Stateless transformations, by definition, do not depend on any state for process
 
 ```
 
-##### [**Write streams back to Kafka**](http://kafka.apache.org/documentation.html#streams_dsl_sink)
+##### [Write streams back to Kafka](#streams_dsl_sink)<a id="streams_dsl_sink"></a>
 
 At the end of the processing, users can choose to \(continuously\) write the final resulted streams back to a Kafka topic through `KStream.to` and `KTable.to`.
 

@@ -1,8 +1,8 @@
-## [**5. Implementation**](http://kafka.apache.org/documentation.html#implementation)
+## [5. Implementation](#implementation)<a id="implementation"></a>
 
-### [**5.1 API Design**](http://kafka.apache.org/documentation.html#apidesign)
+### [5.1 API Design](#apidesign)<a id="apidesign"></a>
 
-#### [**Producer APIs**](http://kafka.apache.org/documentation.html#impl_producer)
+#### [Producer APIs](#impl_producer)<a id="impl_producer"></a>
 
 The Producer API that wraps the 2 low-level producers - `kafka.producer.SyncProducer` and`kafka.producer.async.AsyncProducer`.
 
@@ -55,13 +55,13 @@ The goal is to expose all the producer functionality through a single API to the
 
 
 
-#### [**Consumer APIs**](http://kafka.apache.org/documentation.html#impl_consumer)
+#### [Consumer APIs](#impl_consumer)<a id="impl_consumer"></a>
 
 We have 2 levels of consumer APIs. The low-level "simple" API maintains a connection to a single broker and has a close correspondence to the network requests sent to the server. This API is completely stateless, with the offset being passed in on every request, allowing the user to maintain this metadata however they choose.
 
 The high-level API hides the details of brokers from the consumer and allows consuming off the cluster of machines without concern for the underlying topology. It also maintains the state of what has been consumed. The high-level API also provides the ability to subscribe to topics that match a filter expression \(i.e., either a whitelist or a blacklist regular expression\).
 
-##### [**Low-level API**](http://kafka.apache.org/documentation.html#impl_lowlevel)
+##### [Low-level API](#impl_lowlevel)<a id="impl_lowlevel"></a>
 
 ```
 class SimpleConsumer {
@@ -86,7 +86,7 @@ class SimpleConsumer {
 
 The low-level API is used to implement the high-level API as well as being used directly for some of our offline consumers which have particular requirements around maintaining state.
 
-##### [**High-level API**](http://kafka.apache.org/documentation.html#impl_highlevel)
+##### [High-level API](#impl_highlevel)<a id="impl_highlevel"></a>
 
 ```
 /* create a connection to the cluster */
@@ -124,11 +124,11 @@ This API is centered around iterators, implemented by the KafkaStream class. Eac
 
 The createMessageStreams call registers the consumer for the topic, which results in rebalancing the consumer\/broker assignment. The API encourages creating many topic streams in a single call in order to minimize this rebalancing. The createMessageStreamsByFilter call \(additionally\) registers watchers to discover new topics that match its filter. Note that each stream that createMessageStreamsByFilter returns may iterate over messages from multiple topics \(i.e., if multiple topics are allowed by the filter\).
 
-### [**5.2 Network Layer**](http://kafka.apache.org/documentation.html#networklayer)
+### [5.2 Network Layer](#networklayer)<a id="networklayer"></a>
 
 The network layer is a fairly straight-forward NIO server, and will not be described in great detail. The sendfile implementation is done by giving the `MessageSet` interface a `writeTo` method. This allows the file-backed message set to use the more efficient `transferTo` implementation instead of an in-process buffered write. The threading model is a single acceptor thread and _N_ processor threads which handle a fixed number of connections each. This design has been pretty thoroughly tested [**elsewhere**](http://sna-projects.com/blog/2009/08/introducing-the-nio-socketserver-implementation) and found to be simple to implement and fast. The protocol is kept quite simple to allow for future implementation of clients in other languages.
 
-### [**5.3 Messages**](http://kafka.apache.org/documentation.html#messages)
+### [5.3 Messages](#messages)<a id="messages"></a>
 
 Messages consist of a fixed-size header, a variable length opaque key byte array and a variable length opaque value byte array. The header contains the following fields:
 
@@ -140,7 +140,7 @@ Messages consist of a fixed-size header, a variable length opaque key byte array
 
 Leaving the key and value opaque is the right decision: there is a great deal of progress being made on serialization libraries right now, and any particular choice is unlikely to be right for all uses. Needless to say a particular application using Kafka would likely mandate a particular serialization type as part of its usage. The`MessageSet` interface is simply an iterator over messages with specialized methods for bulk reading and writing to an NIO `Channel`.
 
-### [**5.4 Message Format**](http://kafka.apache.org/documentation.html#messageformat)
+### [5.4 Message Format](#messageformat)<a id="messageformat"></a>
 
 ```
     /**
@@ -167,7 +167,7 @@ Leaving the key and value opaque is the right decision: there is a great deal of
 
 
 
-### [**5.5 Log**](http://kafka.apache.org/documentation.html#log)
+### [5.5 Log](#log)<a id="log"></a>
 
 A log for a topic named "my\_topic" with two partitions consists of two directories \(namely `my_topic_0` and`my_topic_1`\) populated with data files containing the messages for that topic. The format of the log files is a sequence of "log entries""; each log entry is a 4 byte integer _N_ storing the message length which is followed by the _N_ message bytes. Each message is uniquely identified by a 64-bit integer _offset_ giving the byte position of the start of this message in the stream of all messages ever sent to that topic on that partition. The on-disk format of each message is given below. Each log file is named with the offset of the first message it contains. So the first file created will be 00000000000.kafka, and each additional file will have an integer name roughly _S_bytes from the previous file where _S_ is the max log file size given in the configuration.
 
@@ -193,11 +193,11 @@ The use of the message offset as the message id is unusual. Our original idea wa
 
 ![](/images/kafka_log.png)
 
-#### [**Writes**](http://kafka.apache.org/documentation.html#impl_writes)
+#### [Writes](#impl_writes)<a id="impl_writes"></a>
 
 The log allows serial appends which always go to the last file. This file is rolled over to a fresh file when it reaches a configurable size \(say 1GB\). The log takes two configuration parameters: _M_, which gives the number of messages to write before forcing the OS to flush the file to disk, and _S_, which gives a number of seconds after which a flush is forced. This gives a durability guarantee of losing at most _M_ messages or _S_ seconds of data in the event of a system crash.
 
-#### [**Reads**](http://kafka.apache.org/documentation.html#impl_reads)
+#### [Reads](#impl_reads)<a id="impl_reads"></a>
 
 Reads are done by giving the 64-bit logical offset of a message and an _S_-byte max chunk size. This will return an iterator over the messages contained in the _S_-byte buffer. _S_ is intended to be larger than any single message, but in the event of an abnormally large message, the read can be retried multiple times, each time doubling the buffer size, until the message is read successfully. A maximum message and buffer size can be specified to make the server reject messages larger than some size, and to give a bound to the client on the maximum it needs to ever read to get a complete message. It is likely that the read buffer ends with a partial message, this is easily detected by the size delimiting.
 
@@ -229,19 +229,19 @@ messageSetSend n
 
 ```
 
-#### [**Deletes**](http://kafka.apache.org/documentation.html#impl_deletes)
+#### [Deletes](#impl_deletes)<a id="impl_deletes"></a>
 
 Data is deleted one log segment at a time. The log manager allows pluggable delete policies to choose which files are eligible for deletion. The current policy deletes any log with a modification time of more than _N_ days ago, though a policy which retained the last _N_ GB could also be useful. To avoid locking reads while still allowing deletes that modify the segment list we use a copy-on-write style segment list implementation that provides consistent views to allow a binary search to proceed on an immutable static snapshot view of the log segments while deletes are progressing.
 
-#### [**Guarantees**](http://kafka.apache.org/documentation.html#impl_guarantees)
+#### [Guarantees](#impl_guarantees)<a id="impl_guarantees"></a>
 
 The log provides a configuration parameter _M_ which controls the maximum number of messages that are written before forcing a flush to disk. On startup a log recovery process is run that iterates over all messages in the newest log segment and verifies that each message entry is valid. A message entry is valid if the sum of its size and offset are less than the length of the file AND the CRC32 of the message payload matches the CRC stored with the message. In the event corruption is detected the log is truncated to the last valid offset.
 
 Note that two kinds of corruption must be handled: truncation in which an unwritten block is lost due to a crash, and corruption in which a nonsense block is ADDED to the file. The reason for this is that in general the OS makes no guarantee of the write order between the file inode and the actual block data so in addition to losing written data the file can gain nonsense data if the inode is updated with a new size but a crash occurs before the block containing that data is written. The CRC detects this corner case, and prevents it from corrupting the log \(though the unwritten messages are, of course, lost\).
 
-### [**5.6 Distribution**](http://kafka.apache.org/documentation.html#distributionimpl)
+### [5.6 Distribution](#distributionimpl)<a id="distributionimpl"></a>
 
-#### [**Consumer Offset Tracking**](http://kafka.apache.org/documentation.html#impl_offsettracking)
+#### [Consumer Offset Tracking](#impl_offsettracking)<a id="impl_offsettracking"></a>
 
 The high-level consumer tracks the maximum offset it has consumed in each partition and periodically commits its offset vector so that it can resume from those offsets in the event of a restart. Kafka provides the option to store all the offsets for a given consumer group in a designated broker \(for that group\) called the_offset manager_. i.e., any consumer instance in that consumer group should send its offset commits and fetches to that offset manager \(broker\). The high-level consumer handles this automatically. If you use the simple consumer you will need to manage offsets manually. This is currently unsupported in the Java simple consumer which can only commit or fetch offsets in ZooKeeper. If you use the Scala simple consumer you can discover the offset manager and explicitly commit or fetch offsets to the offset manager. A consumer can look up its offset manager by issuing a GroupCoordinatorRequest to any Kafka broker and reading the GroupCoordinatorResponse which will contain the offset manager. The consumer can then proceed to commit or fetch offsets from the offsets manager broker. In case the offset manager moves, the consumer will need to rediscover the offset manager. If you wish to manage your offsets manually, you can take a look at these [**code samples that explain how to issue OffsetCommitRequest and OffsetFetchRequest**](https://cwiki.apache.org/confluence/display/KAFKA/Committing+and+fetching+consumer+offsets+in+Kafka).
 
@@ -249,7 +249,7 @@ When the offset manager receives an OffsetCommitRequest, it appends the request 
 
 When the offset manager receives an offset fetch request, it simply returns the last committed offset vector from the offsets cache. In case the offset manager was just started or if it just became the offset manager for a new set of consumer groups \(by becoming a leader for a partition of the offsets topic\), it may need to load the offsets topic partition into the cache. In this case, the offset fetch will fail with an OffsetsLoadInProgress exception and the consumer may retry the OffsetFetchRequest after backing off. \(This is done automatically by the high-level consumer.\)
 
-##### [**Migrating offsets from ZooKeeper to Kafka**](http://kafka.apache.org/documentation.html#offsetmigration)
+##### [Migrating offsets from ZooKeeper to Kafka](#offsetmigration)<a id="offsetmigration"></a>
 
 Kafka consumers in earlier releases store their offsets by default in ZooKeeper. It is possible to migrate these consumers to commit offsets into Kafka by following these steps:
 
@@ -262,15 +262,15 @@ A roll-back \(i.e., migrating from Kafka back to ZooKeeper\) can also be perform
 
 
 
-#### [**ZooKeeper Directories**](http://kafka.apache.org/documentation.html#impl_zookeeper)
+#### [ZooKeeper Directories](#impl_zookeeper)<a id="impl_zookeeper"></a>
 
 The following gives the ZooKeeper structures and algorithms used for co-ordination between consumers and brokers.
 
-#### [**Notation**](http://kafka.apache.org/documentation.html#impl_zknotation)
+#### [Notation](#impl_zknotation)<a id="impl_zknotation"></a>
 
 When an element in a path is denoted \[xyz\], that means that the value of xyz is not fixed and there is in fact a ZooKeeper znode for each possible value of xyz. For example \/topics\/\[topic\] would be a directory named \/topics containing a sub-directory for each topic name. Numerical ranges are also given such as \[0...5\] to indicate the subdirectories 0, 1, 2, 3, 4. An arrow -&gt; is used to indicate the contents of a znode. For example \/hello -&gt; world would indicate a znode \/hello containing the value "world".
 
-#### [**Broker Node Registry**](http://kafka.apache.org/documentation.html#impl_zkbroker)
+#### [Broker Node Registry](#impl_zkbroker)<a id="impl_zkbroker"></a>
 
 ```
 /brokers/ids/[0...N] --> {"jmx_port":...,"timestamp":...,"endpoints":[...],"host":...,"version":...,"port":...} (ephemeral node)
@@ -281,7 +281,7 @@ This is a list of all present broker nodes, each of which provides a unique logi
 
 Since the broker registers itself in ZooKeeper using ephemeral znodes, this registration is dynamic and will disappear if the broker is shutdown or dies \(thus notifying consumers it is no longer available\).
 
-#### [**Broker Topic Registry**](http://kafka.apache.org/documentation.html#impl_zktopic)
+#### [Broker Topic Registry](#impl_zktopic)<a id="impl_zktopic"></a>
 
 ```
 /brokers/topics/[topic]/partitions/[0...N]/state --> {"controller_epoch":...,"leader":...,"version":...,"leader_epoch":...,"isr":[...]} (ephemeral node)
@@ -290,7 +290,7 @@ Since the broker registers itself in ZooKeeper using ephemeral znodes, this regi
 
 Each broker registers itself under the topics it maintains and stores the number of partitions for that topic.
 
-#### [**Consumers and Consumer Groups**](http://kafka.apache.org/documentation.html#impl_zkconsumers)
+#### [Consumers and Consumer Groups](#impl_zkconsumers)<a id="impl_zkconsumers"></a>
 
 Consumers of topics also register themselves in ZooKeeper, in order to coordinate with each other and balance the consumption of data. Consumers can also store their offsets in ZooKeeper by setting`offsets.storage=zookeeper`. However, this offset storage mechanism will be deprecated in a future release. Therefore, it is recommended to [**migrate offsets storage to Kafka**](http://kafka.apache.org/documentation.html#offsetmigration).
 
@@ -298,7 +298,7 @@ Multiple consumers can form a group and jointly consume a single topic. Each con
 
 The consumers in a group divide up the partitions as fairly as possible, each partition is consumed by exactly one consumer in a consumer group.
 
-#### [**Consumer Id Registry**](http://kafka.apache.org/documentation.html#impl_zkconsumerid)
+#### [Consumer Id Registry](#impl_zkconsumerid)<a id="impl_zkconsumerid"></a>
 
 In addition to the group\_id which is shared by all consumers in a group, each consumer is given a transient, unique consumer\_id \(of the form hostname:uuid\) for identification purposes. Consumer ids are registered in the following directory.
 
@@ -311,7 +311,7 @@ Each of the consumers in the group registers under its group and creates a znode
 
 
 
-#### [**Consumer Offsets**](http://kafka.apache.org/documentation.html#impl_zkconsumeroffsets)
+#### [Consumer Offsets](#impl_zkconsumeroffsets)<a id="impl_zkconsumeroffsets"></a>
 
 Consumers track the maximum offset they have consumed in each partition. This value is stored in a ZooKeeper directory if `offsets.storage=zookeeper`.
 
@@ -320,7 +320,7 @@ Consumers track the maximum offset they have consumed in each partition. This va
 
 ```
 
-#### [**Partition Owner registry**](http://kafka.apache.org/documentation.html#impl_zkowner)
+#### [Partition Owner registry](#impl_zkowner)<a id="impl_zkowner"></a>
 
 Each broker partition is consumed by a single consumer within a given consumer group. The consumer must establish its ownership of a given partition before any consumption can begin. To establish its ownership, a consumer writes its own id in an ephemeral node under the particular broker partition it is claiming.
 
@@ -329,11 +329,11 @@ Each broker partition is consumed by a single consumer within a given consumer g
 
 ```
 
-#### [**Broker node registration**](http://kafka.apache.org/documentation.html#impl_brokerregistration)
+#### [Broker node registration](#impl_brokerregistration)<a id="impl_brokerregistration"></a>
 
 The broker nodes are basically independent, so they only publish information about what they have. When a broker joins, it registers itself under the broker node registry directory and writes information about its host name and port. The broker also register the list of existing topics and their logical partitions in the broker topic registry. New topics are registered dynamically when they are created on the broker.
 
-#### [**Consumer registration algorithm**](http://kafka.apache.org/documentation.html#impl_consumerregistration)
+#### [Consumer registration algorithm](#impl_consumerregistration)<a id="impl_consumerregistration"></a>
 
 When a consumer starts, it does the following:
 
@@ -345,7 +345,7 @@ When a consumer starts, it does the following:
 
 
 
-#### [**Consumer rebalancing algorithm**](http://kafka.apache.org/documentation.html#impl_consumerrebalance)
+#### [Consumer rebalancing algorithm](#impl_consumerrebalance)<a id="impl_consumerrebalance"></a>
 
 The consumer rebalancing algorithms allows all the consumers in a group to come into consensus on which consumer is consuming which partitions. Consumer rebalancing is triggered on each addition or removal of both broker nodes and other consumers within the same group. For a given topic and a given consumer group, broker partitions are divided evenly among consumers within the group. A partition is always consumed by a single consumer. This design simplifies the implementation. Had we allowed a partition to be concurrently consumed by multiple consumers, there would be contention on the partition and some kind of locking would be required. If there are more consumers than partitions, some consumers won't get any data at all. During rebalancing, we try to assign partitions to consumers in such a way that reduces the number of broker nodes each consumer has to connect to.
 

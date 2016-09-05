@@ -1,12 +1,12 @@
-## [**6. Operations**](http://kafka.apache.org/documentation.html#operations)
+## [6. Operations](#operations)<a id="operations"></a>
 
 Here is some information on actually running Kafka as a production system based on usage and experience at LinkedIn. Please send us any additional tips you know of.
 
-### [**6.1 Basic Kafka Operations**](http://kafka.apache.org/documentation.html#basic_ops)
+### [6.1 Basic Kafka Operations](#basic_ops)<a id="basic_ops"></a>
 
 This section will review the most common operations you will perform on your Kafka cluster. All of the tools reviewed in this section are available under the `bin/` directory of the Kafka distribution and each tool will print details on all possible commandline options if it is run with no arguments.
 
-#### [**Adding and removing topics**](http://kafka.apache.org/documentation.html#basic_ops_add_topic)
+#### [Adding and removing topics](#basic_ops_add_topic)<a id="basic_ops_add_topic"></a>
 
 You have the option of either adding topics manually or having them be created automatically when data is first published to a non-existent topic. If topics are auto-created then you may want to tune the default [**topic configurations**](http://kafka.apache.org/documentation.html#topic-config) used for auto-created topics.
 
@@ -26,7 +26,7 @@ Each sharded partition log is placed into its own folder under the Kafka log dir
 
 The configurations added on the command line override the default settings the server has for things like the length of time data should be retained. The complete set of per-topic configurations is documented [**here**](http://kafka.apache.org/documentation.html#topic-config).
 
-#### [**Modifying topics**](http://kafka.apache.org/documentation.html#basic_ops_modify_topic)
+#### [Modifying topics](#basic_ops_modify_topic)<a id="basic_ops_modify_topic"></a>
 
 You can change the configuration or partitioning of a topic using the same topic tool.
 
@@ -71,7 +71,7 @@ Kafka does not currently support reducing the number of partitions for a topic.
 
 Instructions for changing the replication factor of a topic can be found [**here**](http://kafka.apache.org/documentation.html#basic_ops_increase_replication_factor).
 
-#### [**Graceful shutdown**](http://kafka.apache.org/documentation.html#basic_ops_restarting)
+#### [Graceful shutdown](#basic_ops_restarting)<a id="basic_ops_restarting"></a>
 
 The Kafka cluster will automatically detect any broker shutdown or failure and elect new leaders for the partitions on that machine. This will occur whether a server fails or it is brought down intentionally for maintenance or configuration changes. For the latter cases Kafka supports a more graceful mechanism for stopping a server than just killing it. When a server is stopped gracefully it has two optimizations it will take advantage of:
 
@@ -87,7 +87,7 @@ Syncing the logs will happen automatically whenever the server is stopped other 
 
 Note that controlled shutdown will only succeed if _all_ the partitions hosted on the broker have replicas \(i.e. the replication factor is greater than 1 _and_ at least one of these replicas is alive\). This is generally what you want since shutting down the last replica would make that topic partition unavailable.
 
-#### [**Balancing leadership**](http://kafka.apache.org/documentation.html#basic_ops_leader_balancing)
+#### [Balancing leadership](#basic_ops_leader_balancing)<a id="basic_ops_leader_balancing"></a>
 
 Whenever a broker stops or crashes leadership for that broker's partitions transfers to other replicas. This means that by default when the broker is restarted it will only be a follower for all its partitions, meaning it will not be used for client reads and writes.
 
@@ -105,7 +105,7 @@ Since running this command can be tedious you can also configure Kafka to do thi
 
 ```
 
-#### [**Balancing Replicas Across Racks**](http://kafka.apache.org/documentation.html#basic_ops_racks)
+#### [Balancing Replicas Across Racks](#basic_ops_racks)<a id="basic_ops_racks"></a>
 
 The rack awareness feature spreads replicas of the same partition across different racks. This extends the guarantees Kafka provides for broker-failure to cover rack-failure, limiting the risk of data loss should all the brokers on a rack fail at once. The feature can also be applied to other broker groupings such as availability zones in EC2.
 
@@ -127,7 +127,7 @@ The algorithm used to assign replicas to brokers ensures that the number of lead
 
 However if racks are assigned different numbers of brokers, the assignment of replicas will not be even. Racks with fewer brokers will get more replicas, meaning they will use more storage and put more resources into replication. Hence it is sensible to configure an equal number of brokers per rack.
 
-#### [**Mirroring data between clusters**](http://kafka.apache.org/documentation.html#basic_ops_mirror_maker)
+#### [Mirroring data between clusters](#basic_ops_mirror_maker)<a id="basic_ops_mirror_maker"></a>
 
 We refer to the process of replicating data _between_ Kafka clusters "mirroring" to avoid confusion with the replication that happens amongst the nodes in a single cluster. Kafka comes with a tool for mirroring data between Kafka clusters. The tool reads from a source cluster and writes to a destination cluster, like this:
 
@@ -156,7 +156,7 @@ Sometimes it is easier to say what it is that you _don't_ want. Instead of using
 
 Combining mirroring with the configuration `auto.create.topics.enable=true` makes it possible to have a replica cluster that will automatically create and replicate all data in a source cluster even as new topics are added.
 
-#### [**Checking consumer position**](http://kafka.apache.org/documentation.html#basic_ops_consumer_lag)
+#### [Checking consumer position](#basic_ops_consumer_lag)<a id="basic_ops_consumer_lag"></a>
 
 Sometimes it's useful to see the position of your consumers. We have a tool that will show the position of all consumers in a consumer group as well as how far behind the end of the log they are. To run this tool on a consumer group named _my-group_ consuming a topic named _my-topic_ would look like this:
 
@@ -170,7 +170,7 @@ my-group        my-topic                       1   0               0            
 
 Note, however, after 0.9.0, the kafka.tools.ConsumerOffsetChecker tool is deprecated and you should use the kafka.admin.ConsumerGroupCommand \(or the bin\/kafka-consumer-groups.sh script\) to manage consumer groups, including consumers created with the [**new consumer API**](http://kafka.apache.org/documentation.html#newconsumerapi).
 
-#### [**Managing Consumer Groups**](http://kafka.apache.org/documentation.html#basic_ops_consumer_group)
+#### [Managing Consumer Groups](#basic_ops_consumer_group)<a id="basic_ops_consumer_group"></a>
 
 With the ConsumerGroupCommand tool, we can list, delete, or describe consumer groups. For example, to list all consumer groups across all topics:
 
@@ -198,7 +198,7 @@ When you're using the [**new consumer API**](http://kafka.apache.org/documentati
 
 ```
 
-#### [**Expanding your cluster**](http://kafka.apache.org/documentation.html#basic_ops_cluster_expansion)
+#### [Expanding your cluster](#basic_ops_cluster_expansion)<a id="basic_ops_cluster_expansion"></a>
 
 Adding servers to a Kafka cluster is easy, just assign them a unique broker id and start up Kafka on your new servers. However these new servers will not automatically be assigned any data partitions, so unless partitions are moved to them they won't be doing any work until new topics are created. So usually when you add machines to your cluster you will want to migrate some existing data to these machines.
 
@@ -212,7 +212,7 @@ The partition reassignment tool can run in 3 mutually exclusive modes -
 * --execute: In this mode, the tool kicks off the reassignment of partitions based on the user provided reassignment plan. \(using the --reassignment-json-file option\). This can either be a custom reassignment plan hand crafted by the admin or provided by using the --generate option
 * --verify: In this mode, the tool verifies the status of the reassignment for all partitions listed during the last --execute. The status can be either of successfully completed, failed or in progress
 
-##### [**Automatically migrating data to new machines**](http://kafka.apache.org/documentation.html#basic_ops_automigrate)
+##### [Automatically migrating data to new machines](#basic_ops_automigrate)<a id="basic_ops_automigrate"></a>
 
 The partition reassignment tool can be used to move some topics off of the current set of brokers to the newly added brokers. This is typically useful while expanding an existing cluster since it is easier to move entire topics to the new set of brokers, than moving one partition at a time. When used to do this, the user should provide a list of topics that should be moved to the new set of brokers and a target list of new brokers. The tool then evenly distributes all partitions for the given list of topics across the new set of brokers. During this move, the replication factor of the topic is kept constant. Effectively the replicas for all partitions for the input list of topics are moved from the old set of brokers to the newly added brokers.
 
@@ -299,7 +299,7 @@ Reassignment of partition [foo2,2] completed successfully
 
 ```
 
-##### [**Custom partition assignment and migration**](http://kafka.apache.org/documentation.html#basic_ops_partitionassignment)
+##### [Custom partition assignment and migration](#basic_ops_partitionassignment)<a id="basic_ops_partitionassignment"></a>
 
 The partition reassignment tool can also be used to selectively move replicas of a partition to a specific set of brokers. When used in this manner, it is assumed that the user knows the reassignment plan and does not require the tool to generate a candidate reassignment, effectively skipping the --generate step and moving straight to the --execute step
 
@@ -343,11 +343,11 @@ Reassignment of partition [foo2,1] completed successfully
 
 ```
 
-#### [**Decommissioning brokers**](http://kafka.apache.org/documentation.html#basic_ops_decommissioning_brokers)
+#### [Decommissioning brokers](#basic_ops_decommissioning_brokers)<a id="basic_ops_decommissioning_brokers"></a>
 
 The partition reassignment tool does not have the ability to automatically generate a reassignment plan for decommissioning brokers yet. As such, the admin has to come up with a reassignment plan to move the replica for all partitions hosted on the broker to be decommissioned, to the rest of the brokers. This can be relatively tedious as the reassignment needs to ensure that all the replicas are not moved from the decommissioned broker to only one other broker. To make this process effortless, we plan to add tooling support for decommissioning brokers in the future.
 
-#### [**Increasing replication factor**](http://kafka.apache.org/documentation.html#basic_ops_increase_replication_factor)
+#### [Increasing replication factor](#basic_ops_increase_replication_factor)<a id="basic_ops_increase_replication_factor"></a>
 
 Increasing the replication factor of an existing partition is easy. Just specify the extra replicas in the custom reassignment json file and use it with the --execute option to increase the replication factor of the specified partitions.
 
@@ -396,7 +396,7 @@ Topic:foo	PartitionCount:1	ReplicationFactor:3	Configs:
 
 ```
 
-#### [**Setting quotas**](http://kafka.apache.org/documentation.html#quotas)
+#### [Setting quotas](#quotas)<a id="quotas"></a>
 
 It is possible to set default quotas that apply to all client-ids by setting these configs on the brokers. By default, each client-id receives an unlimited quota. The following sets the default quota per producer and consumer client-id to 10MB\/sec.
 
@@ -422,7 +422,7 @@ Configs for clients:clientA are producer_byte_rate=1024,consumer_byte_rate=2048
 
 ```
 
-### [**6.2 Datacenters**](http://kafka.apache.org/documentation.html#datacenters)
+### [6.2 Datacenters](#datacenters)<a id="datacenters"></a>
 
 Some deployments will need to manage a data pipeline that spans multiple datacenters. Our recommended approach to this is to deploy a local Kafka cluster in each datacenter with application instances in each datacenter interacting only with their local cluster and mirroring between clusters \(see the documentation on the [**mirror maker tool**](http://kafka.apache.org/documentation.html#basic_ops_mirror_maker) for how to do this\).
 
@@ -436,9 +436,9 @@ Kafka naturally batches data in both the producer and consumer so it can achieve
 
 It is generally _not_ advisable to run a _single_ Kafka cluster that spans multiple datacenters over a high-latency link. This will incur very high replication latency both for Kafka writes and ZooKeeper writes, and neither Kafka nor ZooKeeper will remain available in all locations if the network between locations is unavailable.
 
-### [**6.3 Kafka Configuration**](http://kafka.apache.org/documentation.html#config)
+### [6.3 Kafka Configuration](#config)<a id="config"></a>
 
-#### [**Important Client Configurations**](http://kafka.apache.org/documentation.html#clientconfig)
+#### [Important Client Configurations](#clientconfig)<a id="clientconfig"></a>
 
 The most important producer configurations control
 
@@ -452,7 +452,7 @@ All configurations are documented in the [**configuration**](http://kafka.apache
 
 
 
-#### [**A Production Server Config**](http://kafka.apache.org/documentation.html#prodconfig)
+#### [A Production Server Config](#prodconfig)<a id="prodconfig"></a>
 
 Here is our production server configuration:
 
@@ -501,7 +501,7 @@ producer.purgatory.purge.interval.requests=100
 
 Our client configuration varies a fair amount between different use cases.
 
-### [**Java Version**](http://kafka.apache.org/documentation.html#java)
+### [Java Version](#java)<a id="java"></a>
 
 From a security perspective, we recommend you use the latest released version of JDK 1.8 as older freely available versions have disclosed security vulnerabilities. LinkedIn is currently running JDK 1.8 u5 \(looking to upgrade to a newer version\) with the G1 collector. If you decide to use the G1 collector \(the current default\) and you are still on JDK 1.7, make sure you are on u51 or newer. LinkedIn tried out u21 in testing, but they had a number of problems with the GC implementation in that version. LinkedIn's tuning looks like this:
 
@@ -521,7 +521,7 @@ For reference, here are the stats on one of LinkedIn's busiest clusters \(at pea
 
 The tuning looks fairly aggressive, but all of the brokers in that cluster have a 90% GC pause time of about 21ms, and they're doing less than 1 young GC per second.
 
-### [**6.4 Hardware and OS**](http://kafka.apache.org/documentation.html#hwandos)
+### [6.4 Hardware and OS](#hwandos)<a id="hwandos"></a>
 
 We are using dual quad-core Intel Xeon machines with 24GB of memory.
 
@@ -529,7 +529,7 @@ You need sufficient memory to buffer active readers and writers. You can do a ba
 
 The disk throughput is important. We have 8x7200 rpm SATA drives. In general disk throughput is the performance bottleneck, and more disks is better. Depending on how you configure flush behavior you may or may not benefit from more expensive disks \(if you force flush often then higher RPM SAS drives may be better\).
 
-#### [**OS**](http://kafka.apache.org/documentation.html#os)
+#### [OS](#os)<a id="os"></a>
 
 Kafka should run well on any unix system and has been tested on Linux and Solaris.
 
@@ -542,7 +542,7 @@ It is unlikely to require much OS-level tuning, but there are two potentially im
 
 
 
-#### [**Disks and Filesystem**](http://kafka.apache.org/documentation.html#diskandfs)
+#### [Disks and Filesystem](#diskandfs)<a id="diskandfs"></a>
 
 We recommend using multiple drives to get good throughput and not sharing the same drives used for Kafka data with application logs or other OS filesystem activity to ensure good latency. You can either RAID these drives together into a single volume or format and mount each drive as its own directory. Since Kafka has replication the redundancy provided by RAID can also be provided at the application level. This choice has several tradeoffs.
 
@@ -552,7 +552,7 @@ RAID can potentially do better at balancing load between disks \(although it doe
 
 Another potential benefit of RAID is the ability to tolerate disk failures. However our experience has been that rebuilding the RAID array is so I\/O intensive that it effectively disables the server, so this does not provide much real availability improvement.
 
-#### [**Application vs. OS Flush Management**](http://kafka.apache.org/documentation.html#appvsosflush)
+#### [Application vs. OS Flush Management](#appvsosflush)<a id="appvsosflush"></a>
 
 Kafka always immediately writes all data to the filesystem and supports the ability to configure the flush policy that controls when data is forced out of the OS cache and onto disk using the flush. This flush policy can be controlled to force data to disk after a period of time or after a certain number of messages has been written. There are several choices in this configuration.
 
@@ -566,7 +566,7 @@ The drawback of using application level flush settings is that it is less effici
 
 In general you don't need to do any low-level tuning of the filesystem, but in the next few sections we will go over some of this in case it is useful.
 
-#### [**Understanding Linux OS Flush Behavior**](http://kafka.apache.org/documentation.html#linuxflush)
+#### [Understanding Linux OS Flush Behavior](#linuxflush)<a id="linuxflush"></a>
 
 In Linux, data written to the filesystem is maintained in [**pagecache**](http://en.wikipedia.org/wiki/Page_cache) until it must be written out to disk \(due to an application-level fsync or the OS's own flush policy\). The flushing of data is done by a set of background threads called pdflush \(or in post 2.6.32 kernels "flusher threads"\).
 
@@ -587,26 +587,26 @@ Using pagecache has several advantages over an in-process cache for storing data
 * The I\/O scheduler will attempt to re-sequence writes to minimize movement of the disk head which improves throughput.
 * It automatically uses all the free memory on the machine
 
-#### [**Filesystem Selection**](http://kafka.apache.org/documentation.html#filesystems)
+#### [Filesystem Selection](#filesystems)<a id="filesystems"></a>
 
 Kafka uses regular files on disk, and as such it has no hard dependency on a specific filesystem. The two filesystems which have the most usage, however, are EXT4 and XFS. Historically, EXT4 has had more usage, but recent improvements to the XFS filesystem have shown it to have better performance characteristics for Kafka's workload with no compromise in stability.
 
 Comparison testing was performed on a cluster with significant message loads, using a variety of filesystem creation and mount options. The primary metric in Kafka that was monitored was the "Request Local Time", indicating the amount of time append operations were taking. XFS resulted in much better local times \(160ms vs. 250ms+ for the best EXT4 configuration\), as well as lower average wait times. The XFS performance also showed less variability in disk performance.
 
-##### [**General Filesystem Notes**](http://kafka.apache.org/documentation.html#generalfs)
+##### [General Filesystem Notes](#generalfs)<a id="generalfs"></a>
 
 For any filesystem used for data directories, on Linux systems, the following options are recommended to be used at mount time:
 
 * noatime: This option disables updating of a file's atime \(last access time\) attribute when the file is read. This can eliminate a significant number of filesystem writes, especially in the case of bootstrapping consumers. Kafka does not rely on the atime attributes at all, so it is safe to disable this.
 
-##### [**XFS Notes**](http://kafka.apache.org/documentation.html#xfs)
+##### [XFS Notes](#xfs)<a id="xfs"></a>
 
 The XFS filesystem has a significant amount of auto-tuning in place, so it does not require any change in the default settings, either at filesystem creation time or at mount. The only tuning parameters worth considering are:
 
 * largeio: This affects the preferred I\/O size reported by the stat call. While this can allow for higher performance on larger disk writes, in practice it had minimal or no effect on performance.
 * nobarrier: For underlying devices that have battery-backed cache, this option can provide a little more performance by disabling periodic write flushes. However, if the underlying device is well-behaved, it will report to the filesystem that it does not require flushes, and this option will have no effect.
 
-##### [**EXT4 Notes**](http://kafka.apache.org/documentation.html#ext4)
+##### [EXT4 Notes](#ext4)<a id="ext4"></a>
 
 EXT4 is a serviceable choice of filesystem for the Kafka data directories, however getting the most performance out of it will require adjusting several mount options. In addition, these options are generally unsafe in a failure scenario, and will result in much more data loss and corruption. For a single broker failure, this is not much of a concern as the disk can be wiped and the replicas rebuilt from the cluster. In a multiple-failure scenario, such as a power outage, this can mean underlying filesystem \(and therefore data\) corruption that is not easily recoverable. The following options can be adjusted:
 
@@ -616,7 +616,7 @@ EXT4 is a serviceable choice of filesystem for the Kafka data directories, howev
 * nobh: This setting controls additional ordering guarantees when using data=writeback mode. This should be safe with Kafka as we do not depend on write ordering and improves throughput and latency.
 * delalloc: Delayed allocation means that the filesystem avoid allocating any blocks until the physical write occurs. This allows ext4 to allocate a large extent instead of smaller pages and helps ensure the data is written sequentially. This feature is great for throughput. It does seem to involve some locking in the filesystem which adds a bit of latency variance.
 
-### [**6.6 Monitoring**](http://kafka.apache.org/documentation.html#monitoring)
+### [6.6 Monitoring](#monitoring)<a id="monitoring"></a>
 
 Kafka uses Yammer Metrics for metrics reporting in both the server and the client. This can be configured to report stats using pluggable stats reporters to hook up to your monitoring system.
 
@@ -653,7 +653,7 @@ We do graphing and alerting on the following metrics:
 | The average fraction of time the request handler threads are idle | kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent | between 0 and 1, ideally &gt; 0.3 |
 | Quota metrics per client-id | kafka.server:type={Produce\|Fetch},client-id==\(\[-.\w\]+\) | Two attributes. throttle-time indicates the amount of time in ms the client-id was throttled. Ideally = 0. byte-rate indicates the data produce\/consume rate of the client in bytes\/sec. |
 
-#### [**New producer monitoring**](http://kafka.apache.org/documentation.html#new_producer_monitoring)
+#### [New producer monitoring](#new_producer_monitoring)<a id="new_producer_monitoring"></a>
 
 The following metrics are available on new producer instances.
 
@@ -711,17 +711,17 @@ The following metrics are available on new producer instances.
 
 We recommend monitoring GC time and other stats and various server stats such as CPU utilization, I\/O service time, etc. On the client side, we recommend monitoring the message\/byte rate \(global and per topic\), request rate\/size\/time, and on the consumer side, max lag in messages among all partitions and min fetch request rate. For a consumer to keep up, max lag needs to be less than a threshold and min fetch rate needs to be larger than 0.
 
-#### [**Audit**](http://kafka.apache.org/documentation.html#basic_ops_audit)
+#### [Audit](#basic_ops_audit)<a id="basic_ops_audit"></a>
 
 The final alerting we do is on the correctness of the data delivery. We audit that every message that is sent is consumed by all consumers and measure the lag for this to occur. For important topics we alert if a certain completeness is not achieved in a certain time period. The details of this are discussed in KAFKA-260.
 
-### [**6.7 ZooKeeper**](http://kafka.apache.org/documentation.html#zk)
+### [6.7 ZooKeeper](#zk)<a id="zk"></a>
 
-#### [**Stable version**](http://kafka.apache.org/documentation.html#zkversion)
+#### [Stable version](#zkversion)<a id="zkversion"></a>
 
 The current stable branch is 3.4 and the latest release of that branch is 3.4.6, which is the one ZkClient 0.7 uses. ZkClient is the client layer Kafka uses to interact with ZooKeeper.
 
-#### [**Operationalizing ZooKeeper**](http://kafka.apache.org/documentation.html#zkops)
+#### [Operationalizing ZooKeeper](#zkops)<a id="zkops"></a>
 
 Operationally, we do the following for a healthy ZooKeeper installation:
 

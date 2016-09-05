@@ -1,4 +1,4 @@
-### [1.1 简介](:introduction)
+## [1.1 简介](#introduction)<a id="introduction"></a>
 
 Kafka是一个实现了分布式、分区、提交后复制的日志服务。它通过一套独特的设计提供了消息系统中间件的功能。
 
@@ -22,7 +22,7 @@ Kafka是一个实现了分布式、分区、提交后复制的日志服务。它
 
 Clients(客户端)和Servers(服务器)通过一个简单的、高效的[基于TCP的协议](https://kafka.apache.org/protocol.html)进行交互。官方为Kafka提供一个Java客户端，但更多[其他语言的客户端](https://cwiki.apache.org/confluence/display/KAFKA/Clients)可以在这里找到。
 
-#### [Topics and Logs](#intro_topics)
+### [Topics and Logs](#intro_topics)<a id="intro_topics"></a>
 
 Let's first dive into the high-level abstraction Kafka provides—the topic.
 首先我们先来深入Kafka提供的关于Topic的高层抽象。
@@ -42,7 +42,7 @@ Kafka集群会保存一个时间段内所有被发布出来的信息，无论这
 
 对log进行分区主要是为了以下几个目的：第一、这可以让log的伸缩能力超过单台服务器上线，每个独立的partition的大小受限于单台服务器的容积，但是一个topic可以有很多partition从而使得它有能力处理任意大小的数据。第二、在并行处理方面这可以作为一个独立的单元。
 
-#### [分布式](#intro_distribution)
+### [分布式](#intro_distribution)<a id="intro_distribution"></a>
 
 log的partition被分布到Kafka集群之中；每个服务器负责处理彼此共享的partition的一部分数据和请求。每个partition被复制指定的份数散布到机器之中来提供故障转移能力。
 
@@ -51,7 +51,7 @@ Each partition has one server which acts as the "leader" and zero or more server
 
 
 
-#### [Producers](#intro_producers)
+### [Producers](#intro_producers)<a id="intro_producers"></a>
 
 
 
@@ -59,7 +59,7 @@ Producers publish data to the topics of their choice. The producer is responsibl
 
 
 
-#### [Consumers](#intro_consumers)
+### [Consumers](#intro_consumers)<a id="intro_consumers"></a>
 
 
 
@@ -105,7 +105,7 @@ Kafka only provides a total order over messages _within_ a partition, not betwee
 
 
 
-#### [Guarantees](#intro_guarantees)
+### [Guarantees](#intro_guarantees)<a id="intro_guarantees"></a>
 
 
 

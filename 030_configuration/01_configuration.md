@@ -1,8 +1,8 @@
-## [**3. Configuration**](http://kafka.apache.org/documentation.html#configuration)
+## [3. Configuration](#configuration)<a id="configuration"></a>
 
 Kafka uses key-value pairs in the [**property file format**](http://en.wikipedia.org/wiki/.properties) for configuration. These values can be supplied either from a file or programmatically.
 
-### [**3.1 Broker Configs**](http://kafka.apache.org/documentation.html#brokerconfigs)
+### [3.1 Broker Configs](#brokerconfigs)<a id="brokerconfigs"></a>
 
 The essential configurations are the following:
 
@@ -192,7 +192,7 @@ The following are the topic-level configurations. The server's default configura
 | segment.ms | 7 days | log.roll.hours | This configuration controls the period of time after which Kafka will force the log to roll even if the segment file isn't full to ensure that retention can delete or compact old data. |
 | segment.jitter.ms | 0 | log.roll.jitter.{ms,hours} | The maximum jitter to subtract from logRollTimeMillis. |
 
-### [**3.2 Producer Configs**](http://kafka.apache.org/documentation.html#producerconfigs)
+### [3.2 Producer Configs](#producerconfigs)<a id="producerconfigs"></a>
 
 Below is the configuration of the Java producer:
 
@@ -250,11 +250,11 @@ Below is the configuration of the Java producer:
 
 For those interested in the legacy Scala producer configs, information can be found [**here**](http://kafka.apache.org/082/documentation.html#producerconfigs).
 
-### [**3.3 Consumer Configs**](http://kafka.apache.org/documentation.html#consumerconfigs)
+### [3.3 Consumer Configs](#consumerconfigs)<a id="consumerconfigs"></a>
 
 We introduce both the old 0.8 consumer configs and the new consumer configs respectively below.
 
-#### [**3.3.1 Old Consumer Configs**](http://kafka.apache.org/documentation.html#oldconsumerconfigs)
+#### [3.3.1 Old Consumer Configs](#oldconsumerconfigs)<a id="oldconsumerconfigs"></a>
 
 The essential old consumer configurations are the following:
 
@@ -300,7 +300,7 @@ The essential old consumer configurations are the following:
 
 More details about consumer configuration can be found in the scala class`kafka.consumer.ConsumerConfig`.
 
-#### [**3.3.2 New Consumer Configs**](http://kafka.apache.org/documentation.html#newconsumerconfigs)
+#### [3.3.2 New Consumer Configs](#newconsumerconfigs)<a id="newconsumerconfigs"></a>
 
 Since 0.9.0.0 we have been working on a replacement for our existing simple and high-level consumers. The code is considered beta quality. Below is the configuration for the new consumer:
 
@@ -356,7 +356,7 @@ Since 0.9.0.0 we have been working on a replacement for our existing simple and 
 | ssl.keymanager.algorithm | The algorithm used by key manager factory for SSL connections. Default value is the key manager factory algorithm configured for the Java Virtual Machine. | string | SunX509 |  | low |
 | ssl.trustmanager.algorithm | The algorithm used by trust manager factory for SSL connections. Default value is the trust manager factory algorithm configured for the Java Virtual Machine. | string | PKIX |  | low |
 
-### [**3.4 Kafka Connect Configs**](http://kafka.apache.org/documentation.html#connectconfigs)
+### [3.4 Kafka Connect Configs](#connectconfigs)<a id="connectconfigs"></a>
 
 Below is the configuration of the Kafka Connect framework.
 
@@ -418,7 +418,7 @@ Below is the configuration of the Kafka Connect framework.
 | ssl.trustmanager.algorithm | The algorithm used by trust manager factory for SSL connections. Default value is the trust manager factory algorithm configured for the Java Virtual Machine. | string | PKIX |  | low |
 | task.shutdown.graceful.timeout.ms | Amount of time to wait for tasks to shutdown gracefully. This is the total amount of time, not per task. All task have shutdown triggered, then they are waited on sequentially. | long | 5000 |  | low |
 
-### [**3.5 Kafka Streams Configs**](http://kafka.apache.org/documentation.html#streamsconfigs)
+### [3.5 Kafka Streams Configs](#streamsconfigs)<a id="streamsconfigs"></a>
 
 Below is the configuration of the Kafka Streams client library.
 

@@ -1,6 +1,6 @@
-### [**1.5 Upgrading From Previous Versions**](http://kafka.apache.org/documentation.html#upgrade)
+### [1.5 Upgrading From Previous Versions](#upgrade)<a id="upgrade"></a>
 
-#### [**Upgrading from 0.8.x or 0.9.x to 0.10.0.0**](http://kafka.apache.org/documentation.html#upgrade_10)
+#### [Upgrading from 0.8.x or 0.9.x to 0.10.0.0](#upgrade_10)<a id="upgrade_10"></a>
 
 0.10.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_10_breaking) \(please review before upgrading\) and possible [**performance impact following the upgrade**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact). By following the recommended rolling upgrade plan below, you guarantee no downtime and no performance impact during and following the upgrade. 
 
@@ -23,7 +23,7 @@ Note: Because new protocols are introduced, it is important to upgrade your Kafk
 
 **Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
 
-##### [**Potential performance impact following upgrade to 0.10.0.0**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact)
+##### [Potential performance impact following upgrade to 0.10.0.0](#upgrade_10_performance_impact)<a id="upgrade_10_performance_impact"></a>
 
 The message format in 0.10.0 includes a new timestamp field and uses relative offsets for compressed messages. The on disk message format can be configured through log.message.format.version in the server.properties file. The default on-disk message format is 0.10.0. If a consumer client is on a version before 0.10.0.0, it only understands message formats before 0.10.0. In this case, the broker is able to convert messages from the 0.10.0 format to an earlier format before sending the response to the consumer on an older version. However, the broker can't use zero-copy transfer in this case. Reports from the Kafka community on the performance impact have shown CPU utilization going from 20% before to 100% after an upgrade, which forced an immediate upgrade of all clients to bring performance back to normal. To avoid such message conversion before consumers are upgraded to 0.10.0.0, one can set log.message.format.version to 0.8.2 or 0.9.0 when upgrading the broker to 0.10.0.0. This way, the broker can still use zero-copy transfer to send the data to the old consumers. Once consumers are upgraded, one can change the message format to 0.10.0 on the broker and enjoy the new message format that includes new timestamp and improved compression. The conversion is supported to ensure compatibility and can be useful to support a few apps that have not updated to newer clients yet, but is impractical to support all consumer traffic on even an overprovisioned cluster. Therefore it is critical to avoid the message conversion as much as possible when brokers have been upgraded but the majority of clients have not.
 
@@ -37,7 +37,7 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 
 
 
-##### [**Potential breaking changes in 0.10.0.0**](http://kafka.apache.org/documentation.html#upgrade_10_breaking)
+##### [Potential breaking changes in 0.10.0.0](#upgrade_10_breaking)<a id="upgrade_10_breaking"></a>
 
 * Starting from Kafka 0.10.0.0, the message format version in Kafka is represented as the Kafka version. For example, message format 0.9.0 refers to the highest message version supported by Kafka 0.9.0.
 * Message format 0.10.0 has been introduced and it is used by default. It includes a timestamp field in the messages and relative offsets are used for compressed messages.
@@ -52,7 +52,7 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 * The new consumer has standardized its APIs to accept `java.util.Collection` as the sequence type for method parameters. Existing code may have to be updated to work with the 0.10.0 client library.
 * LZ4-compressed message handling was changed to use an interoperable framing specification \(LZ4f v1.5.1\). To maintain compatibility with old clients, this change only applies to Message format 0.10.0 and later. Clients that Produce\/Fetch LZ4-compressed messages using v0\/v1 \(Message format 0.9.0\) should continue to use the 0.9.0 framing implementation. Clients that use Produce\/Fetch protocols v2 or later should use interoperable LZ4f framing. A list of interoperable LZ4 libraries is available at http:\/\/www.lz4.org\/
 
-##### [**Notable changes in 0.10.0.0**](http://kafka.apache.org/documentation.html#upgrade_10_notable)
+##### [Notable changes in 0.10.0.0](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
 
 * Starting from Kafka 0.10.0.0, a new client library named **Kafka Streams** is available for stream processing on data stored in Kafka topics. This new client library only works with 0.10.x and upward versioned brokers due to message format changes mentioned above. For more information please read [**this section**](http://kafka.apache.org/documentation.html#streams_overview).
 * The default value of the configuration parameter `receive.buffer.bytes` is now 64K for the new consumer.
@@ -60,7 +60,7 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 * The old Scala producer has been deprecated. Users should migrate their code to the Java producer included in the kafka-clients JAR as soon as possible.
 * The new consumer API has been marked stable.
 
-#### [**Upgrading from 0.8.0, 0.8.1.X or 0.8.2.X to 0.9.0.0**](http://kafka.apache.org/documentation.html#upgrade_9)
+#### [Upgrading from 0.8.0, 0.8.1.X or 0.8.2.X to 0.9.0.0](#upgrade_9)<a id="upgrade_9"></a>
 
 0.9.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_9_breaking) \(please review before upgrading\) and an inter-broker protocol change from previous versions. This means that upgraded brokers and clients may not be compatible with older versions. It is important that you upgrade your Kafka cluster before upgrading your clients. If you are using MirrorMaker downstream clusters should be upgraded first as well.
 
@@ -75,7 +75,7 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 
 **Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
 
-##### [**Potential breaking changes in 0.9.0.0**](http://kafka.apache.org/documentation.html#upgrade_9_breaking)
+##### [Potential breaking changes in 0.9.0.0](#upgrade_9_breaking)<a id="upgrade_9_breaking"></a>
 
 * Java 1.6 is no longer supported.
 * Scala 2.9 is no longer supported.
@@ -91,7 +91,7 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 * The kafka-console-producer.sh script \(kafka.tools.ConsoleProducer\) will use the new producer instead of the old producer be default, and users have to specify 'old-producer' to use the old producer.
 * By default all command line tools will print all logging messages to stderr instead of stdout.
 
-##### [**Notable changes in 0.9.0.1**](http://kafka.apache.org/documentation.html#upgrade_901_notable)
+##### [Notable changes in 0.9.0.1](#upgrade_901_notable)<a id="upgrade_901_notable"></a>
 
 * The new broker id generation feature can be disabled by setting broker.id.generation.enable to false.
 * Configuration parameter log.cleaner.enable is now true by default. This means topics with a cleanup.policy=compact will now be compacted by default, and 128 MB of heap will be allocated to the cleaner process via log.cleaner.dedupe.buffer.size. You may want to review log.cleaner.dedupe.buffer.size and the other log.cleaner configuration values based on your usage of compacted topics.
@@ -104,15 +104,15 @@ For clients that are upgraded to 0.10.0.0, there is no performance impact.
 * The kafka.tools.ProducerPerformance class has been deprecated. Going forward, please use org.apache.kafka.tools.ProducerPerformance for this functionality \(kafka-producer-perf-test.sh will also be changed to use the new class\).
 * The producer config block.on.buffer.full has been deprecated and will be removed in future release. Currently its default value has been changed to false. The KafkaProducer will no longer throw BufferExhaustedException but instead will use max.block.ms value to block, after which it will throw a TimeoutException. If block.on.buffer.full property is set to true explicitly, it will set the max.block.ms to Long.MAX\_VALUE and metadata.fetch.timeout.ms will not be honoured
 
-#### [**Upgrading from 0.8.1 to 0.8.2**](http://kafka.apache.org/documentation.html#upgrade_82)
+#### [Upgrading from 0.8.1 to 0.8.2](#upgrade_82)<a id="upgrade_82"></a>
 
 0.8.2 is fully compatible with 0.8.1. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
 
-#### [**Upgrading from 0.8.0 to 0.8.1**](http://kafka.apache.org/documentation.html#upgrade_81)
+#### [Upgrading from 0.8.0 to 0.8.1](#upgrade_81)<a id="upgrade_81"></a>
 
 0.8.1 is fully compatible with 0.8. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
 
-#### [**Upgrading from 0.7**](http://kafka.apache.org/documentation.html#upgrade_7)
+#### [Upgrading from 0.7](#upgrade_7)<a id="upgrade_7"></a>
 
 Release 0.7 is incompatible with newer releases. Major changes were made to the API, ZooKeeper data structures, and protocol, and configuration in order to add replication \(Which was missing in 0.7\). The upgrade from 0.7 to later versions requires a [**special tool**](https://cwiki.apache.org/confluence/display/KAFKA/Migrating+from+0.7+to+0.8) for migration. This migration can be done without downtime.
 

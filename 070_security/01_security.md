@@ -1,6 +1,6 @@
-## [**7. Security**](http://kafka.apache.org/documentation.html#security)
+## [7. Security](#security)<a id="security"></a>
 
-### [**7.1 Security Overview**](http://kafka.apache.org/documentation.html#security_overview)
+### [7.1 Security Overview](#security_overview)<a id="security_overview"></a>
 
 In release 0.9.0.0, the Kafka community added a number of features that, used either separately or together, increases security in a Kafka cluster. These features are considered to be of beta quality. The following security measures are currently supported:
 
@@ -12,7 +12,7 @@ In release 0.9.0.0, the Kafka community added a number of features that, used ei
 
 It's worth noting that security is optional - non-secured clusters are supported, as well as a mix of authenticated, unauthenticated, encrypted and non-encrypted clients. The guides below explain how to configure and use the security features in both clients and brokers.
 
-### [**7.2 Encryption and Authentication using SSL**](http://kafka.apache.org/documentation.html#security_ssl)
+### [7.2 Encryption and Authentication using SSL](#security_ssl)<a id="security_ssl"></a>
 
 Apache Kafka allows clients to connect over SSL. By default SSL is disabled but can be turned on as needed.
 
@@ -207,7 +207,7 @@ Apache Kafka allows clients to connect over SSL. By default SSL is disabled but 
   ```
 
 
-### [**7.3 Authentication using SASL**](http://kafka.apache.org/documentation.html#security_sasl)
+### [7.3 Authentication using SASL](#security_sasl)<a id="security_sasl"></a>
 
 1. #### [**SASL configuration for Kafka brokers**](http://kafka.apache.org/documentation.html#security_sasl_brokerconfig)
 
@@ -486,7 +486,7 @@ Apache Kafka allows clients to connect over SSL. By default SSL is disabled but 
   4. To remove old mechanism \(if this is required\), remove the old mechanism fromsasl.enabled.mechanisms in server.properties and remove the entries for the old mechanism from JAAS config file. Incrementally bounce the cluster again.
 
 
-### [**7.4 Authorization and ACLs**](http://kafka.apache.org/documentation.html#security_authz)
+### [7.4 Authorization and ACLs](#security_authz)<a id="security_authz"></a>
 
 Kafka ships with a pluggable Authorizer and an out-of-box authorizer implementation that uses zookeeper to store all the acls. Kafka acls are defined in the general format of "Principal P is \[Allowed\/Denied\] Operation O From Host H On Resource R". You can read more about the acl structure on KIP-11. In order to add, remove or list acls you can use the Kafka authorizer CLI. By default, if a Resource R has no associated acls, no one other than super users is allowed to access R. If you want to change that behavior, you can include the following in broker.properties.
 
@@ -512,7 +512,7 @@ By default, the SASL user name will be the primary part of the Kerberos principa
 sasl.kerberos.principal.to.local.rules=RULE:[1:$1@$0](.*@MYDOMAIN.COM)s/@.*//,DEFAULT
 ```
 
-#### [**Command Line Interface**](http://kafka.apache.org/documentation.html#security_authz_cli)
+#### [Command Line Interface](#security_authz_cli)<a id="security_authz_cli"></a>
 
 Kafka Authorization management CLI can be found under bin directory with all the other CLIs. The CLI script is called **kafka-acls.sh**. Following lists all the options that the script supports:
 
@@ -542,7 +542,7 @@ Valid values are : Read, Write, Create, Delete, Alter, Describe, ClusterAction, 
 | --producer | Convenience option to add\/remove acls for producer role. This will generate acls that allows WRITE, DESCRIBE on topic and CREATE on cluster. |  | Convenience |
 | --consumer | Convenience option to add\/remove acls for consumer role. This will generate acls that allows READ, DESCRIBE on topic and READ on consumer-group. |  | Convenience |
 
-#### [**Examples**](http://kafka.apache.org/documentation.html#security_authz_examples)
+#### [Examples](#security_authz_examples)<a id="security_authz_examples"></a>
 
 * **Adding Acls**
 
@@ -585,7 +585,7 @@ Valid values are : Read, Write, Create, Delete, Alter, Describe, ClusterAction, 
 
   Note that for consumer option we must also specify the consumer group. In order to remove a principal from producer or consumer role we just need to pass --remove option.
 
-### [**7.5 Incorporating Security Features in a Running Cluster**](http://kafka.apache.org/documentation.html#security_rolling_upgrade)
+### [7.5 Incorporating Security Features in a Running Cluster](#security_rolling_upgrade)<a id="security_rolling_upgrade"></a>
 
 You can secure a running cluster via one or more of the supported protocols discussed previously. This is done in phases:
 
@@ -668,9 +668,9 @@ The final bounce secures the cluster by closing the PLAINTEXT port.
 
 ZooKeeper can be secured independently of the Kafka cluster. The steps for doing this are covered in section[**7.6.2**](http://kafka.apache.org/documentation.html#zk_authz_migration).
 
-### [**7.6 ZooKeeper Authentication**](http://kafka.apache.org/documentation.html#zk_authz)
+### [7.6 ZooKeeper Authentication](#zk_authz)<a id="zk_authz"></a>
 
-#### [**7.6.1 New clusters**](http://kafka.apache.org/documentation.html#zk_authz_new)
+#### [7.6.1 New clusters](#zk_authz_new)<a id="zk_authz_new"></a>
 
 To enable ZooKeeper authentication on brokers, there are two necessary steps:
 
@@ -679,7 +679,7 @@ To enable ZooKeeper authentication on brokers, there are two necessary steps:
 
 The metadata stored in ZooKeeper is such that only brokers will be able to modify the corresponding znodes, but znodes are world readable. The rationale behind this decision is that the data stored in ZooKeeper is not sensitive, but inappropriate manipulation of znodes can cause cluster disruption. We also recommend limiting the access to ZooKeeper via network segmentation \(only brokers and some admin tools need access to ZooKeeper if the new consumer and new producer are used\).
 
-#### [**7.6.2 Migrating clusters**](http://kafka.apache.org/documentation.html#zk_authz_migration)
+#### [7.6.2 Migrating clusters](#zk_authz_migration)<a id="zk_authz_migration"></a>
 
 If you are running a version of Kafka that does not support security or simply with security disabled, and you want to make the cluster secure, then you need to execute the following steps to enable ZooKeeper authentication with minimal disruption to your operations:
 
@@ -707,7 +707,7 @@ Run this to see the full list of parameters:
 
 ```
 
-#### [**7.6.3 Migrating the ZooKeeper ensemble**](http://kafka.apache.org/documentation.html#zk_authz_ensemble)
+#### [7.6.3 Migrating the ZooKeeper ensemble](#zk_authz_ensemble)<a id="zk_authz_ensemble"></a>
 
 It is also necessary to enable authentication on the ZooKeeper ensemble. To do it, we need to perform a rolling restart of the server and set a few properties. Please refer to the ZooKeeper documentation for more detail:
 

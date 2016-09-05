@@ -84,5 +84,4 @@
     * [Overview](080_connect/01_connect.md#connect_overview)
     * [User Guide](080_connect/01_connect.md#connect_user)
     * [Connector Development Guide](080_connect/01_connect.md#connect_development)
-* 简介
 
