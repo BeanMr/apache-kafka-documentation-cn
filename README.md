@@ -11,11 +11,13 @@ Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公
 
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
+Github: [BeanMr](https://github.com/BeanMr)\/[**apache-kafka-documentation-cn**](https://github.com/BeanMr/apache-kafka-documentation-cn)
+
+Gitbook: [**Apache Kafka Documentation CN**](https://www.gitbook.com/book/ddfeng/apache-kafka-documentation-cn/details)
+
 ---
 
 译者：[@D2Feng](https://github.com/BeanMr)
-
-
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
 
@@ -27,7 +29,7 @@ Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公
 
 小伙伴[@numbbbbb](https://github.com/numbbbbb)在《The Swift Programming Language》对协作流程中进行了详细的介绍，小伙伴[@looly](https://github.com/looly)在他的ES翻译中总结了一下，我抄过来并再次感谢他们的分享。
 
-1. 首先fork我的项目 
+1. 首先fork的项目 
 2. 把fork过去的项目也就是你的项目clone到你的本地 
 3. 运行 `git remote add ddfeng` 把我的库添加为远端库 
 4. 运行 `git pull ddfeng master` 拉取并合并到本地 
