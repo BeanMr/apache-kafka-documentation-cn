@@ -11,9 +11,9 @@ Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公
 
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
-Github: [BeanMr](https://github.com/BeanMr)\/[**apache-kafka-documentation-cn**](https://github.com/BeanMr/apache-kafka-documentation-cn)
+Github: [BeanMr](https://github.com/BeanMr)\/[apache-kafka-documentation-cn](https://github.com/BeanMr/apache-kafka-documentation-cn)
 
-Gitbook: [**Apache Kafka Documentation CN**](https://www.gitbook.com/book/ddfeng/apache-kafka-documentation-cn/details)
+Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apache-kafka-documentation-cn/details)
 
 ---
 
