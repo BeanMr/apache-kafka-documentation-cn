@@ -7,7 +7,7 @@ Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公
 
 ---
 
-阅读地址：[Apache Kafka 官方文档中文版](https://ddfeng.gitbooks.io/apache-kafka-documentation-cn/content/)
+阅读地址：[Apache Kafka 官方文档中文版](http://kafkadoc.beanmr.com/)
 
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
