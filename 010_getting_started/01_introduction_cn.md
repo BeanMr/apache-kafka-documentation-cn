@@ -1,76 +1,50 @@
-### [1.1 简介](#introduction)
+### [1.1 简介](:introduction)
 
 Kafka是一个实现了分布式、分区、提交后复制的日志服务。它通过一套独特的设计提供了消息系统中间件的功能。
 
-
-What does all that mean?
 这是什么意思呢？
 
-
-
-First let's review some basic messaging terminology:
-首先我们回顾几个基础的消息系统属于：
+首先我们回顾几个基础的消息系统术语：
 
 * Kafka将消息源放在称为_topics_的归类组维护
 
-* 我们将发布消息到Kafka topic上的处理程序称之为_processes_
+* 我们将发布消息到Kafka topic上的处理程序称之为_producers_
 
-* 我们将订阅topic并处理消息源上发布的信息的程序称之为_consumers_
+* 我们将订阅topic并处理消息源发布的信息的程序称之为_consumers_
 
-* Kafka由一个或者多个服务器构成的集群方式运行，每个机器被称之为一个_broker_
+* Kafka采用集群方式运行，集群由一台或者多台服务器构成，每个机器被称之为一个_broker_
 
 (译者注：这些基本名词怎么翻译都觉着怪还是尽量理解下原文)
 
-所以总的来说，producers(生产者)通过网络将消息发送到Kafka机器，然后由集群将这些消息提供给consumers(消费者)，如下图所示：
+所以高度概括起来，producers(生产者)通过网络将messages(消息)发送到Kafka机器，然后由集群将这些消息提供给consumers(消费者)，如下图所示：
 
 ![](/images/producer_consumer.png)
 
-Clients(客户端)和Servers(服务器)通过一个简单的、高效的[基于TCP的协议](https://kafka.apache.org/protocol.html)进行交互。官方为Kafka提供一个Java客户端，更多[其他语言的客户端]可以在这里找到。 We provide a Java client for Kafka, but clients are available in [many languages](https://cwiki.apache.org/confluence/display/KAFKA/Clients).
-
-
+Clients(客户端)和Servers(服务器)通过一个简单的、高效的[基于TCP的协议](https://kafka.apache.org/protocol.html)进行交互。官方为Kafka提供一个Java客户端，但更多[其他语言的客户端](https://cwiki.apache.org/confluence/display/KAFKA/Clients)可以在这里找到。
 
 #### [Topics and Logs](#intro_topics)
 
-
-
 Let's first dive into the high-level abstraction Kafka provides—the topic.
+首先我们先来深入Kafka提供的关于Topic的高层抽象。
 
-
-
-A topic is a category or feed name to which messages are published. For each topic, the Kafka cluster maintains a partitioned log that looks like this:
-
+Topic是一个消息投递目标的名称，这个目标可以理解为一个消息归类或者消息源。对于每个Topic，Kafka会为其维护一个如下图所示的分区的日志文件：
 
 
 ![](/images/log_anatomy.png)
 
+每个partition(分区)是一个有序的、不可修改的、消息组成的队列；这些消息是被不断的appended(追加)到这个commit log（提交日志文件）上的。在这些patitions之中的每个消息都会被赋予一个叫做_offset_的顺序id编号，用来在partition之中唯一性的标示这个消息。
 
+Kafka集群会保存一个时间段内所有被发布出来的信息，无论这个消息是否已经被消费过，这个时间段是可以配置的。比如日志保存时间段被设置为2天，那么2天以内发布的消息都是可以消费的；而之前的消息为了释放空间将会抛弃掉。Kafka的性能与数据量不相干，所以保存大量的消息数据不会造成性能问题。
 
-Each partition is an ordered, immutable sequence of messages that is continually appended to—a commit log. The messages in the partitions are each assigned a sequential id number called the _offset_ that uniquely identifies each message within the partition.
+实际上Kafka关注的关于每个消费者的元数据信息也基本上仅仅只有这个消费者的"offset"也就是它访问到了log的哪个位置。这个offsize是由消费者控制的，通常情况下当消费者读取信息时这个数值是线性递增的，但实际上消费者可以自行随意的控制这个值从而随意控制其消费信息的顺序。例如，一个消费者可以将其重置到更早的时间来实现信息的重新处理。
 
+这些特性组合起来就意味着Kafka消费者是非常低消耗，它们可以随意的被添加或者移除而不会对集群或者其他的消费者造成太多的干扰。例如，你可以通过我们的命令行工具"tail"(译者注：Linux的tail命令的意思)任何消息队列的内容，这不会对任何已有的消费者产生任何影响。
 
+对log进行分区主要是为了以下几个目的：第一、这可以让log的伸缩能力超过单台服务器上线，每个独立的partition的大小受限于单台服务器的容积，但是一个topic可以有很多partition从而使得它有能力处理任意大小的数据。第二、在并行处理方面这可以作为一个独立的单元。
 
-The Kafka cluster retains all published messages—whether or not they have been consumed—for a configurable period of time. For example if the log retention is set to two days, then for the two days after a message is published it is available for consumption, after which it will be discarded to free up space. Kafka's performance is effectively constant with respect to data size so retaining lots of data is not a problem.
+#### [分布式](#intro_distribution)
 
-
-
-In fact the only metadata retained on a per-consumer basis is the position of the consumer in the log, called the "offset". This offset is controlled by the consumer: normally a consumer will advance its offset linearly as it reads messages, but in fact the position is controlled by the consumer and it can consume messages in any order it likes. For example a consumer can reset to an older offset to reprocess.
-
-
-
-This combination of features means that Kafka consumers are very cheap—they can come and go without much impact on the cluster or on other consumers. For example, you can use our command line tools to "tail" the contents of any topic without changing what is consumed by any existing consumers.
-
-
-
-The partitions in the log serve several purposes. First, they allow the log to scale beyond a size that will fit on a single server. Each individual partition must fit on the servers that host it, but a topic may have many partitions so it can handle an arbitrary amount of data. Second they act as the unit of parallelism—more on that in a bit.
-
-
-
-#### [Distribution](#intro_distribution)
-
-
-
-The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
-
+log的partition被分布到Kafka集群之中；每个服务器负责处理彼此共享的partition的一部分数据和请求。每个partition被复制指定的份数散布到机器之中来提供故障转移能力。
 
 
 Each partition has one server which acts as the "leader" and zero or more servers which act as "followers". The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader. Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.
