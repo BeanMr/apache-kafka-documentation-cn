@@ -4,6 +4,7 @@
 * [Getting Started](010_getting_started/01_introduction.md)
     * [简介](010_getting_started/01_introduction_cn.md)
     * [Introduction](010_getting_started/01_introduction.md)
+    * [应用场景](010_getting_started/05_uses_cn.md)
     * [Use Cases](010_getting_started/05_uses.md)
     * [Quick Start](010_getting_started/10_quickstart.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
