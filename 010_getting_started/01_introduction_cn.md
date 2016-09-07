@@ -54,65 +54,34 @@ log的partition被分布到Kafka集群之中；每个服务器负责处理彼此
 
 ### [Consumers](#intro_consumers)<a id="intro_consumers"></a>
 
+通常消息通信有两种模式：队列模式和订阅模式。在[队列模式](http://en.wikipedia.org/wiki/Message_queue)中一组消费者可能是从一个服务器读取消息，每个消息被发送给其中一个消费者。在[订阅模式](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)，消息被广播给所有的消费者。Kafka提供了一个抽象，把_consumer group_的所有消费者视为同一个抽象的消费者。
 
+每个消费者都有一个自己的消费组名称标示，每一个发布到topic上的消息会被投递到每个订阅了此topic的消费者组的某一个消费者（译者注：每组都会投递，但每组都只会投递一份到某个消费者）。这个被选中的消费者实例可以在不同的处理程序中或者不同的机器之上。
 
-Messaging traditionally has two models: [queuing](http://en.wikipedia.org/wiki/Message_queue) and [publish-subscribe](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern). In a queue, a pool of consumers may read from a server and each message goes to one of them; in publish-subscribe the message is broadcast to all consumers. Kafka offers a single consumer abstraction that generalizes both of these—the _consumer group_.
+如果所有的消费者实例都有相同的消费组标示(consumer group),那么整个结构就是一个传统的消息队列模式，消费者之间负载均衡。
 
+如果所有的消费者实例都采用不同的消费组，那么真个结构就是订阅模式，每一个消息将被广播给每一个消费者。
 
+通常来说，我们发现在实际应用的场景，常常是一个topic有数量较少的几个消费组订阅，每个消费组都是一个逻辑上的订阅者。每个消费组由由很多消费者实例构成从而实现横向的扩展和故障转移。其实这也是一个消息订阅模式，无非是消费者不再是一个单独的处理程序而是一个消费者集群。
 
-Consumers label themselves with a consumer group name, and each message published to a topic is delivered to one consumer instance within each subscribing consumer group. Consumer instances can be in separate processes or on separate machines.
+<div style="float: right; margin: 20px; width: 500px" class="caption"> <img src="/images/consumer-groups.png"><br> 一个两节点的kafka集群支持的2个消费组的四个分区(P0-P3)。消费者A有两个消费者实例，消费者B有四个消费者实例。</div>
 
+kafka还提供了相比传统消息系统更加严格的消息顺序保证。
 
+传统的消息队列在服务器上有序的保存消息，当有多个消费者的时候消息也是按序发送消息。但是因为消息投递到消费者的过程是异步的，所以消息到达消费者的顺序可能是乱序的。这就意味着在并行计算的场景下，消息的有序性已经丧失了。消息系统通常采用一个“排他消费者”的概念来规避这个问题，但这样就意味着失去了并行处理的能力。
 
-If all the consumer instances have the same consumer group, then this works just like a traditional queue balancing load over the consumers.
+Kafka在这一点上做的更优秀。Kafka有一个Topic中按照partition并行的概念，这使它即可以提供消息的有序性担保，又可以提供消费者之间的负载均衡。这是通过将Topic中的partition绑定到消费者组中的具体消费者实现的。通过这种方案我们可以保证消费者是某个partition唯一消费者，从而完成消息的有序消费。因为Topic有多个partition所以在消费者实例之间还是负载均衡的。注意，虽然有以上方案，但是如果想担保消息的有序性那么我们就不能为一个partition注册多个消费者了。
 
-
-
-If all the consumer instances have different consumer groups, then this works like publish-subscribe and all messages are broadcast to all consumers.
-
-
-
-More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". Each group is composed of many consumer instances for scalability and fault tolerance. This is nothing more than publish-subscribe semantics where the subscriber is a cluster of consumers instead of a single process.
-
-
-
-<div style="float: right; margin: 20px; width: 500px" class="caption"> <img src="/images/consumer-groups.png"><br> A two server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.</div>
-
-
-
-
-
-Kafka has stronger ordering guarantees than a traditional messaging system, too.
-
-
-
-A traditional queue retains messages in-order on the server, and if multiple consumers consume from the queue then the server hands out messages in the order they are stored. However, although the server hands out messages in order, the messages are delivered asynchronously to consumers, so they may arrive out of order on different consumers. This effectively means the ordering of the messages is lost in the presence of parallel consumption. Messaging systems often work around this by having a notion of "exclusive consumer" that allows only one process to consume from a queue, but of course this means that there is no parallelism in processing.
-
-
-
-Kafka does it better. By having a notion of parallelism—the partition—within the topics, Kafka is able to provide both ordering guarantees and load balancing over a pool of consumer processes. This is achieved by assigning the partitions in the topic to the consumers in the consumer group so that each partition is consumed by exactly one consumer in the group. By doing this we ensure that the consumer is the only reader of that partition and consumes the data in order. Since there are many partitions this still balances the load over many consumer instances. Note however that there cannot be more consumer instances in a consumer group than partitions.
-
-
-
-Kafka only provides a total order over messages _within_ a partition, not between different partitions in a topic. Per-partition ordering combined with the ability to partition data by key is sufficient for most applications. However, if you require a total order over messages this can be achieved with a topic that has only one partition, though this will mean only one consumer process per consumer group.
-
-
+Kafka仅仅提供提供partition之内的消息的全局有序，在不同的partition之间不能担保。partition的消息有序性加上可以按照指定的key划分消息的partition，这基本上满足了大部分应用的需求。如果你必须要实现一个全局有序的消息队列，那么可以采用Topic只划分1个partition来实现。但是这就意味着你的每个消费组只有有唯一的一个消费者进程。
 
 ### [Guarantees](#intro_guarantees)<a id="intro_guarantees"></a>
 
+在上层Kafka提供一下可靠性保证：
 
+* 生产者发送到Topic某个partition的消息都被有序的追加到之前发送的消息之后。意思就是如果一个消息M1、M2是同一个生产者发送的，先发送的M1那么M1的offse就比M2更小也就是更早的保存在log中。
 
-At a high-level Kafka gives the following guarantees:
+* 对于特定的消费者，它观察到的消息的顺序与消息保存到log中的顺序一致。
 
+* 对于一个复制N份的Topic，系统能保证在N-1台服务器失效的情况下不丢失任何已提交到log中的消息。
 
-
-* Messages sent by a producer to a particular topic partition will be appended in the order they are sent. That is, if a message M1 is sent by the same producer as a message M2, and M1 is sent first, then M1 will have a lower offset than M2 and appear earlier in the log.
-
-* A consumer instance sees messages in the order they are stored in the log.
-
-* For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any messages committed to the log.
-
-
-
-More details on these guarantees are given in the design section of the documentation.
-
+更多关于可靠性保证的细节，将会在后续的本文档设计章节进行讨论。
