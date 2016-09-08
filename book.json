@@ -7,14 +7,19 @@
         "sitemap",
         "prism",
         "-highlight",
-        "baidu"
+        "baidu_gio"
     ],
     "pluginsConfig": {
-        "baidu": {
+        "baidu_gio": {
             "token": "f11ab3e8c5f25638fa247efa47a6b1f6"
         },
         "github": {
             "url": "https://github.com/BeanMr/apache-kafka-documentation-cn"
+        },
+        "prism": {
+            "css": [
+                "prismjs/themes/prism-solarizedlight.css"
+            ]
         },
         "sharing": {
             "all": [
