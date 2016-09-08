@@ -7,11 +7,15 @@
         "sitemap",
         "prism",
         "-highlight",
-        "baidu_gio"
+        "baidu_gio",
+        "ga"
     ],
     "pluginsConfig": {
         "baidu_gio": {
             "token": "f11ab3e8c5f25638fa247efa47a6b1f6"
+        },
+        "ga": {
+            "token": "UA-83895646-1"
         },
         "github": {
             "url": "https://github.com/BeanMr/apache-kafka-documentation-cn"
