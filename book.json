@@ -1,3 +1,38 @@
 {
- "gitbook":">=3.0.0"
+    "gitbook": ">=3.0.0",
+    "plugins": [
+        "splitter",
+        "github",
+        "anchors",
+        "sitemap",
+        "prism",
+        "-highlight",
+        "baidu"
+    ],
+    "pluginsConfig": {
+        "baidu": {
+            "token": "f11ab3e8c5f25638fa247efa47a6b1f6"
+        },
+        "github": {
+            "url": "https://github.com/BeanMr/apache-kafka-documentation-cn"
+        },
+        "sharing": {
+            "all": [
+                "facebook",
+                "google",
+                "twitter",
+                "weibo",
+                "instapaper"
+            ],
+            "facebook": true,
+            "google": true,
+            "instapaper": true,
+            "twitter": true,
+            "vk": false,
+            "weibo": true
+        },
+        "sitemap": {
+            "hostname": "http://kafkadoc.beanmr.com/"
+        }
+    }
 }
