@@ -35,4 +35,4 @@ Kafka常被用来处理操作监控数据。这涉及到聚合统计分布式应
 
 #### [提交日志 Commit Log](#uses_commitlog)<a id="uses_commitlog"></a>
 
-Kafka可以作为分布式系统的外部提交日志服务。这些日志可以用于节点间数据复制和失败阶段的数据重同步过程。Kafka的[**日志合并 log compaction**](http://kafka.apache.org/documentation.html#compaction)功能是很好的支撑这种应用场景。Kafka这种应用和[**Apache BookKeeper**](http://zookeeper.apache.org/bookkeeper/)功能相似。
+Kafka可以作为分布式系统的外部提交日志服务。这些日志可以用于节点间数据复制和失败阶段的数据重同步过程。Kafka的[**日志合并 log compaction**](http://kafka.apache.org/documentation.html#compaction)功能可以很好的支撑这种应用场景。Kafka这种应用和[**Apache BookKeeper**](http://zookeeper.apache.org/bookkeeper/)功能相似。
