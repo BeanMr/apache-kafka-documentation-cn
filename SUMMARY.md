@@ -6,6 +6,7 @@
     * [Introduction](010_getting_started/01_introduction.md)
     * [应用场景](010_getting_started/05_uses_cn.md)
     * [Use Cases](010_getting_started/05_uses.md)
+    * [快速入门](010_getting_started/10_quickstart_cn.md)
     * [Quick Start](010_getting_started/10_quickstart.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
     * [Upgrading](010_getting_started/20_upgrade.md)
