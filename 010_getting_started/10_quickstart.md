@@ -6,7 +6,7 @@ This tutorial assumes you are starting fresh and have no existing Kafka or ZooKe
 
 [**Download**](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz "Kafka downloads") the 0.10.0.0 release and un-tar it.
 
-```
+```bash
 > tar -xzf kafka_2.11-0.10.0.0.tgz
 > cd kafka_2.11-0.10.0.0
 

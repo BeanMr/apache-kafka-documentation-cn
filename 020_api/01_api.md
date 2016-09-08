@@ -25,7 +25,7 @@ As of the 0.9.0 release we have added a new Java consumer to replace our existin
 
 #### [2.2.1 Old High Level Consumer API](#highlevelconsumerapi)<a id="highlevelconsumerapi"></a>
 
-```
+```java
 class Consumer {
   /**
    *  Create a ConsumerConnector

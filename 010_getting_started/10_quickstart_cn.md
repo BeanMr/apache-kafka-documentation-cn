@@ -6,7 +6,7 @@
 
 [**下载**](https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz "Kafka downloads")  0.10.0.0 的正式版本并解压。
 
-```
+```bash
 > tar -xzf kafka_2.11-0.10.0.0.tgz
 > cd kafka_2.11-0.10.0.0
 
@@ -16,7 +16,7 @@
 
 Kafka依赖ZooKeeper因此你首先启动一个ZooKeeper服务器。如果你没有一个现成的实例，你可以使用Kafka包里面的默认脚本快速的安装并启动一个全新的单节点ZooKeeper实例。
 
-```
+```bash
 > bin/zookeeper-server-start.sh config/zookeeper.properties
 [2013-04-22 15:01:37,495] INFO Reading configuration from: config/zookeeper.properties (org.apache.zookeeper.server.quorum.QuorumPeerConfig)
 ...
@@ -25,7 +25,7 @@ Kafka依赖ZooKeeper因此你首先启动一个ZooKeeper服务器。如果你没
 
 现在开始启动Kafka服务器:
 
-```
+```bash
 > bin/kafka-server-start.sh config/server.properties
 [2013-04-22 15:01:47,028] INFO Verifying properties (kafka.utils.VerifiableProperties)
 [2013-04-22 15:01:47,051] INFO Property socket.send.buffer.bytes is overridden to 1048576 (kafka.utils.VerifiableProperties)
@@ -37,14 +37,14 @@ Kafka依赖ZooKeeper因此你首先启动一个ZooKeeper服务器。如果你没
 
 现在我们开始创建一个名为“TestCase”的单分区单副本的Topic。
 
-```
+```bash
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 
 ```
 
 现在我们应该可以通过运行`list topic`命令查看到这个topic:
 
-```
+```bash
 > bin/kafka-topics.sh --list --zookeeper localhost:2181
 test
 
@@ -58,7 +58,7 @@ Kafka附带一个命令行客户端可以从文件或者标准输入中读取输
 
 运行生产者脚本然后在终端中输入一些消息并发送到服务器。
 
-```
+```bash
 > bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
 This is a message
 This is another message
@@ -69,7 +69,7 @@ This is another message
 
 Kafka也附带了一个命令行的消费者可以导出这些消息到标准输出。
 
-```
+```bash
 > bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
 This is a message
 This is another message
@@ -86,7 +86,7 @@ This is another message
 
 首先为每个broker准备配置文件
 
-```
+```bash
 > cp config/server.properties config/server-1.properties
 > cp config/server.properties config/server-2.properties
 
@@ -111,7 +111,7 @@ config/server-2.properties:
 
 我们已经有了ZooKeeper并且已经有一个阶段启动了，接下来我们只要启动另外两个节点。
 
-```
+```bash
 > bin/kafka-server-start.sh config/server-1.properties &
 ...
 > bin/kafka-server-start.sh config/server-2.properties &
@@ -121,7 +121,7 @@ config/server-2.properties:
 
 现在我们可以创建一个新的topic并制定副本数量为3：
 
-```
+```bash
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic
 
 ```
@@ -131,7 +131,7 @@ Okay but now that we have a cluster how can we know which broker is doing what? 
 现在我们启动了一个集群，我们如何知道每个broker具体的工作呢？
 为了回答这个问题，可以运行`describe topics`命令：
 
-```
+```bash
 > bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic
 Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 	Topic: my-replicated-topic	Partition: 0	Leader: 1	Replicas: 1,2,0	Isr: 1,2,0
@@ -148,20 +148,18 @@ Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 
 我们可以对我们原来创建的topic运行相同的命令，来观察它保存在哪里：
 
-```
+```bash
 > bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
 Topic:test	PartitionCount:1	ReplicationFactor:1	Configs:
 	Topic: test	Partition: 0	Leader: 0	Replicas: 0	Isr: 0
 
 ```
 
-课件
+我们很明显的发现原来的那个topic没有副本而且它在我们创建它时集群仅有的一个节点server 0上。
 
-So there is no surprise there—the original topic has no replicas and is on server 0, the only server in our cluster when we created it.
+现在我们发布几个消息到我们的新topic上：
 
-Let's publish a few messages to our new topic:
-
-```
+```bash
 > bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated-topic
 ...
 my test message 1
@@ -170,9 +168,9 @@ my test message 2
 
 ```
 
-Now let's consume these messages:
+现在让我们消费这几个消息：
 
-```
+```bash
 > bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic my-replicated-topic
 ...
 my test message 1
@@ -181,27 +179,27 @@ my test message 2
 
 ```
 
-Now let's test out fault-tolerance. Broker 1 was acting as the leader so let's kill it:
+先在让我们测试一下集群容错。Broker 1正在作为leader所以我们杀掉它：
 
-```
+```bash
 > ps | grep server-1.properties
 7564 ttys002    0:15.91 /System/Library/Frameworks/JavaVM.framework/Versions/1.8/Home/bin/java...
 > kill -9 7564
 
 ```
 
-Leadership has switched to one of the slaves and node 1 is no longer in the in-sync replica set:
+集群领导已经切换到一个从服务器上，node 1节点也不在出现在同步副本列表中了：
 
-```
+```bash
 > bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic
 Topic:my-replicated-topic	PartitionCount:1	ReplicationFactor:3	Configs:
 	Topic: my-replicated-topic	Partition: 0	Leader: 2	Replicas: 1,2,0	Isr: 2,0
 
 ```
 
-But the messages are still be available for consumption even though the leader that took the writes originally is down:
+而且现在消息的消费仍然能正常进行，即使原来负责写的节点已经失效了。
 
-```
+```bash
 > bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic my-replicated-topic
 ...
 my test message 1
@@ -210,47 +208,26 @@ my test message 2
 
 ```
 
-#### [Step 7: Use Kafka Connect to import\/export data](#quickstart_kafkaconnect)<a id="quickstart_kafkaconnect"></a>
+#### [Step 7: 使用Kafka Connect进行数据导入导出 Use Kafka Connect to import/export data](#quickstart_kafkaconnect)<a id="quickstart_kafkaconnect"></a>
 
-Writing data from the console and writing it back to the console is a convenient place to start, but you'll probably want to use data from other sources or export data from Kafka to other systems. For many systems, instead of writing custom integration code you can use Kafka Connect to import or export data. Kafka Connect is a tool included with Kafka that imports and exports data to Kafka. It is an extensible tool that runs_connectors_, which implement the custom logic for interacting with an external system. In this quickstart we'll see how to run Kafka Connect with simple connectors that import data from a file to a Kafka topic and export data from a Kafka topic to a file. First, we'll start by creating some seed data to test with:
+从终端写入数据，数据也写回终端是默认的。但是你可能希望从一些其它的数据源或者导出Kafka的数据到其它的系统。相比其它系统需要自己编写集成代码，你可以直接使用Kafka的Connect直接导入或者导出数据。Kafka Connect是Kafka自带的用于数据导入和导出的工具。它是一个扩展的可运行连接器(runs_connectors_)工具，可实现自定义的逻辑来实现与外部系统的集成交互。在这个快速入门中我们将介绍如何通过一个简单的从文本导入数据、导出数据到文本的连接器来调用Kafka Connect。首先我们从创建一些测试的基础数据开始：
 
-```
+
+```bash
 > echo -e "foo\nbar" > test.txt
 
 ```
 
-Next, we'll start two connectors running in _standalone_ mode, which means they run in a single, local, dedicated process. We provide three configuration files as parameters. The first is always the configuration for the Kafka Connect process, containing common configuration such as the Kafka brokers to connect to and the serialization format for data. The remaining configuration files each specify a connector to create. These files include a unique connector name, the connector class to instantiate, and any other configuration required by the connector.
+接下来我们采用_standalone_模式启动两个connectors,也就是让它们都运行在独立的、本地的、不同的进程中。我们提供三个参数化的配置文件，第一个提供共有的配置用于Kafka Connect处理，包含共有的配置比如连接哪个Kafka broker和数据的序列化格式。剩下的配置文件制定每个connector创建的特定信息。这些文件包括唯一的connector的名字，connector要实例化的类和其它的一些connector必备的配置。
 
-```
+```bash
 > bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-source.properties config/connect-file-sink.properties
 
 ```
 
-These sample configuration files, included with Kafka, use the default local cluster configuration you started earlier and create two connectors: the first is a source connector that reads lines from an input file and produces each to a Kafka topic and the second is a sink connector that reads messages from a Kafka topic and produces each as a line in an output file. During startup you'll see a number of log messages, including some indicating that the connectors are being instantiated. Once the Kafka Connect process has started, the source connector should start reading lines from
+上述简单的配置文件已经被包含在Kafka的发行包中，它们将使用默认的之前我们启动的本地集群配置创建两个connector：第一个作为源connector从一个文件中读取每行数据然后将他们发送Kafka的topic，第二个是一个输出(sink)connector从Kafka的topic读取消息，然后将它们输出成输出文件的一行行的数据。在启动的过程你讲看到一些日志消息，包括一些提示connector正在被实例化的信息。一旦Kafka Connect进程启动以后，源connector应该开始从`test.txt`中读取数据行，并将他们发送到topic `connect-test`上，然后输出connector将会开始从topic读取消息然后把它们写入到`test.sink.txt`中。
 
-```
-test.txt
-```
-
-and producing them to the topic
-
-```
-connect-test
-```
-
-, and the sink connector should start reading messages from the topic
-
-```
-connect-test
-```
-
-and write them to the file
-
-```
-test.sink.txt
-```
-
-. We can verify the data has been delivered through the entire pipeline by examining the contents of the output file:
+我们可以查看输出文件来验证通过整个管线投递的数据：
 
 ```
 > cat test.sink.txt
@@ -260,12 +237,7 @@ bar
 ```
 
 Note that the data is being stored in the Kafka topic
-
-```
-connect-test
-```
-
-, so we can also run a console consumer to see the data in the topic \(or use custom consumer code to process it\):
+注意这些数据已经被保存到了Kafka的`connect-test` topic中，所以我们还可以运行一个终端消费者来看到这些数据（或者使用自定义的消费者代码来处理数据）：
 
 ```
 > bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic connect-test --from-beginning
@@ -275,31 +247,33 @@ connect-test
 
 ```
 
-The connectors continue to process data, so we can add data to the file and see it move through the pipeline:
+connector在持续的处理着数据，所以我们可以向文件中添加数据然后观察到它在这个管线中的传递：
 
 ```
 > echo "Another line" >> test.txt
 
 ```
 
-You should see the line appear in the console consumer output and in the sink file.
+你应该可以观察到新的数据行出现在终端消费者中和输出文件中。
 
-#### [Step 8: Use Kafka Streams to process data](#quickstart_kafkastreams)<a id="quickstart_kafkastreams"></a>
+#### [Step 8: 使用Kafka Streams来处理数据 Use Kafka Streams to process data](#quickstart_kafkastreams)<a id="quickstart_kafkastreams"></a>
 
-Kafka Streams is a client library of Kafka for real-time stream processing and analyzing data stored in Kafka brokers. This quickstart example will demonstrate how to run a streaming application coded in this library. Here is the gist of the `WordCountDemo` example code \(converted to use Java 8 lambda expressions for easy reading\).
+Kafka Streams是一个用来对Kafka brokers中保存的数据进行实时处理和分析的客户端库。这个入门示例将演示如何启动一个采用此类库实现的流处理程序。下面是`WordCountDemo`示例代码的GIST（为了方便阅读已经转化成了Java 8的lambda表达式）。
 
 ```
 KTable wordCounts = textLines
+    // 按照空格将每个文本行拆分成单词
     // Split each text line, by whitespace, into words.
     .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
-
+    // 确保每个单词作为记录的key值以便于下一步的聚合
     // Ensure the words are available as record keys for the next aggregate operation.
     .map((key, value) -> new KeyValue<>(value, value))
-
+    // 计算每个单词的出现频率并将他们保存到“Counts”的表中
     // Count the occurrences of each word (record key) and store the results into a table named "Counts".
     .countByKey("Counts")
 
 ```
+
 
 It implements the WordCount algorithm, which computes a word occurrence histogram from the input text. However, unlike other WordCount examples you might have seen before that operate on bounded data, the WordCount demo application behaves slightly differently because it is designed to operate on an **infinite, unbounded stream** of data. Similar to the bounded variant, it is a stateful algorithm that tracks and updates the counts of words. However, since it must assume potentially unbounded input data, it will periodically output its current state and results while continuing to process more data because it cannot know when it has processed "all" the input data.
 
