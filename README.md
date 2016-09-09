@@ -21,11 +21,11 @@ Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apa
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
 
-因为本人能力和精力有限，如果有翻译不准确之处欢迎指正，更期望大家能共同参与进来。
-
 译文尽量保持原文的语义和结构，但是有时某些句子直译会有些蹩脚，所以可能会进行一些调整。
 
-## Pull Request流程
+因为本人能力和精力有限，译文如有不妥欢迎[提issue](https://github.com/BeanMr/apache-kafka-documentation-cn/issues)，更期望大家能共同参与进来。
+
+## 参与翻译Pull Request流程
 
 小伙伴[@numbbbbb](https://github.com/numbbbbb)在《The Swift Programming Language》对协作流程中进行了详细的介绍，小伙伴[@looly](https://github.com/looly)在他的ES翻译中总结了一下，我抄过来并再次感谢他们的分享。
 
