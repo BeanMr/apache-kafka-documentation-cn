@@ -8,6 +8,7 @@
     * [Use Cases](010_getting_started/05_uses.md)
     * [快速入门](010_getting_started/10_quickstart_cn.md)
     * [Quick Start](010_getting_started/10_quickstart.md)
+    * [软件生态](010_getting_started/15_ecosystem_cn.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
     * [Upgrading](010_getting_started/20_upgrade.md)
 * [API](020_api/01_api.md)
