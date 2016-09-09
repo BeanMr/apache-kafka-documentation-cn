@@ -236,7 +236,6 @@ bar
 
 ```
 
-Note that the data is being stored in the Kafka topic
 注意这些数据已经被保存到了Kafka的`connect-test` topic中，所以我们还可以运行一个终端消费者来看到这些数据（或者使用自定义的消费者代码来处理数据）：
 
 ```
@@ -274,17 +273,18 @@ KTable wordCounts = textLines
 
 ```
 
+上述代码实现了计算每个单词出现频率直方图的单词计数算法。但是它与之前常见的操作有限数据的示例相比有明显的不同，它被设计成一个操作**无边界限制的流数据**的程序。与有界算法相似它是一个有状态算法，它可以跟踪并更新单词的计数。但是它必须支持处理无边界限制的数据输入的假设，它将在处理数据的过程持续的输出自身的状态和结果，因为它不能明确的知道合适已经完成了所有输入数据的处理。
 
-It implements the WordCount algorithm, which computes a word occurrence histogram from the input text. However, unlike other WordCount examples you might have seen before that operate on bounded data, the WordCount demo application behaves slightly differently because it is designed to operate on an **infinite, unbounded stream** of data. Similar to the bounded variant, it is a stateful algorithm that tracks and updates the counts of words. However, since it must assume potentially unbounded input data, it will periodically output its current state and results while continuing to process more data because it cannot know when it has processed "all" the input data.
 
-We will now prepare input data to a Kafka topic, which will subsequently processed by a Kafka Streams application.
+接下来我们准备一些发送到Kafka topic的输入数据，随后它们将被Kafka Streams程序处理。
 
 ```
 > echo -e "all streams lead to kafka\nhello kafka streams\njoin kafka summit" > file-input.txt
 
 ```
+ing\):
 
-Next, we send this input data to the input topic named **streams-file-input** using the console producer \(in practice, stream data will likely be flowing continuously into Kafka where the application will be up and running\):
+接下来我们使用终端生产者发送这些输入数据到名为**streams-file-input**的输入topic（在实际应用中，流数据会是不断流入处理程序启动和运行用的Kafka）：
 
 ```
 > bin/kafka-topics.sh --create \
@@ -300,16 +300,16 @@ Next, we send this input data to the input topic named **streams-file-input** us
 
 ```
 
-We can now run the WordCount demo application to process the input data:
+现在我们可以启动WordCount示例程序来处理这些数据了：
 
 ```
 > bin/kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo
 
 ```
 
-There won't be any STDOUT output except log entries as the results are continuously written back into another topic named **streams-wordcount-output** in Kafka. The demo will run for a few seconds and then, unlike typical stream processing applications, terminate automatically.
+在STDOUT终端不会有任何日志输出，因为所有的结果被不断的写回了另外一个名为**streams-wordcount-output**的topic上。这个实例将会运行一会儿，之后与典型的流处理程序不同它将会自动退出。
 
-We can now inspect the output of the WordCount demo application by reading from its output topic:
+现在我们可以通过读取这个单词计数示例程序的输出topic来验证结果：
 
 ```
 > bin/kafka-console-consumer.sh --zookeeper localhost:2181 \
@@ -323,7 +323,7 @@ We can now inspect the output of the WordCount demo application by reading from 
 
 ```
 
-with the following output data being printed to the console:
+以下输出数据将会被打印到终端上：
 
 ```
 all     1
@@ -340,11 +340,11 @@ summit  1
 
 ```
 
-Here, the first column is the Kafka message key, and the second column is the message value, both in in`java.lang.String` format. Note that the output is actually a continuous stream of updates, where each data record \(i.e. each line in the original output above\) is an updated count of a single word, aka record key such as "kafka". For multiple records with the same key, each later record is an update of the previous one.
+可以看到，第一列是Kafka的消息的健，第二列是这个消息的值，他们都是`java.lang.String`格式的。注意这个输出结果实际上是一个持续更新的流，每一行（例如、上述原始输出的每一行）是一个单词更新之后的计数。对于key相同的多行记录，每行都是前面一行的更新。
 
-Now you can write more input messages to the **streams-file-input** topic and observe additional messages added to **streams-wordcount-output** topic, reflecting updated word counts \(e.g., using the console producer and the console consumer, as described above\).
+现在你可以向**streams-file-input** topic写入更多的消息并观察**streams-wordcount-output** topic表述更新单词计数的新的消息。
 
-You can stop the console consumer via **Ctrl-C**.
+你可以通过键入**Ctrl-C**来终止终端消费者。
 
 
 
