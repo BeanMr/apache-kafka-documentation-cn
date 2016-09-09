@@ -1,9 +1,14 @@
 # Apache Kafka 官方文档中文版
 
-Apache Kafka是一个高吞吐量分布式消息系统。Kafka在国内很多公司都有大规模的应用，但是关于这款消息中间件的中文资料并不多。
+Apache Kafka是一个高吞吐量分布式消息系统。
 
-为了方便大家学习交流，尽最大努力翻译一点官方的手册。
+Kafka在国内很多公司都有大规模的应用，但关于它的中文资料并不多，只找到了12年某版本的[设计章节的翻译](http://www.oschina.net/translate/kafka-design?lang=chs&page=1#)。
+
+为了方便大家学习交流，尽最大努力翻译一下完整的官方的手册。
+
 原文版本选择当前最新的[Kafka 0.10.0的文档](http://kafka.apache.org/documentation.html)（2016-08）。
+
+前辈们在OS China上翻译的[设计章节](http://www.oschina.net/translate/kafka-design?lang=chs&page=1#)非常优秀，如果之前没有阅读过推荐先参考一下。
 
 ---
 
@@ -21,7 +26,7 @@ Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apa
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
 
-译文尽量保持原文的语义和结构，但是有时某些句子直译会有些蹩脚，所以可能会进行一些调整。
+译文章节组织及内容尽量保持与原文一直，但有时某些句子直译会有些蹩脚，所以可能会进行一些语句上调整。
 
 因为本人能力和精力有限，译文如有不妥欢迎[提issue](https://github.com/BeanMr/apache-kafka-documentation-cn/issues)，更期望大家能共同参与进来。
 
