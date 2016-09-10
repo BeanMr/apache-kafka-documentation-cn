@@ -50,4 +50,6 @@ Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apa
 
 在提交前请先执行第4步同步库，这样可以及时发现和避免冲突，然后执行5~7既可。
 
+如果嫌以上过程繁琐，你只是准备支出一些翻译不当，也可以点击段落后‘+’直接评论。 
+
 *JustDoIT，您的任何建议和尝试都值得尊重！*
