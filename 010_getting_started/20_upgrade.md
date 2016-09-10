@@ -1,78 +1,117 @@
-## [1.1 Introduction](#introduction)<a id="introduction"></a>
+### [1.5 Upgrading From Previous Versions](#upgrade)<a id="upgrade"></a>
 
-Kafka is a distributed, partitioned, replicated commit log service. It provides the functionality of a messaging system, but with a unique design.
+#### [Upgrading from 0.8.x or 0.9.x to 0.10.0.0](#upgrade_10)<a id="upgrade_10"></a>
 
-What does all that mean?
+0.10.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_10_breaking) \(please review before upgrading\) and possible [**performance impact following the upgrade**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact). By following the recommended rolling upgrade plan below, you guarantee no downtime and no performance impact during and following the upgrade. 
 
-First let's review some basic messaging terminology:
+Note: Because new protocols are introduced, it is important to upgrade your Kafka clusters before upgrading your clients.
 
-* Kafka maintains feeds of messages in categories called _topics_.
-* We'll call processes that publish messages to a Kafka topic _producers_.
-* We'll call processes that subscribe to topics and process the feed of published messages _consumers_.
-* Kafka is run as a cluster comprised of one or more servers each of which is called a _broker_.
+**Notes to clients with version 0.9.0.0: **Due to a bug introduced in 0.9.0.0, clients that depend on ZooKeeper \(old Scala high-level Consumer and MirrorMaker if used with the old consumer\) will not work with 0.10.0.x brokers. Therefore, 0.9.0.0 clients should be upgraded to 0.9.0.1 **before** brokers are upgraded to 0.10.0.x. This step is not necessary for 0.8.X or 0.9.0.1 clients.
 
-So, at a high level, producers send messages over the network to the Kafka cluster which in turn serves them up to consumers like this:
-![](/images/producer_consumer.png)
+**For a rolling upgrade:**
 
-Communication between the clients and the servers is done with a simple, high-performance, language agnostic [TCP protocol](https://kafka.apache.org/protocol.html). We provide a Java client for Kafka, but clients are available in [many languages](https://cwiki.apache.org/confluence/display/KAFKA/Clients).
+1. Update server.properties file on all brokers and add the following properties:
+  * inter.broker.protocol.version=CURRENT\_KAFKA\_VERSION \(e.g. 0.8.2 or 0.9.0.0\).
+  * log.message.format.version=CURRENT\_KAFKA\_VERSION \(See [**potential performance impact following the upgrade**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact) for the details on what this configuration does.\)
 
-### [Topics and Logs](#intro_topics)<a id="intro_topics"></a>
+2. Upgrade the brokers. This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
+3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.10.0.0. NOTE: You shouldn't touch log.message.format.version yet - this parameter should only change once all consumers have been upgraded to 0.10.0.0
+4. Restart the brokers one by one for the new protocol version to take effect.
+5. Once all consumers have been upgraded to 0.10.0, change log.message.format.version to 0.10.0 on each broker and restart them one by one.
 
-Let's first dive into the high-level abstraction Kafka provides—the topic.
+**Note:** If you are willing to accept downtime, you can simply take all the brokers down, update the code and start all of them. They will start with the new protocol by default.
 
-A topic is a category or feed name to which messages are published. For each topic, the Kafka cluster maintains a partitioned log that looks like this:
+**Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
 
-![](/images/log_anatomy.png)
+##### [Potential performance impact following upgrade to 0.10.0.0](#upgrade_10_performance_impact)<a id="upgrade_10_performance_impact"></a>
 
-Each partition is an ordered, immutable sequence of messages that is continually appended to—a commit log. The messages in the partitions are each assigned a sequential id number called the _offset_ that uniquely identifies each message within the partition.
+The message format in 0.10.0 includes a new timestamp field and uses relative offsets for compressed messages. The on disk message format can be configured through log.message.format.version in the server.properties file. The default on-disk message format is 0.10.0. If a consumer client is on a version before 0.10.0.0, it only understands message formats before 0.10.0. In this case, the broker is able to convert messages from the 0.10.0 format to an earlier format before sending the response to the consumer on an older version. However, the broker can't use zero-copy transfer in this case. Reports from the Kafka community on the performance impact have shown CPU utilization going from 20% before to 100% after an upgrade, which forced an immediate upgrade of all clients to bring performance back to normal. To avoid such message conversion before consumers are upgraded to 0.10.0.0, one can set log.message.format.version to 0.8.2 or 0.9.0 when upgrading the broker to 0.10.0.0. This way, the broker can still use zero-copy transfer to send the data to the old consumers. Once consumers are upgraded, one can change the message format to 0.10.0 on the broker and enjoy the new message format that includes new timestamp and improved compression. The conversion is supported to ensure compatibility and can be useful to support a few apps that have not updated to newer clients yet, but is impractical to support all consumer traffic on even an overprovisioned cluster. Therefore it is critical to avoid the message conversion as much as possible when brokers have been upgraded but the majority of clients have not.
 
-The Kafka cluster retains all published messages—whether or not they have been consumed—for a configurable period of time. For example if the log retention is set to two days, then for the two days after a message is published it is available for consumption, after which it will be discarded to free up space. Kafka's performance is effectively constant with respect to data size so retaining lots of data is not a problem.
+For clients that are upgraded to 0.10.0.0, there is no performance impact.
 
-In fact the only metadata retained on a per-consumer basis is the position of the consumer in the log, called the "offset". This offset is controlled by the consumer: normally a consumer will advance its offset linearly as it reads messages, but in fact the position is controlled by the consumer and it can consume messages in any order it likes. For example a consumer can reset to an older offset to reprocess.
+**Note:** By setting the message format version, one certifies that all existing messages are on or below that message format version. Otherwise consumers before 0.10.0.0 might break. In particular, after the message format is set to 0.10.0, one should not change it back to an earlier format as it may break consumers on versions before 0.10.0.0.
 
-This combination of features means that Kafka consumers are very cheap—they can come and go without much impact on the cluster or on other consumers. For example, you can use our command line tools to "tail" the contents of any topic without changing what is consumed by any existing consumers.
+**Note:** Due to the additional timestamp introduced in each message, producers sending small messages may see a message throughput degradation because of the increased overhead. Likewise, replication now transmits an additional 8 bytes per message. If you're running close to the network capacity of your cluster, it's possible that you'll overwhelm the network cards and see failures and performance issues due to the overload.
 
-The partitions in the log serve several purposes. First, they allow the log to scale beyond a size that will fit on a single server. Each individual partition must fit on the servers that host it, but a topic may have many partitions so it can handle an arbitrary amount of data. Second they act as the unit of parallelism—more on that in a bit.
-
-### [Distribution](#intro_distribution)<a id="intro_distribution"></a>
-
-The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
-
-Each partition has one server which acts as the "leader" and zero or more servers which act as "followers". The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader. Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.
-
-### [Producers](#intro_producers)<a id="intro_producers"></a>
-
-Producers publish data to the topics of their choice. The producer is responsible for choosing which message to assign to which partition within the topic. This can be done in a round-robin fashion simply to balance load or it can be done according to some semantic partition function \(say based on some key in the message\). More on the use of partitioning in a second.
-
-### [Consumers](#intro_consumers)<a id="intro_consumers"></a>
-
-Messaging traditionally has two models: [queuing](http://en.wikipedia.org/wiki/Message_queue) and [publish-subscribe](http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern). In a queue, a pool of consumers may read from a server and each message goes to one of them; in publish-subscribe the message is broadcast to all consumers. Kafka offers a single consumer abstraction that generalizes both of these—the _consumer group_.
-
-Consumers label themselves with a consumer group name, and each message published to a topic is delivered to one consumer instance within each subscribing consumer group. Consumer instances can be in separate processes or on separate machines.
-
-If all the consumer instances have the same consumer group, then this works just like a traditional queue balancing load over the consumers.
-
-If all the consumer instances have different consumer groups, then this works like publish-subscribe and all messages are broadcast to all consumers.
-
-More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". Each group is composed of many consumer instances for scalability and fault tolerance. This is nothing more than publish-subscribe semantics where the subscriber is a cluster of consumers instead of a single process.
-
-<div style="float: right; margin: 20px; width: 500px" class="caption"> <img src="/images/consumer-groups.png"><br> A two server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.</div>
+**Note:** If you have enabled compression on producers, you may notice reduced producer throughput and\/or lower compression rate on the broker in some cases. When receiving compressed messages, 0.10.0 brokers avoid recompressing the messages, which in general reduces the latency and improves the throughput. In certain cases, however, this may reduce the batching size on the producer, which could lead to worse throughput. If this happens, users can tune linger.ms and batch.size of the producer for better throughput. In addition, the producer buffer used for compressing messages with snappy is smaller than the one used by the broker, which may have a negative impact on the compression ratio for the messages on disk. We intend to make this configurable in a future Kafka release.
 
 
-Kafka has stronger ordering guarantees than a traditional messaging system, too.
 
-A traditional queue retains messages in-order on the server, and if multiple consumers consume from the queue then the server hands out messages in the order they are stored. However, although the server hands out messages in order, the messages are delivered asynchronously to consumers, so they may arrive out of order on different consumers. This effectively means the ordering of the messages is lost in the presence of parallel consumption. Messaging systems often work around this by having a notion of "exclusive consumer" that allows only one process to consume from a queue, but of course this means that there is no parallelism in processing.
+##### [Potential breaking changes in 0.10.0.0](#upgrade_10_breaking)<a id="upgrade_10_breaking"></a>
 
-Kafka does it better. By having a notion of parallelism—the partition—within the topics, Kafka is able to provide both ordering guarantees and load balancing over a pool of consumer processes. This is achieved by assigning the partitions in the topic to the consumers in the consumer group so that each partition is consumed by exactly one consumer in the group. By doing this we ensure that the consumer is the only reader of that partition and consumes the data in order. Since there are many partitions this still balances the load over many consumer instances. Note however that there cannot be more consumer instances in a consumer group than partitions.
+* Starting from Kafka 0.10.0.0, the message format version in Kafka is represented as the Kafka version. For example, message format 0.9.0 refers to the highest message version supported by Kafka 0.9.0.
+* Message format 0.10.0 has been introduced and it is used by default. It includes a timestamp field in the messages and relative offsets are used for compressed messages.
+* ProduceRequest\/Response v2 has been introduced and it is used by default to support message format 0.10.0
+* FetchRequest\/Response v2 has been introduced and it is used by default to support message format 0.10.0
+* MessageFormatter interface was changed from `def writeTo(key: Array[Byte], value: Array[Byte], output: PrintStream)` to `def writeTo(consumerRecord: ConsumerRecord[Array[Byte], Array[Byte]], output: PrintStream)`
+* MessageReader interface was changed from `def readMessage(): KeyedMessage[Array[Byte], Array[Byte]]` to `def readMessage(): ProducerRecord[Array[Byte], Array[Byte]]`
+* MessageFormatter's package was changed from `kafka.tools` to `kafka.common`
+* MessageReader's package was changed from `kafka.tools` to `kafka.common`
+* MirrorMakerMessageHandler no longer exposes the `handle(record: MessageAndMetadata[Array[Byte], Array[Byte]])` method as it was never called.
+* The 0.7 KafkaMigrationTool is no longer packaged with Kafka. If you need to migrate from 0.7 to 0.10.0, please migrate to 0.8 first and then follow the documented upgrade process to upgrade from 0.8 to 0.10.0.
+* The new consumer has standardized its APIs to accept `java.util.Collection` as the sequence type for method parameters. Existing code may have to be updated to work with the 0.10.0 client library.
+* LZ4-compressed message handling was changed to use an interoperable framing specification \(LZ4f v1.5.1\). To maintain compatibility with old clients, this change only applies to Message format 0.10.0 and later. Clients that Produce\/Fetch LZ4-compressed messages using v0\/v1 \(Message format 0.9.0\) should continue to use the 0.9.0 framing implementation. Clients that use Produce\/Fetch protocols v2 or later should use interoperable LZ4f framing. A list of interoperable LZ4 libraries is available at http:\/\/www.lz4.org\/
 
-Kafka only provides a total order over messages _within_ a partition, not between different partitions in a topic. Per-partition ordering combined with the ability to partition data by key is sufficient for most applications. However, if you require a total order over messages this can be achieved with a topic that has only one partition, though this will mean only one consumer process per consumer group.
+##### [Notable changes in 0.10.0.0](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
 
-### [Guarantees](#intro_guarantees)<a id="intro_guarantees"></a>
+* Starting from Kafka 0.10.0.0, a new client library named **Kafka Streams** is available for stream processing on data stored in Kafka topics. This new client library only works with 0.10.x and upward versioned brokers due to message format changes mentioned above. For more information please read [**this section**](http://kafka.apache.org/documentation.html#streams_overview).
+* The default value of the configuration parameter `receive.buffer.bytes` is now 64K for the new consumer.
+* The new consumer now exposes the configuration parameter `exclude.internal.topics` to restrict internal topics \(such as the consumer offsets topic\) from accidentally being included in regular expression subscriptions. By default, it is enabled.
+* The old Scala producer has been deprecated. Users should migrate their code to the Java producer included in the kafka-clients JAR as soon as possible.
+* The new consumer API has been marked stable.
 
-At a high-level Kafka gives the following guarantees:
+#### [Upgrading from 0.8.0, 0.8.1.X or 0.8.2.X to 0.9.0.0](#upgrade_9)<a id="upgrade_9"></a>
 
-* Messages sent by a producer to a particular topic partition will be appended in the order they are sent. That is, if a message M1 is sent by the same producer as a message M2, and M1 is sent first, then M1 will have a lower offset than M2 and appear earlier in the log.
-* A consumer instance sees messages in the order they are stored in the log.
-* For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any messages committed to the log.
+0.9.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_9_breaking) \(please review before upgrading\) and an inter-broker protocol change from previous versions. This means that upgraded brokers and clients may not be compatible with older versions. It is important that you upgrade your Kafka cluster before upgrading your clients. If you are using MirrorMaker downstream clusters should be upgraded first as well.
 
-More details on these guarantees are given in the design section of the documentation.
+**For a rolling upgrade:**
+
+1. Update server.properties file on all brokers and add the following property: inter.broker.protocol.version=0.8.2.X
+2. Upgrade the brokers. This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
+3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.9.0.0.
+4. Restart the brokers one by one for the new protocol version to take effect
+
+**Note:** If you are willing to accept downtime, you can simply take all the brokers down, update the code and start all of them. They will start with the new protocol by default.
+
+**Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
+
+##### [Potential breaking changes in 0.9.0.0](#upgrade_9_breaking)<a id="upgrade_9_breaking"></a>
+
+* Java 1.6 is no longer supported.
+* Scala 2.9 is no longer supported.
+* Broker IDs above 1000 are now reserved by default to automatically assigned broker IDs. If your cluster has existing broker IDs above that threshold make sure to increase the reserved.broker.max.id broker configuration property accordingly.
+* Configuration parameter replica.lag.max.messages was removed. Partition leaders will no longer consider the number of lagging messages when deciding which replicas are in sync.
+* Configuration parameter replica.lag.time.max.ms now refers not just to the time passed since last fetch request from replica, but also to time since the replica last caught up. Replicas that are still fetching messages from leaders but did not catch up to the latest messages in replica.lag.time.max.ms will be considered out of sync.
+* Compacted topics no longer accept messages without key and an exception is thrown by the producer if this is attempted. In 0.8.x, a message without key would cause the log compaction thread to subsequently complain and quit \(and stop compacting all compacted topics\).
+* MirrorMaker no longer supports multiple target clusters. As a result it will only accept a single --consumer.config parameter. To mirror multiple source clusters, you will need at least one MirrorMaker instance per source cluster, each with its own consumer configuration.
+* Tools packaged under _org.apache.kafka.clients.tools.\*_ have been moved to _org.apache.kafka.tools.\*_. All included scripts will still function as usual, only custom code directly importing these classes will be affected.
+* The default Kafka JVM performance options \(KAFKA\_JVM\_PERFORMANCE\_OPTS\) have been changed in kafka-run-class.sh.
+* The kafka-topics.sh script \(kafka.admin.TopicCommand\) now exits with non-zero exit code on failure.
+* The kafka-topics.sh script \(kafka.admin.TopicCommand\) will now print a warning when topic names risk metric collisions due to the use of a '.' or '\_' in the topic name, and error in the case of an actual collision.
+* The kafka-console-producer.sh script \(kafka.tools.ConsoleProducer\) will use the new producer instead of the old producer be default, and users have to specify 'old-producer' to use the old producer.
+* By default all command line tools will print all logging messages to stderr instead of stdout.
+
+##### [Notable changes in 0.9.0.1](#upgrade_901_notable)<a id="upgrade_901_notable"></a>
+
+* The new broker id generation feature can be disabled by setting broker.id.generation.enable to false.
+* Configuration parameter log.cleaner.enable is now true by default. This means topics with a cleanup.policy=compact will now be compacted by default, and 128 MB of heap will be allocated to the cleaner process via log.cleaner.dedupe.buffer.size. You may want to review log.cleaner.dedupe.buffer.size and the other log.cleaner configuration values based on your usage of compacted topics.
+* Default value of configuration parameter fetch.min.bytes for the new consumer is now 1 by default.
+
+##### Deprecations in 0.9.0.0
+
+* Altering topic configuration from the kafka-topics.sh script \(kafka.admin.TopicCommand\) has been deprecated. Going forward, please use the kafka-configs.sh script \(kafka.admin.ConfigCommand\) for this functionality.
+* The kafka-consumer-offset-checker.sh \(kafka.tools.ConsumerOffsetChecker\) has been deprecated. Going forward, please use kafka-consumer-groups.sh \(kafka.admin.ConsumerGroupCommand\) for this functionality.
+* The kafka.tools.ProducerPerformance class has been deprecated. Going forward, please use org.apache.kafka.tools.ProducerPerformance for this functionality \(kafka-producer-perf-test.sh will also be changed to use the new class\).
+* The producer config block.on.buffer.full has been deprecated and will be removed in future release. Currently its default value has been changed to false. The KafkaProducer will no longer throw BufferExhaustedException but instead will use max.block.ms value to block, after which it will throw a TimeoutException. If block.on.buffer.full property is set to true explicitly, it will set the max.block.ms to Long.MAX\_VALUE and metadata.fetch.timeout.ms will not be honoured
+
+#### [Upgrading from 0.8.1 to 0.8.2](#upgrade_82)<a id="upgrade_82"></a>
+
+0.8.2 is fully compatible with 0.8.1. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
+
+#### [Upgrading from 0.8.0 to 0.8.1](#upgrade_81)<a id="upgrade_81"></a>
+
+0.8.1 is fully compatible with 0.8. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
+
+#### [Upgrading from 0.7](#upgrade_7)<a id="upgrade_7"></a>
+
+Release 0.7 is incompatible with newer releases. Major changes were made to the API, ZooKeeper data structures, and protocol, and configuration in order to add replication \(Which was missing in 0.7\). The upgrade from 0.7 to later versions requires a [**special tool**](https://cwiki.apache.org/confluence/display/KAFKA/Migrating+from+0.7+to+0.8) for migration. This migration can be done without downtime.
