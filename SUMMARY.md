@@ -10,6 +10,7 @@
     * [Quick Start](010_getting_started/10_quickstart.md)
     * [软件生态](010_getting_started/15_ecosystem_cn.md)
     * [Ecosystem](010_getting_started/15_ecosystem.md)
+    * [升级](010_getting_started/20_upgrade_cn.md)
     * [Upgrading](010_getting_started/20_upgrade.md)
 * [API](020_api/01_api.md)
     * [Producer API](020_api/01_api.md#producerapi)
