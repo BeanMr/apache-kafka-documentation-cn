@@ -10,6 +10,10 @@ Kafka在国内很多公司都有大规模的应用，但关于它的中文资料
 
 前辈们在OS China上翻译的[设计章节](http://www.oschina.net/translate/kafka-design?lang=chs&page=1#)非常优秀，如果之前没有阅读过推荐先参考一下。
 
+** 翻译中 **
+
+发现有小伙伴已经下载了，如果你发现后面还是英文不是我掺假是你着急了！
+
 ---
 
 阅读地址：[Apache Kafka 官方文档中文版](http://kafkadoc.beanmr.com/)
