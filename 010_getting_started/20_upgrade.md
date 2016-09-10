@@ -1,18 +1,18 @@
-### [1.5 Upgrading From Previous Versions](#upgrade)<a id="upgrade"></a>
+### [1.5 从早期版本升级](#upgrade)<a id="upgrade"></a>
 
-#### [Upgrading from 0.8.x or 0.9.x to 0.10.0.0](#upgrade_10)<a id="upgrade_10"></a>
+#### [从0.8.x或0.9.x升级到0.10.0.0](#upgrade_10)<a id="upgrade_10"></a>
 
-0.10.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_10_breaking) \(please review before upgrading\) and possible [**performance impact following the upgrade**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact). By following the recommended rolling upgrade plan below, you guarantee no downtime and no performance impact during and following the upgrade. 
+0.10.0.0 有一些潜在的[不兼容变更]((http://kafka.apache.org/documentation.html#upgrade_10_breaking))（在升级前请一定对其进行检查）和升级过程中性能下降的风险。遵照一下推荐的滚动升级方案，可以保证你在升级过程及之后都不需要停机并且没有性能下降。
 
-Note: Because new protocols are introduced, it is important to upgrade your Kafka clusters before upgrading your clients.
+注意：因为新的协议的引入，一定要先升级你的Kafka集群然后在升级客户端。
 
-**Notes to clients with version 0.9.0.0: **Due to a bug introduced in 0.9.0.0, clients that depend on ZooKeeper \(old Scala high-level Consumer and MirrorMaker if used with the old consumer\) will not work with 0.10.0.x brokers. Therefore, 0.9.0.0 clients should be upgraded to 0.9.0.1 **before** brokers are upgraded to 0.10.0.x. This step is not necessary for 0.8.X or 0.9.0.1 clients.
+*注意：0.9.0.0版本客户端**因为一个在0.9.0.0版本客户端引入的bug使得它不能与0.10.0.x版本中间件协作，这包括依赖ZooKeeper的客户端（原Scala上层（high-level）消费者和使用原消费者的MirrorMaker）。因此，0.9.0.0的客户端应该在中间件升级到0.10.0.0**之前**被升级到0.9.0.1上。这个步骤对于0.8.X和0.9.0.1的客户端不是不需要。
 
-**For a rolling upgrade:**
+**采用滚动升级:**
 
-1. Update server.properties file on all brokers and add the following properties:
-  * inter.broker.protocol.version=CURRENT\_KAFKA\_VERSION \(e.g. 0.8.2 or 0.9.0.0\).
-  * log.message.format.version=CURRENT\_KAFKA\_VERSION \(See [**potential performance impact following the upgrade**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact) for the details on what this configuration does.\)
+1. 更新所有中间件的server.properties文件，添加如下配置：
+  * inter.broker.protocol.version=CURRENT_KAFKA_VERSION (e.g. 0.8.2 or 0.9.0.0).
+  * log.message.format.version=CURRENT_KAFKA_VERSION (参考 [**升级过程可能的性能影响**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact)了解这个配置项的作用)
 
 2. Upgrade the brokers. This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
 3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.10.0.0. NOTE: You shouldn't touch log.message.format.version yet - this parameter should only change once all consumers have been upgraded to 0.10.0.0
