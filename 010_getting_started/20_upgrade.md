@@ -13,6 +13,7 @@
 1. 更新所有中间件的server.properties文件，添加如下配置：
   * inter.broker.protocol.version=CURRENT_KAFKA_VERSION (e.g. 0.8.2 or 0.9.0.0).
   * log.message.format.version=CURRENT_KAFKA_VERSION (参考 [**升级过程可能的性能影响**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact)了解这个配置项的作用)
+  
 
 2. Upgrade the brokers. This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
 3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.10.0.0. NOTE: You shouldn't touch log.message.format.version yet - this parameter should only change once all consumers have been upgraded to 0.10.0.0
