@@ -24,37 +24,36 @@
 
 ##### [升级0.10.0.0过程潜在的性能影响](#upgrade_10_performance_impact)<a id="upgrade_10_performance_impact"></a>
 
-The message format in 0.10.0 includes a new timestamp field and uses relative offsets for compressed messages. The on disk message format can be configured through log.message.format.version in the server.properties file. The default on-disk message format is 0.10.0. If a consumer client is on a version before 0.10.0.0, it only understands message formats before 0.10.0. In this case, the broker is able to convert messages from the 0.10.0 format to an earlier format before sending the response to the consumer on an older version. However, the broker can't use zero-copy transfer in this case. Reports from the Kafka community on the performance impact have shown CPU utilization going from 20% before to 100% after an upgrade, which forced an immediate upgrade of all clients to bring performance back to normal. To avoid such message conversion before consumers are upgraded to 0.10.0.0, one can set log.message.format.version to 0.8.2 or 0.9.0 when upgrading the broker to 0.10.0.0. This way, the broker can still use zero-copy transfer to send the data to the old consumers. Once consumers are upgraded, one can change the message format to 0.10.0 on the broker and enjoy the new message format that includes new timestamp and improved compression. The conversion is supported to ensure compatibility and can be useful to support a few apps that have not updated to newer clients yet, but is impractical to support all consumer traffic on even an overprovisioned cluster. Therefore it is critical to avoid the message conversion as much as possible when brokers have been upgraded but the majority of clients have not.
+0.10.0版本的消息格式引入了一个新的timestamp字段并对压缩的消息使用了相对偏移量。磁盘的消息格式可以通过server.properties文件的log.message.format.version进行配置。默认的消息格式是0.10.0。对一个0.10.0之前版本的客户端，它只能识别0.10.0之前的消息格式。在这种情况下消息中间件可以将消息在响应给客户端之前转换成老的消息格式。但如此一来中间件就不能使用零拷贝传输了（zero-copy transfer）。根据Kafka社区的反馈包括，升级后这对性能的影响将会是CPU的使用率从20%提升到100%，这将迫使你必须立即升级所有的客户端到0.10.0.0版本来恢复性能表现。为了避免客户端升级到0.10.0.0之前的消息转换。你可以在升级中间件版本到0.10.0.0的过程中，将消息的格式参数og.message.format.version设置成0.8.2 或者 0.9.0版本。这样一来中间件依旧可以使用零拷贝传输来将消息发送到客户端。在所有的消费者升级以后，就可以修改中间件上消息格式版本到0.10.0，享受新消息格式带来的益处包括新引入的时间戳字段和更好的消息压缩。这个转换过程的支持是为了保证兼容性和支持少量未能及时升级到新版本客户端应用而存在的。如果想在一个即将超载的集群上来支持所有客户端的流量是不现实的。因此在消息中间升级以后但是主要的客户端还没有升级的时候应该尽可能的去避免消息转换。
 
-For clients that are upgraded to 0.10.0.0, there is no performance impact.
+对于已升级到0.10.0.0的客户端不存在这种性能上的负面影响。
 
-**Note:** By setting the message format version, one certifies that all existing messages are on or below that message format version. Otherwise consumers before 0.10.0.0 might break. In particular, after the message format is set to 0.10.0, one should not change it back to an earlier format as it may break consumers on versions before 0.10.0.0.
+**注意：**设置消息格式的版本，应该保证所有的已有的消息都是这个消息格式版本之下的版本。否则0.10.0.0之前的客户端可能出现故障。在实践中，一旦消息的格式被设置成了0.10.0之后就不应该把它再修改到早期的格式上，因为这可能造成0.10.0.0之前版本的消费者的故障。
 
-**Note:** Due to the additional timestamp introduced in each message, producers sending small messages may see a message throughput degradation because of the increased overhead. Likewise, replication now transmits an additional 8 bytes per message. If you're running close to the network capacity of your cluster, it's possible that you'll overwhelm the network cards and see failures and performance issues due to the overload.
+**注意：**因为每个消息新时间戳字段的引入，生产者在发送小包消息可能出现因为负载上升造成的吞吐量的下降。同理，现在复制过程每个消息也要多传输8个比特。如果你的集群即将达到网络容量的瓶颈，这可能造成网卡打爆并因为超载引起失败和性能问题。
 
-**Note:** If you have enabled compression on producers, you may notice reduced producer throughput and\/or lower compression rate on the broker in some cases. When receiving compressed messages, 0.10.0 brokers avoid recompressing the messages, which in general reduces the latency and improves the throughput. In certain cases, however, this may reduce the batching size on the producer, which could lead to worse throughput. If this happens, users can tune linger.ms and batch.size of the producer for better throughput. In addition, the producer buffer used for compressing messages with snappy is smaller than the one used by the broker, which may have a negative impact on the compression ratio for the messages on disk. We intend to make this configurable in a future Kafka release.
+**注意：**如果你在生产者启动了消息压缩机制，你可能发现生产者吞吐量下降和/或中间件消息压缩比例的下降。在接受压缩过的消息时，0.10.0的中间避免重新压缩信息，这样原意是为了降低延迟提供吞吐量。但是在某些场景下，这可能降低生产者批处理数量，并引起吞吐量上更差的表现。如果这种情况发生了，用户可以调节生产者的linger.ms和batch.size参数来获得更好的吞吐量。另外生产者在使用snappy进行消息压缩时它用来消息压缩的buffer相比中间件的要小，这可能给磁盘上的消息的压缩率带来一个负面影响，我们计划将在后续的版本中将这个参数修改为可配置的。
 
+##### [0.10.0.0潜在的不兼容修改](#upgrade_10_breaking)<a id="upgrade_10_breaking"></a>
 
+* 从0.10.0.0开始，Kafka消息格式的版本号将用Kafka版本号表示。例如，消息格式版本号0.9.0表示最高Kafka 0.9.0支持的消息格式。
+* 引入了0.10.0版本消息格式并作为默认配置。它引入了一个时间戳字段并在压缩消息中使用相对偏移量。
+* 引入了ProduceRequest/Response v2并用作0.10.0消息格式的默认支持。
+* 引入了FetchRequest\/Response v2并用作0.10.0消息格式的默认支持。
+* 接口MessageFormatter从`def writeTo(key: Array[Byte], value: Array[Byte], output: PrintStream)`变更为`def writeTo(consumerRecord: ConsumerRecord[Array[Byte], Array[Byte]], output: PrintStream)`
+* 接口MessageReader从`def readMessage(): KeyedMessage[Array[Byte], Array[Byte]]`变更为`def readMessage(): ProducerRecord[Array[Byte], Array[Byte]]`
+* MessageFormatter的包从`kafka.tools`变更为`kafka.common`
+* MessageReader的包`kafka.tools`变更为`kafka.common`
+* MirrorMakerMessageHandler不再暴露`handle(record: MessageAndMetadata[Array[Byte], Array[Byte]])`方法，因为它从没有被调用过.
+* 0.7 KafkaMigrationTool不再和Kafka打包。如果你需要从0.8迁移到0.10.0，请先迁移到0.8然后在根据文档升级过程完成从0.8到0.10.0的升级。
+* 新的消费者规范化了API来使用`java.util.Collection`作为序列类型方法参数。现存的代码可能需要进行修改来实现0.10.0版本客户端库的协作。
+* LZ4压缩消息的处理变更为使用互操作框架规范（LZ4f v1.5.1）（interoperable framing specification）。为了保证对老客户端的兼容，这个变更只应用于0.10.0或之后版本的消息格式上。v0/v1 (消息格式 0.9.0)生产或者拉取LZ4压缩消息的客户端将依旧使用0.9.0的框架实现。使用Produce/Fetch protocols v2协议的客户端及之后客户端应该使用互操作LZ4f框架。互操作（interoperable）LZ4类库列表可以在这里找到http://www.lz4.org/
 
-##### [Potential breaking changes in 0.10.0.0](#upgrade_10_breaking)<a id="upgrade_10_breaking"></a>
-
-* Starting from Kafka 0.10.0.0, the message format version in Kafka is represented as the Kafka version. For example, message format 0.9.0 refers to the highest message version supported by Kafka 0.9.0.
-* Message format 0.10.0 has been introduced and it is used by default. It includes a timestamp field in the messages and relative offsets are used for compressed messages.
-* ProduceRequest\/Response v2 has been introduced and it is used by default to support message format 0.10.0
-* FetchRequest\/Response v2 has been introduced and it is used by default to support message format 0.10.0
-* MessageFormatter interface was changed from `def writeTo(key: Array[Byte], value: Array[Byte], output: PrintStream)` to `def writeTo(consumerRecord: ConsumerRecord[Array[Byte], Array[Byte]], output: PrintStream)`
-* MessageReader interface was changed from `def readMessage(): KeyedMessage[Array[Byte], Array[Byte]]` to `def readMessage(): ProducerRecord[Array[Byte], Array[Byte]]`
-* MessageFormatter's package was changed from `kafka.tools` to `kafka.common`
-* MessageReader's package was changed from `kafka.tools` to `kafka.common`
-* MirrorMakerMessageHandler no longer exposes the `handle(record: MessageAndMetadata[Array[Byte], Array[Byte]])` method as it was never called.
-* The 0.7 KafkaMigrationTool is no longer packaged with Kafka. If you need to migrate from 0.7 to 0.10.0, please migrate to 0.8 first and then follow the documented upgrade process to upgrade from 0.8 to 0.10.0.
-* The new consumer has standardized its APIs to accept `java.util.Collection` as the sequence type for method parameters. Existing code may have to be updated to work with the 0.10.0 client library.
-* LZ4-compressed message handling was changed to use an interoperable framing specification \(LZ4f v1.5.1\). To maintain compatibility with old clients, this change only applies to Message format 0.10.0 and later. Clients that Produce\/Fetch LZ4-compressed messages using v0\/v1 \(Message format 0.9.0\) should continue to use the 0.9.0 framing implementation. Clients that use Produce\/Fetch protocols v2 or later should use interoperable LZ4f framing. A list of interoperable LZ4 libraries is available at http:\/\/www.lz4.org\/
-
-##### [Notable changes in 0.10.0.0](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
+##### [0.10.0.0显著变化](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
 
 * Starting from Kafka 0.10.0.0, a new client library named **Kafka Streams** is available for stream processing on data stored in Kafka topics. This new client library only works with 0.10.x and upward versioned brokers due to message format changes mentioned above. For more information please read [**this section**](http://kafka.apache.org/documentation.html#streams_overview).
 * The default value of the configuration parameter `receive.buffer.bytes` is now 64K for the new consumer.
+
 * The new consumer now exposes the configuration parameter `exclude.internal.topics` to restrict internal topics \(such as the consumer offsets topic\) from accidentally being included in regular expression subscriptions. By default, it is enabled.
 * The old Scala producer has been deprecated. Users should migrate their code to the Java producer included in the kafka-clients JAR as soon as possible.
 * The new consumer API has been marked stable.
