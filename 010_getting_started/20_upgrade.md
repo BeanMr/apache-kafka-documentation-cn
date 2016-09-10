@@ -13,17 +13,16 @@
 1. 更新所有中间件的server.properties文件，添加如下配置：
   * inter.broker.protocol.version=CURRENT_KAFKA_VERSION (e.g. 0.8.2 or 0.9.0.0).
   * log.message.format.version=CURRENT_KAFKA_VERSION (参考 [**升级过程可能的性能影响**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact)了解这个配置项的作用)
+2. 升级中间件。这个过程可以逐个中间件的去完成，只要将它下线然后升级代码然后重启即可。
+3. 当整个集群都升级完成以后，再去处理协议版本问题，通过编辑inter.broker.protocol.version并设置为0.10.0.0即可。注意：此时还不应该去修改日志格式版本参数log.message.format.version-这参数只能在所有的客户端都升级到0.10.0.0之后去修改。
+4. 逐个重启中间件让新的协议版本生效。
+5. 当所有的消费者都升级到0.10.0以后，逐个中间件去修改log.message.format.version为0.10.0并重启。
 
-2. 升级中间件。This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
-3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.10.0.0. NOTE: You shouldn't touch log.message.format.version yet - this parameter should only change once all consumers have been upgraded to 0.10.0.0
-4. Restart the brokers one by one for the new protocol version to take effect.
-5. Once all consumers have been upgraded to 0.10.0, change log.message.format.version to 0.10.0 on each broker and restart them one by one.
+**注意：** 如果你接受停机，你可简单将所有的中间件下线，升级代码然后再重启。这样它们应该都会默认使用新的协议。
 
-**Note:** If you are willing to accept downtime, you can simply take all the brokers down, update the code and start all of them. They will start with the new protocol by default.
+**注意：** 修改协议版本并重启的工作你可以在升级中间件之后的任何时间进行，这个过程没必要升级代码后立即进行。
 
-**Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
-
-##### [Potential performance impact following upgrade to 0.10.0.0](#upgrade_10_performance_impact)<a id="upgrade_10_performance_impact"></a>
+##### [升级0.10.0.0过程潜在的性能影响](#upgrade_10_performance_impact)<a id="upgrade_10_performance_impact"></a>
 
 The message format in 0.10.0 includes a new timestamp field and uses relative offsets for compressed messages. The on disk message format can be configured through log.message.format.version in the server.properties file. The default on-disk message format is 0.10.0. If a consumer client is on a version before 0.10.0.0, it only understands message formats before 0.10.0. In this case, the broker is able to convert messages from the 0.10.0 format to an earlier format before sending the response to the consumer on an older version. However, the broker can't use zero-copy transfer in this case. Reports from the Kafka community on the performance impact have shown CPU utilization going from 20% before to 100% after an upgrade, which forced an immediate upgrade of all clients to bring performance back to normal. To avoid such message conversion before consumers are upgraded to 0.10.0.0, one can set log.message.format.version to 0.8.2 or 0.9.0 when upgrading the broker to 0.10.0.0. This way, the broker can still use zero-copy transfer to send the data to the old consumers. Once consumers are upgraded, one can change the message format to 0.10.0 on the broker and enjoy the new message format that includes new timestamp and improved compression. The conversion is supported to ensure compatibility and can be useful to support a few apps that have not updated to newer clients yet, but is impractical to support all consumer traffic on even an overprovisioned cluster. Therefore it is critical to avoid the message conversion as much as possible when brokers have been upgraded but the majority of clients have not.
 
