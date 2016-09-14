@@ -1,7 +1,7 @@
 # Summary
 
 * [About Book](README.md)
-* [Getting Started](010_getting_started/01_introduction_cn.md)
+* [入门](010_getting_started/01_introduction_cn.md)
     * [简介](010_getting_started/01_introduction_cn.md)
     * [Introduction](010_getting_started/01_introduction.md)
     * [应用场景](010_getting_started/05_uses_cn.md)
