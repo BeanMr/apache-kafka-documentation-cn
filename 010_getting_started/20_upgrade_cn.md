@@ -96,22 +96,21 @@
 * 配置参数log.cleaner.enable现在默认值为true。这意味着使用cleanup.policy=compact的话题将不再默认被压缩，并且一个128M的堆会被分配给清理进程（cleaner process），这个大小由log.cleaner.dedupe.buffer.size决定。在使用了压缩话题（compacted topics）时你可能需要评估你的log.cleaner.dedupe.buffer.size和其它log.cleaner配置。
 * 新的消费者参数fetch.min.bytes默认配置为1
 
-##### Deprecations in 0.9.0.0
+##### 0.9.0.0中弃用
 
-* Altering topic configuration from the kafka-topics.sh script \(kafka.admin.TopicCommand\) has been deprecated. Going forward, please use the kafka-configs.sh script \(kafka.admin.ConfigCommand\) for this functionality.
-* The kafka-consumer-offset-checker.sh \(kafka.tools.ConsumerOffsetChecker\) has been deprecated. Going forward, please use kafka-consumer-groups.sh \(kafka.admin.ConsumerGroupCommand\) for this functionality.
+* 通过kafka-topics.sh脚本修改topic信息已经弃用。今后请使用kafka-configs.sh完成此功能。
+* kafka-consumer-offset-checker.sh（kafka.tools.ConsumerOffsetChecker）已经弃用。今后请用kafka-consumer-groups.sh完成此功能。
 * The kafka.tools.ProducerPerformance class has been deprecated. Going forward, please use org.apache.kafka.tools.ProducerPerformance for this functionality \(kafka-producer-perf-test.sh will also be changed to use the new class\).
-* The producer config block.on.buffer.full has been deprecated and will be removed in future release. Currently its default value has been changed to false. The KafkaProducer will no longer throw BufferExhaustedException but instead will use max.block.ms value to block, after which it will throw a TimeoutException. If block.on.buffer.full property is set to true explicitly, it will set the max.block.ms to Long.MAX\_VALUE and metadata.fetch.timeout.ms will not be honoured
+* kafka.tools.ProducerPerformance类已经弃用。今后使用org.apache.kafka.tools.ProducerPerformance完成此功能(kafka-producer-perf-test.sh也将变更为使用新的类)。
+* 生产者配置block.on.buffer.full已经被弃用并在后续版本中移除。当前它的默认值已经被修改为false。Kafka生产者不再抛出BufferExhaustedException取而代之使用max.block.ms来阻塞，在阻塞超时以后将抛出TimeoutException。如果block.on.buffer.full属性被明确配置为true，它将设置max.block.ms为Long最大值（Long.MAX_VALUE）并且metadata.fetch.timeout.ms配置将不再被参考。
+#### [从0.8.1升级到0.8.2](#upgrade_82)<a id="upgrade_82"></a>
 
-#### [Upgrading from 0.8.1 to 0.8.2](#upgrade_82)<a id="upgrade_82"></a>
+0.8.2与0.8.1完全兼容。升级过程可以通过简单的逐个下线、升级代码、重启完成。
 
-0.8.2 is fully compatible with 0.8.1. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
+#### [从0.8.0升级到0.8.1](#upgrade_81)<a id="upgrade_81"></a>
 
-#### [Upgrading from 0.8.0 to 0.8.1](#upgrade_81)<a id="upgrade_81"></a>
+0.8.1与0.8.0完全兼容。升级过程可以通过简单的逐个下线、升级代码、重启完成。
 
-0.8.1 is fully compatible with 0.8. The upgrade can be done one broker at a time by simply bringing it down, updating the code, and restarting it.
+#### [从0.7升级](#upgrade_7)<a id="upgrade_7"></a>
 
-#### [Upgrading from 0.7](#upgrade_7)<a id="upgrade_7"></a>
-
-Release 0.7 is incompatible with newer releases. Major changes were made to the API, ZooKeeper data structures, and protocol, and configuration in order to add replication \(Which was missing in 0.7\). The upgrade from 0.7 to later versions requires a [**special tool**](https://cwiki.apache.org/confluence/display/KAFKA/Migrating+from+0.7+to+0.8) for migration. This migration can be done without downtime.
-
+0.7的发布版本与心得发布不兼容。核心的变更涉及到了API、ZooKeeper数据结构、协议以及实现复制的配置（之前0.7缺失的）。从0.7升级到后续的版本需要使用[特殊的工具](https://cwiki.apache.org/confluence/display/KAFKA/Migrating+from+0.7+to+0.8)来完成迁移。迁移过程可以实现不停机。
