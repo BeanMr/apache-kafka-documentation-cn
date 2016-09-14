@@ -49,7 +49,7 @@
 * 新的消费者规范化了API来使用`java.util.Collection`作为序列类型方法参数。现存的代码可能需要进行修改来实现0.10.0版本客户端库的协作。
 * LZ4压缩消息的处理变更为使用互操作框架规范（LZ4f v1.5.1）（interoperable framing specification）。为了保证对老客户端的兼容，这个变更只应用于0.10.0或之后版本的消息格式上。v0/v1 (消息格式 0.9.0)生产或者拉取LZ4压缩消息的客户端将依旧使用0.9.0的框架实现。使用Produce/Fetch protocols v2协议的客户端及之后客户端应该使用互操作LZ4f框架。互操作（interoperable）LZ4类库列表可以在这里找到http://www.lz4.org/
 
-##### [0.10.0.0显著变化](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
+##### [0.10.0.0值得关注的变更](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
 
 * 从Kafka 0.10.0.0开始，一个称为**Kafka Streams**的新客户端类库被引入，用于对存储于Kafka Topic的数据进行流处理。因为上文介绍的新消息格式变更，新的客户端类库只能与0.10.x或以上版本的中间件协作。详细信息请参[考此章节](http://kafka.apache.org/documentation.html#streams_overview)。
 * 新消费者的默认配置参数`receive.buffer.bytes`现在变更为64K。
@@ -82,20 +82,19 @@
 * 配置参数replica.lag.max.messages was removed。分区领导判定副本是否同步不再考虑延迟的消息。
 * 配置参数replica.lag.time.max.ms现在不仅仅代表自副本最后拉取请求到现在的时间间隔，它也是副本最后完成同步的时间。副本正在从leader拉取消息，但是在replica.lag.time.max.ms时间内还没有完成最后一条信息的拉取，它也将被认为不再是同步状态。
 * 压缩话题（Compacted topics）不再接受没有key的消息，如果消费者尝试将抛出一个异常。在0.8.x版本，一个不包含key的消息会引起日志压缩线程（log compaction thread）异常并退出（造成所有压缩话题的压缩工作中断）。
-* MirrorMaker no longer supports multiple target clusters. As a result it will only accept a single --consumer.config parameter. To mirror multiple source clusters, you will need at least one MirrorMaker instance per source cluster, each with its own consumer configuration.
+* MirrorMaker不再支持多个目标集群。这意味着它能只能接受一个--consumer.config参数配置。为了镜像多个源集群，你至少要为每个源集群配置一个MirrorMaker实例，每个实例配置他们的消费者信息。
+* 原打包在_org.apache.kafka.clients.tools.*_的工具类移动到了_org.apache.kafka.tools.*_里面。所有包含的脚本能正常的使用，只有自定义代码直接import了那些类会受到影响。
+* 默认的Kafka JVM 性能配置(KAFKA_JVM_PERFORMANCE_OPTS)在kafka-run-class.sh发生了变更。
+* kafka-topics.sh脚本(kafka.admin.TopicCommand)在异常退出情况exit code变更为非零。
+* 当topic names引起指标冲突时kafka-topics.sh脚本(kafka.admin.TopicCommand)将打印一个warn，这是由topic name使用了'.'或者'_'并且在用例中实际发生了冲突引起的。
+* kafka-console-producer.sh脚本将默认使用新的生产者实例而不是老的，用户希望使用老的生产者必须指定'old-producer'。
+* 默认所有的命令行工具将打印所有的日志信息到stderr而不是stdout。
 
-* Tools packaged under _org.apache.kafka.clients.tools.\*_ have been moved to _org.apache.kafka.tools.\*_. All included scripts will still function as usual, only custom code directly importing these classes will be affected.
-* The default Kafka JVM performance options \(KAFKA\_JVM\_PERFORMANCE\_OPTS\) have been changed in kafka-run-class.sh.
-* The kafka-topics.sh script \(kafka.admin.TopicCommand\) now exits with non-zero exit code on failure.
-* The kafka-topics.sh script \(kafka.admin.TopicCommand\) will now print a warning when topic names risk metric collisions due to the use of a '.' or '\_' in the topic name, and error in the case of an actual collision.
-* The kafka-console-producer.sh script \(kafka.tools.ConsoleProducer\) will use the new producer instead of the old producer be default, and users have to specify 'old-producer' to use the old producer.
-* By default all command line tools will print all logging messages to stderr instead of stdout.
+##### [0.9.0.1值得关注的变更](#upgrade_901_notable)<a id="upgrade_901_notable"></a>
 
-##### [Notable changes in 0.9.0.1](#upgrade_901_notable)<a id="upgrade_901_notable"></a>
-
-* The new broker id generation feature can be disabled by setting broker.id.generation.enable to false.
-* Configuration parameter log.cleaner.enable is now true by default. This means topics with a cleanup.policy=compact will now be compacted by default, and 128 MB of heap will be allocated to the cleaner process via log.cleaner.dedupe.buffer.size. You may want to review log.cleaner.dedupe.buffer.size and the other log.cleaner configuration values based on your usage of compacted topics.
-* Default value of configuration parameter fetch.min.bytes for the new consumer is now 1 by default.
+* 新的broker id生成功能可以通过broker.id.generation.enable设置为flase关闭。
+* 配置参数log.cleaner.enable现在默认值为true。这意味着使用cleanup.policy=compact的话题将不再默认被压缩，并且一个128M的堆会被分配给清理进程（cleaner process），这个大小由log.cleaner.dedupe.buffer.size决定。在使用了压缩话题（compacted topics）时你可能需要评估你的log.cleaner.dedupe.buffer.size和其它log.cleaner配置。
+* 新的消费者参数fetch.min.bytes默认配置为1
 
 ##### Deprecations in 0.9.0.0
 
