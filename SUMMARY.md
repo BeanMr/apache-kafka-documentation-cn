@@ -12,7 +12,7 @@
     * [Ecosystem](010_getting_started/15_ecosystem.md)
     * [升级](010_getting_started/20_upgrade_cn.md)
     * [Upgrading](010_getting_started/20_upgrade.md)
-* [API](020_api/01_api.md)
+* [API](020_api/01_api_cn.md)
     * [Producer API](020_api/01_api.md#producerapi)
     * [Consumer API](020_api/01_api.md#consumerapi)
         * [Old High Level Consumer API](020_api/01_api.md#highlevelconsumerapi)
