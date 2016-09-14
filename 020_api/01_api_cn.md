@@ -1,9 +1,8 @@
 ## [2. API](#)
-## [2. API](#)
 
-Apache Kafka includes new java clients \(in the org.apache.kafka.clients package\). These are meant to supplant the older Scala clients, but for compatibility they will co-exist for some time. These clients are available in a separate jar with minimal dependencies, while the old Scala clients remain packaged with the server.
+Apache Kafka包含了新的Java客户端（在org.apache.kafka.clients package包）。它的目的是取代原来的Scala客户端，但是为了兼容它们将并存一段时间。老的Scala客户端还打包在服务器中，这些客户端在不同的jar保证并包含着最小的依赖。
 
-### [2.1 Producer API](#producerapi)<a id="producerapi"></a>
+### [2.1 生产者 API Producer API](#producerapi)<a id="producerapi"></a>
 
 We encourage all new development to use the new Java producer. This client is production tested and generally both faster and more fully featured than the previous Scala client. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
 
