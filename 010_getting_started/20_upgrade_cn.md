@@ -2,7 +2,7 @@
 
 #### [从0.8.x或0.9.x升级到0.10.0.0](#upgrade_10)<a id="upgrade_10"></a>
 
-0.10.0.0 有一些潜在的[不兼容变更]((http://kafka.apache.org/documentation.html#upgrade_10_breaking))（在升级前请一定对其进行检查）和升级过程中性能下降的风险。遵照一下推荐的滚动升级方案，可以保证你在升级过程及之后都不需要停机并且没有性能下降。
+0.10.0.0 有一些潜在的[不兼容变更]((#upgrade_10_breaking))（在升级前请一定对其进行检查）和升级过程中性能下降的风险。遵照一下推荐的滚动升级方案，可以保证你在升级过程及之后都不需要停机并且没有性能下降。
 
 注意：因为新的协议的引入，一定要先升级你的Kafka集群然后在升级客户端。
 
@@ -12,7 +12,7 @@
 
 1. 更新所有中间件的server.properties文件，添加如下配置：
   * inter.broker.protocol.version=CURRENT_KAFKA_VERSION (e.g. 0.8.2 or 0.9.0.0).
-  * log.message.format.version=CURRENT_KAFKA_VERSION (参考 [**升级过程可能的性能影响**](http://kafka.apache.org/documentation.html#upgrade_10_performance_impact)了解这个配置项的作用)
+  * log.message.format.version=CURRENT_KAFKA_VERSION (参考 [**升级过程可能的性能影响**](#upgrade_10_performance_impact)了解这个配置项的作用)
 2. 升级中间件。这个过程可以逐个中间件的去完成，只要将它下线然后升级代码然后重启即可。
 3. 当整个集群都升级完成以后，再去处理协议版本问题，通过编辑inter.broker.protocol.version并设置为0.10.0.0即可。注意：此时还不应该去修改日志格式版本参数log.message.format.version-这参数只能在所有的客户端都升级到0.10.0.0之后去修改。
 4. 逐个重启中间件让新的协议版本生效。
@@ -51,37 +51,39 @@
 
 ##### [0.10.0.0显著变化](#upgrade_10_notable)<a id="upgrade_10_notable"></a>
 
-* Starting from Kafka 0.10.0.0, a new client library named **Kafka Streams** is available for stream processing on data stored in Kafka topics. This new client library only works with 0.10.x and upward versioned brokers due to message format changes mentioned above. For more information please read [**this section**](http://kafka.apache.org/documentation.html#streams_overview).
-* The default value of the configuration parameter `receive.buffer.bytes` is now 64K for the new consumer.
+* 从Kafka 0.10.0.0开始，一个称为**Kafka Streams**的新客户端类库被引入，用于对存储于Kafka Topic的数据进行流处理。因为上文介绍的新消息格式变更，新的客户端类库只能与0.10.x或以上版本的中间件协作。详细信息请参[考此章节](http://kafka.apache.org/documentation.html#streams_overview)。
+* 新消费者的默认配置参数`receive.buffer.bytes`现在变更为64K。
 
-* The new consumer now exposes the configuration parameter `exclude.internal.topics` to restrict internal topics \(such as the consumer offsets topic\) from accidentally being included in regular expression subscriptions. By default, it is enabled.
-* The old Scala producer has been deprecated. Users should migrate their code to the Java producer included in the kafka-clients JAR as soon as possible.
-* The new consumer API has been marked stable.
+* 新的消费者暴露配置参数`exclude.internal.topics`限制内部话题topic(例如消费者偏移量topic)被意外的包括到正则表达式订阅之中。默认启动。
 
-#### [Upgrading from 0.8.0, 0.8.1.X or 0.8.2.X to 0.9.0.0](#upgrade_9)<a id="upgrade_9"></a>
+* 不推荐再使用原来的Scala生产者。用户应该尽快迁移他们的代码到kafka-clients Jar包中Java生产者上。
+* 新的消费者API被认定为进入稳定版本（stable）
 
-0.9.0.0 has [**potential breaking changes**](http://kafka.apache.org/documentation.html#upgrade_9_breaking) \(please review before upgrading\) and an inter-broker protocol change from previous versions. This means that upgraded brokers and clients may not be compatible with older versions. It is important that you upgrade your Kafka cluster before upgrading your clients. If you are using MirrorMaker downstream clusters should be upgraded first as well.
+#### [从0.8.0, 0.8.1.X或0.8.2.X升级到0.9.0.0](#upgrade_9)<a id="upgrade_9"></a>
 
-**For a rolling upgrade:**
+0.9.0.0 存在一些潜在的[不兼容变更](#upgrade_9_breaking) (在升级之前请一定查阅)和中间件间部协议与上一版本也发生了的变更。这意味升级中间件和客户端可能发生于老版本的不兼容情况。在升级客户端之前一定要先升级Kafka集群这一点很重要。如果你使用了MirrorMaker下游集群也应该对其先进行升级。
 
-1. Update server.properties file on all brokers and add the following property: inter.broker.protocol.version=0.8.2.X
-2. Upgrade the brokers. This can be done a broker at a time by simply bringing it down, updating the code, and restarting it.
-3. Once the entire cluster is upgraded, bump the protocol version by editing inter.broker.protocol.version and setting it to 0.9.0.0.
-4. Restart the brokers one by one for the new protocol version to take effect
+**滚动升级：**
 
-**Note:** If you are willing to accept downtime, you can simply take all the brokers down, update the code and start all of them. They will start with the new protocol by default.
+1. 升级所有中间的server.properties文件，添加如下配置：inter.broker.protocol.version=0.8.2.X
+2. 升级中间件。这个过程可以逐个中间件的去完成，只要将它下线然后升级代码然后重启即可。
+3. 在整个集群升级完成以后，设置协议版本修改inter.broker.protocol.version设置成0.9.0.0
+4. 逐个重启中间件让新的协议版本生效。
 
-**Note:** Bumping the protocol version and restarting can be done any time after the brokers were upgraded. It does not have to be immediately after.
+**注意：** 如果你接受停机，你可简单将所有的中间件下线，升级代码然后再重启。这样它们应该都会默认使用新的协议。
 
-##### [Potential breaking changes in 0.9.0.0](#upgrade_9_breaking)<a id="upgrade_9_breaking"></a>
+**注意：** 修改协议版本并重启的工作你可以在升级中间件之后的任何时间进行，这个过程没必要升级代码后立即进行。
 
-* Java 1.6 is no longer supported.
-* Scala 2.9 is no longer supported.
-* Broker IDs above 1000 are now reserved by default to automatically assigned broker IDs. If your cluster has existing broker IDs above that threshold make sure to increase the reserved.broker.max.id broker configuration property accordingly.
-* Configuration parameter replica.lag.max.messages was removed. Partition leaders will no longer consider the number of lagging messages when deciding which replicas are in sync.
-* Configuration parameter replica.lag.time.max.ms now refers not just to the time passed since last fetch request from replica, but also to time since the replica last caught up. Replicas that are still fetching messages from leaders but did not catch up to the latest messages in replica.lag.time.max.ms will be considered out of sync.
-* Compacted topics no longer accept messages without key and an exception is thrown by the producer if this is attempted. In 0.8.x, a message without key would cause the log compaction thread to subsequently complain and quit \(and stop compacting all compacted topics\).
+##### [0.9.0.0潜在的不兼容变更](#upgrade_9_breaking)<a id="upgrade_9_breaking"></a>
+
+* 不再支持Java 1.6。
+* 不再支持Scala 2.9。
+* 1000以上的Broker ID被默认保留用于自动分配broker id。如果你的集群现在有broker id大于此数值应该注意修改reserved.broker.max.id配置。
+* 配置参数replica.lag.max.messages was removed。分区领导判定副本是否同步不再考虑延迟的消息。
+* 配置参数replica.lag.time.max.ms现在不仅仅代表自副本最后拉取请求到现在的时间间隔，它也是副本最后完成同步的时间。副本正在从leader拉取消息，但是在replica.lag.time.max.ms时间内还没有完成最后一条信息的拉取，它也将被认为不再是同步状态。
+* 压缩话题（Compacted topics）不再接受没有key的消息，如果消费者尝试将抛出一个异常。在0.8.x版本，一个不包含key的消息会引起日志压缩线程（log compaction thread）异常并退出（造成所有压缩话题的压缩工作中断）。
 * MirrorMaker no longer supports multiple target clusters. As a result it will only accept a single --consumer.config parameter. To mirror multiple source clusters, you will need at least one MirrorMaker instance per source cluster, each with its own consumer configuration.
+
 * Tools packaged under _org.apache.kafka.clients.tools.\*_ have been moved to _org.apache.kafka.tools.\*_. All included scripts will still function as usual, only custom code directly importing these classes will be affected.
 * The default Kafka JVM performance options \(KAFKA\_JVM\_PERFORMANCE\_OPTS\) have been changed in kafka-run-class.sh.
 * The kafka-topics.sh script \(kafka.admin.TopicCommand\) now exits with non-zero exit code on failure.
