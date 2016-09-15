@@ -4,7 +4,7 @@ Apache Kafka包含了新的Java客户端（在org.apache.kafka.clients package�
 
 ### [2.1 生产者 API Producer API](#producerapi)<a id="producerapi"></a>
 
-We encourage all new development to use the new Java producer. This client is production tested and generally both faster and more fully featured than the previous Scala client. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
+我们鼓励所有新的开发都使用新的Java生产者。这个客户端经过了生产环境测试并且通常情况它比原来Scals客户端更加快速、功能更加齐全。你可以通过添加以下示例的Maven坐标到客户端依赖中来使用这个新的客户端（你可以修改版本号来使用新的发布版本）：
 
 ```
 	<dependency>
@@ -15,13 +15,15 @@ We encourage all new development to use the new Java producer. This client is pr
 
 ```
 
-Examples showing how to use the producer are given in the [**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html "Kafka 0.10.0 Javadoc").
+生产者的使用演示可以在这里找到[**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html "Kafka 0.10.0 Javadoc")。
 
-For those interested in the legacy Scala producer api, information can be found [**here**](http://kafka.apache.org/081/documentation.html#producerapi).
+对老的Scala生产者API感兴趣的人，可以在[这里](http://kafka.apache.org/081/documentation.html#producerapi)找到相关信息。
 
-### [2.2 Consumer API](#consumerapi)<a id="consumerapi"></a>
+### [2.2 消费者API](#consumerapi)<a id="consumerapi"></a>
 
 As of the 0.9.0 release we have added a new Java consumer to replace our existing high-level ZooKeeper-based consumer and low-level consumer APIs. This client is considered beta quality. To ensure a smooth upgrade path for users, we still maintain the old 0.8 consumer clients that continue to work on an 0.9 Kafka cluster. In the following sections we introduce both the old 0.8 consumer APIs \(both high-level ConsumerConnector and low-level SimpleConsumer\) and the new Java consumer API respectively.
+
+在0.9.0发布时我们添加了一个新的Java消费者来取代原来的上层的（high-level）基于ZooKeeper的消费者和底层的（low-level）消费者API。这个客户端被认为是测试质量(beta quality)。
 
 #### [2.2.1 Old High Level Consumer API](#highlevelconsumerapi)<a id="highlevelconsumerapi"></a>
 
