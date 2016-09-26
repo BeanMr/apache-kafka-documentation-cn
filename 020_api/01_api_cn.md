@@ -31,32 +31,39 @@ As of the 0.9.0 release we have added a new Java consumer to replace our existin
 class Consumer {
   /**
    *  Create a ConsumerConnector
+   *  创建一个ConsumerConnector
    *
    *  @param config  at the minimum, need to specify the groupid of the consumer and the zookeeper
    *                 connection string zookeeper.connect.
+   *  配置参数最少要设置此消费者的groupid和Zookeeper的连接字符串Zookeeper.connect
    */
   public static kafka.javaapi.consumer.ConsumerConnector createJavaConsumerConnector(ConsumerConfig config);
 }
 
 /**
- *  V: type of the message
- *  K: type of the optional key associated with the message
+ *  V: type of the message  消息的类型
+ *  K: type of the optional key associated with the message 消息可选的key的类型
  */
 public interface kafka.javaapi.consumer.ConsumerConnector {
   /**
    *  Create a list of message streams of type T for each topic.
+   *  为每个topic创建一个T类型的消息流
    *
    *  @param topicCountMap  a map of (topic, #streams) pair
-   *  @param decoder a decoder that converts from Message to T
+   *                        (topic, #streams)对的Map
+   *  @param decoder a decoder that converts from Message to T 
+   *                 将消息转换为T类型的解码器
    *  @return a map of (topic, list of  KafkaStream) pairs.
    *          The number of items in the list is #streams. Each stream supports
    *          an iterator over message/metadata pairs.
+   *          返回一个(topic, KafkaStream列表)对的Map。list的元素个数为#streams。每个stream都支持一个对message/metadata对的迭代器。
    */
   public <K,V> Map<String, List<KafkaStream<K,V>>>
     createMessageStreams(Map<String, Integer> topicCountMap, Decoder<K> keyDecoder, Decoder<V> valueDecoder);
 
   /**
    *  Create a list of message streams of type T for each topic, using the default decoder.
+   *  使用默认的解码器为每个topic创建一个T类型的消息流
    */
   public Map<String, List<KafkaStream<byte[], byte[]>>> createMessageStreams(Map<String, Integer> topicCountMap);
 
