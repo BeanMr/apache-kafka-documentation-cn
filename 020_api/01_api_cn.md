@@ -21,9 +21,7 @@ Apache Kafka包含了新的Java客户端（在org.apache.kafka.clients package�
 
 ### [2.2 消费者API](#consumerapi)<a id="consumerapi"></a>
 
-As of the 0.9.0 release we have added a new Java consumer to replace our existing high-level ZooKeeper-based consumer and low-level consumer APIs. This client is considered beta quality. To ensure a smooth upgrade path for users, we still maintain the old 0.8 consumer clients that continue to work on an 0.9 Kafka cluster. In the following sections we introduce both the old 0.8 consumer APIs \(both high-level ConsumerConnector and low-level SimpleConsumer\) and the new Java consumer API respectively.
-
-在0.9.0发布时我们添加了一个新的Java消费者来取代原来的上层的（high-level）基于ZooKeeper的消费者和底层的（low-level）消费者API。这个客户端被认为是测试质量(beta quality)。
+在0.9.0发布时我们添加了一个新的Java消费者来取代原来的上层的（high-level）基于ZooKeeper的消费者和底层的（low-level）消费者API。这个客户端被认为是测试质量(beta quality)。为了保证用户能平滑的升级，我们还会维护老的0.8的消费者客户端能与0.9的集群协作。在下面的章节中我们将分别介绍老的0.8消费者API（包括上层消费者连机器和底层简单消费者）和新的Java消费者API。
 
 #### [2.2.1 Old High Level Consumer API](#highlevelconsumerapi)<a id="highlevelconsumerapi"></a>
 
@@ -69,35 +67,45 @@ public interface kafka.javaapi.consumer.ConsumerConnector {
 
   /**
    *  Create a list of message streams for topics matching a wildcard.
+   *  为符合通配符的topics创建一个消息流列表
    *
    *  @param topicFilter a TopicFilter that specifies which topics to
    *                    subscribe to (encapsulates a whitelist or a blacklist).
+   *                    指明哪些topic被订阅的topic过滤器（封装一个白名单或者黑名单）
    *  @param numStreams the number of message streams to return.
+   *                    将返回的消息流的数量
    *  @param keyDecoder a decoder that decodes the message key
+   *                    用于解码消息键的解码器
    *  @param valueDecoder a decoder that decodes the message itself
+   *                    解码消息的解码器
    *  @return a list of KafkaStream. Each stream supports an
    *          iterator over its MessageAndMetadata elements.
+   *          KafkaStream的列表。每个流支持一个遍历消息及元数据元素的迭代器
    */
   public <K,V> List<KafkaStream<K,V>>
     createMessageStreamsByFilter(TopicFilter topicFilter, int numStreams, Decoder<K> keyDecoder, Decoder<V> valueDecoder);
 
   /**
    *  Create a list of message streams for topics matching a wildcard, using the default decoder.
+   *  使用默认的解码器为符合通配符的topic创建消息流列表
    */
   public List<KafkaStream<byte[], byte[]>> createMessageStreamsByFilter(TopicFilter topicFilter, int numStreams);
 
   /**
    *  Create a list of message streams for topics matching a wildcard, using the default decoder, with one stream.
+   *  使用一个流和默认的解码器为符合通配符的topic创建消息流列表
    */
   public List<KafkaStream<byte[], byte[]>> createMessageStreamsByFilter(TopicFilter topicFilter);
 
   /**
    *  Commit the offsets of all topic/partitions connected by this connector.
+   *  提交连接到这个连接器的所有topic/partition的偏移量
    */
   public void commitOffsets();
 
   /**
    *  Shut down the connector
+   *  关闭这个连接器
    */
   public void shutdown();
 }
@@ -105,49 +113,59 @@ public interface kafka.javaapi.consumer.ConsumerConnector {
 
 ```
 
-You can follow [**this example**](https://cwiki.apache.org/confluence/display/KAFKA/Consumer+Group+Example "Kafka 0.8 consumer example") to learn how to use the high level consumer api.
+你可以参见这个[示例](https://cwiki.apache.org/confluence/display/KAFKA/Consumer+Group+Example "Kafka 0.8 consumer example")来学习如何使用高层消费者api。
 
-#### [2.2.2 Old Simple Consumer API](#simpleconsumerapi)<a id="simpleconsumerapi"></a>
+#### [2.2.2 老的简单消费者API Old Simple Consumer API](#simpleconsumerapi)<a id="simpleconsumerapi"></a>
 
 ```
 class kafka.javaapi.consumer.SimpleConsumer {
   /**
    *  Fetch a set of messages from a topic.
+   *  从一个topic上拉取抓取一堆消息
    *
    *  @param request specifies the topic name, topic partition, starting byte offset, maximum bytes to be fetched.
+   *         request指定topic名称，topic分区，起始的比特偏移量，最大的抓取的比特量
    *  @return a set of fetched messages
+   *          抓取的消息集合
    */
   public FetchResponse fetch(kafka.javaapi.FetchRequest request);
 
   /**
    *  Fetch metadata for a sequence of topics.
+   *  抓取一个topic序列的元数据
    *
    *  @param request specifies the versionId, clientId, sequence of topics.
+   *         request指明versionId，clientId，topic序列
    *  @return metadata for each topic in the request.
+   *          request中的每个topic的元数据
    */
   public kafka.javaapi.TopicMetadataResponse send(kafka.javaapi.TopicMetadataRequest request);
 
   /**
    *  Get a list of valid offsets (up to maxSize) before the given time.
+   *  获取一个在指定时间前有效偏移量（到最大数值）的列表
    *
    *  @param request a [[kafka.javaapi.OffsetRequest]] object.
+   *                 一个[[kafka.javaapi.OffsetRequest]]对象
    *  @return a [[kafka.javaapi.OffsetResponse]] object.
+   *          一个[[kafka.javaapi.OffsetResponse]]对象
    */
   public kafka.javaapi.OffsetResponse getOffsetsBefore(OffsetRequest request);
 
   /**
    * Close the SimpleConsumer.
+   * 关闭SimpleConsumer
    */
   public void close();
 }
 
 ```
 
-For most applications, the high level consumer Api is good enough. Some applications want features not exposed to the high level consumer yet \(e.g., set initial offset when restarting the consumer\). They can instead use our low level SimpleConsumer Api. The logic will be a bit more complicated and you can follow the example in [**here**](https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example "Kafka 0.8 SimpleConsumer example").
+对于大多数应用，高层的消费者Api已经足够优秀了。一些应用需求的特性还没有暴露给高层消费者（比如在重启消费者时设置初始的offset）。它们可以取代我们的底层SimpleConsumer Api。这个逻辑可能更复杂一点，你可以参照这个[示例](https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example "Kafka 0.8 SimpleConsumer example")。
 
-#### [2.2.3 New Consumer API](#newconsumerapi)<a id="newconsumerapi"></a>
+#### [2.2.3 新消费者API New Consumer API](#newconsumerapi)<a id="newconsumerapi"></a>
 
-This new unified consumer API removes the distinction between the 0.8 high-level and low-level consumer APIs. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
+这个新的统一的消费者API移除了从0.8开始而来的上层和底层消费者API的差异。你可以通过添加如下示例Maven坐标来添加客户端jar依赖来使用此客户端。
 
 ```
 	<dependency>
@@ -158,11 +176,11 @@ This new unified consumer API removes the distinction between the 0.8 high-level
 
 ```
 
-Examples showing how to use the consumer are given in the [**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html "Kafka 0.9.0 Javadoc").
+关于消费者如何使用的示例在[**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html "Kafka 0.9.0 Javadoc")。
 
 ### [2.3 Streams API](#streamsapi)<a id="streamsapi"></a>
 
-As of the 0.10.0 release we have added a new client library named **Kafka Streams** to let users implement their stream processing applications with data stored in Kafka topics. Kafka Streams is considered alpha quality and its public APIs are likely to change in future releases. You can use Kafka Streams by adding a dependency on the streams jar using the following example maven co-ordinates \(you can change the version numbers with new releases\):
+我们在0.10.0的发布中添加了一个新的称为**Kafka Streams**客户端类库来支持用户实现存储于Kafka Topic的数据的流处理程序。Kafka流处理被认定为alpha阶段，它的公开API可能在后续的版本中变更。你可以通过添加如下的Maven坐标来添加流处理jar依赖，从而使用Kafka流处理（你可以改变版本为新的发布版本）：
 
 ```
 	<dependency>
@@ -173,5 +191,4 @@ As of the 0.10.0 release we have added a new client library named **Kafka Stream
 
 ```
 
-Examples showing how to use this library are given in the [**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/streams/KafkaStreams.html "Kafka 0.10.0 Javadoc") \(note those classes annotated with**@InterfaceStability.Unstable**, indicating their public APIs may change without backward-compatibility in future releases\).
-
+如何使用这个类库的示例在[**javadocs**](http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/streams/KafkaStreams.html "Kafka 0.10.0 Javadoc")给出（注意，被注解了**@InterfaceStability.Unstable**的类标明他们的公开API可能在以后的发布中变更并不保证前向兼容）。
