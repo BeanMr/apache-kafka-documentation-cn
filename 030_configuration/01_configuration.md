@@ -12,7 +12,7 @@ The essential configurations are the following:
 
 Topic-level configurations and defaults are discussed in more detail [**below**](http://kafka.apache.org/documentation.html#topic-config).
 
-| **NameDescriptionTypeDefaultValid ValuesImportance** |  |  |  |  |  |
+| Name|  Description|  Type|  Default|  Valid Values|  Importance|
 | --- | --- | --- | --- | --- | --- |
 | zookeeper.connect | Zookeeper host string | string |  |  | high |
 | advertised.host.name | DEPRECATED: only used when \`advertised.listeners\` or \`listeners\` are not set. Use \`advertised.listeners\` instead. Hostname to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, it will use the value for \`host.name\` if configured. Otherwise it will use the value returned from java.net.InetAddress.getCanonicalHostName\(\). | string | null |  | high |

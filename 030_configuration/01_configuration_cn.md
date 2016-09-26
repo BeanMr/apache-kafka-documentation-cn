@@ -1,21 +1,22 @@
-## [3. Configuration](#configuration)<a id="configuration"></a>
+## [3. 配置](#configuration)<a id="configuration"></a>
 
-Kafka uses key-value pairs in the [**property file format**](http://en.wikipedia.org/wiki/.properties) for configuration. These values can be supplied either from a file or programmatically.
+Kafka使用[**property file格式**](http://en.wikipedia.org/wiki/.properties)键值对进行配置。这些数值可以通过文件或者编程形式指定。
 
-### [3.1 Broker Configs](#brokerconfigs)<a id="brokerconfigs"></a>
+### [3.1 Broker配置](#brokerconfigs)<a id="brokerconfigs"></a>
 
-The essential configurations are the following:
+必备的配置信息如下：
 
 * `broker.id`
 * `log.dirs`
 * `zookeeper.connect`
 
-Topic-level configurations and defaults are discussed in more detail [**below**](http://kafka.apache.org/documentation.html#topic-config).
+Topic级别的配置和默认值在[下面](http://kafka.apache.org/documentation.html#topic-config)进行更深入的讨论。
 
-| **NameDescriptionTypeDefaultValid ValuesImportance** |  |  |  |  |  |
+| 名称|  描述|  类型|  默认值|  有效值|  重要性|
 | --- | --- | --- | --- | --- | --- |
-| zookeeper.connect | Zookeeper host string | string |  |  | high |
-| advertised.host.name | DEPRECATED: only used when \`advertised.listeners\` or \`listeners\` are not set. Use \`advertised.listeners\` instead. Hostname to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, it will use the value for \`host.name\` if configured. Otherwise it will use the value returned from java.net.InetAddress.getCanonicalHostName\(\). | string | null |  | high |
+| zookeeper.connect | Zookeeper主机字符串| string |  |  | high |
+| advertised.host.name | 弃用:只有当`advertised.listeners`或者`listeners`没有设置时使用。使用`advertised.listeners`来取代。发布到ZooKeeper供客户端使用的的Hostname。在IaaS环境中(译者注：多网卡环境同理)，这个配置必须与broker绑定的接口不同。如果这个值没有设置那么它将使用已配置的`host.name`，如果`host.name`也没有配置它将返回java.net.InetAddress.getCanonicalHostName的值。
+ only used when \`advertised.listeners\` or \`listeners\` are not set. Use \`advertised.listeners\` instead. Hostname to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, it will use the value for \`host.name\` if configured. Otherwise it will use the value returned from java.net.InetAddress.getCanonicalHostName\(\). | string | null |  | high |
 | advertised.listeners | Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for \`listeners\` will be used. | string | null |  | high |
 | advertised.port | DEPRECATED: only used when \`advertised.listeners\` or \`listeners\` are not set. Use \`advertised.listeners\` instead. The port to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the port to which the broker binds. If this is not set, it will publish the same port that the broker binds to. | int | null |  | high |
 | auto.create.topics.enable | Enable auto creation of topic on the server | boolean | true |  | high |
