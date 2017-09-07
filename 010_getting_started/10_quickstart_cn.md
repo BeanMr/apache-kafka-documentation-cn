@@ -35,7 +35,7 @@ Kafka依赖ZooKeeper因此你首先启动一个ZooKeeper服务器。如果你没
 
 #### [Step 3: 创建Topic](#quickstart_createtopic)<a id="quickstart_createtopic"></a>
 
-现在我们开始创建一个名为“TestCase”的单分区单副本的Topic。
+现在我们开始创建一个名为“test”的单分区单副本的Topic。
 
 ```bash
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
