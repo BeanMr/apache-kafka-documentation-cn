@@ -65,7 +65,11 @@ As a result of these factors using the filesystem and relying on pagecache is su
 
 This suggests a design which is very simple: rather than maintain as much as possible in-memory and flush it all out to the filesystem in a panic when we run out of space, we invert that. All data is immediately written to a persistent log on the filesystem without necessarily flushing to disk. In effect this just means that it is transferred into the kernel's pagecache.
 
+这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们Flush到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要flush磁盘操作的持久化的文件系统的log文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
+
 This style of pagecache-centric design is described in an **[article](http://varnish.projects.linpro.no/wiki/ArchitectNotes)** on the design of Varnish here \(along with a healthy dose of arrogance\).
+
+这种基于页缓存的设计可以参见在**[这篇关于Varnish的论文](http://varnish.projects.linpro.no/wiki/ArchitectNotes)**
 
 #### [Constant Time Suffices](#design_constanttime)<a id="design_constanttime"></a>
 
