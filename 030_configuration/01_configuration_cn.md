@@ -66,12 +66,12 @@ Topic级别的配置和默认值在[下面](http://kafka.apache.org/documentatio
 | quota.producer.default | 按照clientId定义的生产者每秒允许生产的限额（byte）<br />Any producer distinguished by clientId will get throttled if it produces more bytes than this value per-second | long | 9223372036854775807 | \[1,...\] | high |
 | replica.fetch.max.bytes | 允许复制者拉取消息集的最大小小<br />The number of bytes of messages to attempt to fetch | int | 1048576 |  | high |
 | replica.fetch.min.bytes | 复制者拉取消息响应最小的大小。如果不足此大小响应延迟到replicaMaxWaitTimeMs返回（译者注：防止小包问题）<br />Minimum bytes expected for each fetch response. If not enough bytes, wait up to replicaMaxWaitTimeMs | int | 1 |  | high |
-| replica.fetch.wait.max.ms | max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics | int | 500 |  | high |
-| replica.high.watermark.checkpoint.interval.ms | The frequency with which the high watermark is saved out to disk | long | 5000 |  | high |
-| replica.lag.time.max.ms | If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr | long | 10000 |  | high |
-| replica.socket.receive.buffer.bytes | The socket receive buffer for network requests | int | 65536 |  | high |
-| replica.socket.timeout.ms | The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms | int | 30000 |  | high |
-| request.timeout.ms | The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted. | int | 30000 |  | high |
+| replica.fetch.wait.max.ms | 复制者拉取消息响应最大的等待时间。这个设置必须小于replica.lag.time.max.ms来防止低吞吐量Topic出现经常性的ISR丢失<br />max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics | int | 500 |  | high |
+| replica.high.watermark.checkpoint.interval.ms | replica将最高水位进行flush到磁盘的时间间隔<br />The frequency with which the high watermark is saved out to disk | long | 5000 |  | high |
+| replica.lag.time.max.ms | 如果在这个时间点前复制者没有发送任何拉取请求或者复制者没有消费到Leader日志最终偏移量，Leader将会将此复制者从ISR中移除<br />If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr | long | 10000 |  | high |
+| replica.socket.receive.buffer.bytes | 网络请求的Socket接收缓存<br />The socket receive buffer for network requests | int | 65536 |  | high |
+| replica.socket.timeout.ms | 网络请求的Socket超时时间。这个值应该至少大于replica.fetch.wait.max.ms<br />The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms | int | 30000 |  | high |
+| request.timeout.ms | 这个配置控制着客户端等待请求响应的最大时间。如果在这个时间之后依旧没有收到响应，客户端将按需重发或者当禁用重试时直接认为请求失败<br />The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted. | int | 30000 |  | high |
 | socket.receive.buffer.bytes | The SO\_RCVBUF buffer of the socket sever sockets | int | 102400 |  | high |
 | socket.request.max.bytes | The maximum number of bytes in a socket request | int | 104857600 | \[1,...\] | high |
 | socket.send.buffer.bytes | The SO\_SNDBUF buffer of the socket sever sockets | int | 102400 |  | high |
