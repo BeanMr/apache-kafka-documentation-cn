@@ -1,76 +1,76 @@
 ## [3. 配置](#configuration)<a id="configuration"></a>
 
-Kafka使用[**property file格式**](http://en.wikipedia.org/wiki/.properties)键值对进行配置。这些数值可以通过文件或者编程形式指定。
+Kafka 使用 [**property file 格式**](http://en.wikipedia.org/wiki/.properties) 键值对进行配置。这些数值可以通过文件或者编程形式指定。
 
-### [3.1 Broker配置](#brokerconfigs)<a id="brokerconfigs"></a>
+### [3.1 Broker 配置](#brokerconfigs)<a id="brokerconfigs"></a>
 
-必备的配置信息如下：
+核心的必要配置信息如下：
 
 * `broker.id`
 * `log.dirs`
 * `zookeeper.connect`
 
-Topic级别的配置和默认值在[下面](http://kafka.apache.org/documentation.html#topic-config)进行更深入的讨论。
+Topic 级别的配置和默认值在[下面](http://kafka.apache.org/documentation.html#topic-config) 进行更深入的讨论。
 
-| 名称|  描述|  类型|  默认值|  有效值|  重要性|
-| --- | --- | --- | --- | --- | --- |
-| zookeeper.connect | Zookeeper连接字符串/ZK地址 | string |  |  | high |
-| advertised.host.name | 弃用:只有当'advertised.listeners'或者'listeners'没有设置时使用。使用'advertised.listeners'来取代。发布到ZooKeeper供客户端使用的的Hostname。在IaaS环境中，这个配置可能与broker绑定的接口不同。如果这个值没有设置那么它将使用已配置的'host.name'，如果'host.name'也没有配置它将返回java.net.InetAddress.getCanonicalHostName()的值。<br />only used when 'advertised.listeners' or 'listeners' are not set. Use 'advertised.listeners' instead. Hostname to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, it will use the value for 'host.name' if configured. Otherwise it will use the value returned from java.net.InetAddress.getCanonicalHostName(). | string | null |  | high |
-| advertised.listeners | 发布到ZooKeeper供客户端使用的监听器（译者注：broker监听的网络接口，例如PLAINTEXT://192.168.71.31:9092或者security_protocol://host_name:port），如果与上面配置的'listeners'不同。在Iaas环境，这个值可能要和broker绑定的接口不同。假如没有设置将使用'listeners'的值。<br />Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for 'listeners' will be used. | string | null |  | high |
-| advertised.port | 弃用：只有当'advertised.listeners'或者'listeners'没有配置的时候起效。使用 'advertised.listeners'代替。发布到ZooKeeper供客户端使用的端口。在IaaS环境中，这个端口后可能需要和Broker绑定的不同。如果没有配置将使用broker绑定的端口值。<br />DEPRECATED: only used when 'advertised.listeners' or 'listeners' are not set. Use 'advertised.listeners' instead. The port to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the port to which the broker binds. If this is not set, it will publish the same port that the broker binds to. | int | null |  | high |
-| auto.create.topics.enable | 允许在服务器上自动创建主题(topic)<br />Enable auto creation of topic on the server | boolean | true |  | high |
-| auto.leader.rebalance.enable | 是否启动自动leader均衡，一个后台线程按周期检查然后按需触发leader重选<br />Enables auto leader balancing. A background thread checks and triggers leader balance if required at regular intervals | boolean | true |  | high |
+| 名称              |  描述              |  类型           |  默认值 |  有效值  |  重要性 |
+| ----------------- | ------------------ | --------------- | ------- | -------- | ------- |
+| zookeeper.connect | Zookeeper 连接字符串 /ZK 地址 | string | null  |  | high |
+| advertised.host.name | 弃用：只有当'advertised.listeners'或者'listeners'没有设置时使用。使用'advertised.listeners'来取代。发布到 ZooKeeper 供客户端使用的的 Hostname。在 IaaS 环境中，这个配置可能与 broker 绑定的接口不同。如果这个值没有设置那么它将使用已配置的'host.name'，如果'host.name'也没有配置它将返回 java.net.InetAddress.getCanonicalHostName() 的值。<br />only used when 'advertised.listeners' or 'listeners' are not set. Use 'advertised.listeners' instead. Hostname to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, it will use the value for 'host.name' if configured. Otherwise it will use the value returned from java.net.InetAddress.getCanonicalHostName(). | string | null |  | high |
+| advertised.listeners | 发布到 ZooKeeper 供客户端使用的监听器（译者注：broker 监听的网络接口，例如 PLAINTEXT://192.168.71.31:9092 或者 security_protocol://host_name:port），如果与上面配置的'listeners'不同。在 Iaas 环境，这个值可能要和 broker 绑定的接口不同。假如没有设置将使用'listeners'的值。<br />Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for 'listeners' will be used. | string | null |  | high |
+| advertised.port | 弃用：只有当'advertised.listeners'或者'listeners'没有配置的时候起效。使用 'advertised.listeners'代替。发布到 ZooKeeper 供客户端使用的端口。在 IaaS 环境中，这个端口后可能需要和 Broker 绑定的不同。如果没有配置将使用 broker 绑定的端口值。<br />DEPRECATED: only used when 'advertised.listeners' or 'listeners' are not set. Use 'advertised.listeners' instead. The port to publish to ZooKeeper for clients to use. In IaaS environments, this may need to be different from the port to which the broker binds. If this is not set, it will publish the same port that the broker binds to. | int | null |  | high |
+| auto.create.topics.enable | 允许在服务器上自动创建主题 (topic)<br />Enable auto creation of topic on the server | boolean | true |  | high |
+| auto.leader.rebalance.enable | 是否启动自动 leader 均衡，一个后台线程按周期检查然后按需触发 leader 重选<br />Enables auto leader balancing. A background thread checks and triggers leader balance if required at regular intervals | boolean | true |  | high |
 | background.threads | 后台处理任务使用的线程数<br />The number of threads to use for various background processing tasks | int | 10 | \[1,...\] | high |
-| broker.id | 这个服务器上broker的id。如果不设置，将生成一个唯一的broker id。为了避免基于Zookeeper生成的broker id与用户配置的发生冲突，生成的broker id从reserved.broker.max.id + 1开始。<br />The broker id for this server. If unset, a unique broker id will be generated.To avoid conflicts between zookeeper generated broker id's and user configured broker id's, generated broker idsstart from reserved.broker.max.id + 1. | int | -1 |  | high |
-| compression.type | 为特定的topic指定最终的压缩类型。这个配置接受标准的压缩编码('gzip', 'snappy', 'lz4')。另外它接受'uncompressed'参数指明不进行压缩；同时'producer'值表示保留生产者指定的压缩类型<br />Specify the final compression type for a given topic. This configuration accepts the standard compression codecs ('gzip', 'snappy', 'lz4'). It additionally accepts 'uncompressed' which is equivalent to no compression; and 'producer' which means retain the original compression codec set by the producer. | string | producer |  | high |
-| delete.topic.enable | 是否允许删除topic。如果这个配置被关闭则通过admin tool删除topic将失效。<br />Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off | boolean | false |  | high |
+| **broker.id** | 这个服务器上 broker 的 id。如果不设置，将生成一个唯一的 broker id。为了避免基于 Zookeeper 生成的 broker id 与用户配置的发生冲突，生成的 broker id 从 reserved.broker.max.id + 1 开始。<br />The broker id for this server. If unset, a unique broker id will be generated.To avoid conflicts between zookeeper generated broker id's and user configured broker id's, generated broker idsstart from reserved.broker.max.id + 1. | int | -1 |  | high |
+| compression.type | 为特定的 topic 指定最终的压缩类型。这个配置接受标准的压缩编码 ('gzip', 'snappy', 'lz4')。另外它接受'uncompressed'参数指明不进行压缩；同时'producer'值表示保留生产者指定的压缩类型<br />Specify the final compression type for a given topic. This configuration accepts the standard compression codecs ('gzip', 'snappy', 'lz4'). It additionally accepts 'uncompressed' which is equivalent to no compression; and 'producer' which means retain the original compression codec set by the producer. | string | producer |  | high |
+| delete.topic.enable | 是否允许删除 topic。如果这个配置被关闭则通过 admin tool 删除 topic 将失效。<br />Enables delete topic. Delete topic through the admin tool will have no effect if this config is turned off | boolean | false |  | high |
 | host.name | 弃用：只有当'listeners'没有配置的时候起效。如果这个配置被设置，它将仅仅绑定到这个地址，如果没有设置将绑定到所有的接口上。<br />DEPRECATED: only used when 'listeners' is not set. Use 'listeners' instead. hostname of broker. If this is set, it will only bind to this address. If this is not set, it will bind to all interfaces | string | "" |  | high |
 | leader.imbalance.check.interval.seconds | 控制器触发分区重分配检查的周期<br />The frequency with which the partition rebalance check is triggered by the controller | long | 300 |  | high |
-| leader.imbalance.per.broker.percentage | 每个broker上的leader不均衡比例。如果每个broker上的leader不均衡比例超过此数值控制器将触发一个leader均衡。这个数值按照百分比指定。（译者注：由于Replication机制Partition都有多个副本，这个副本列表AR第一个称为Preferred Replica，Kafka要保证Preferred Replica均匀分到broker上，因为对于某个Partition的读写操作都由这个副本完成。）<br />The ratio of leader imbalance allowed per broker. The controller would trigger a leader balance if it goes above this value per broker. The value is specified in percentage. | int | 10 |  | high |
-| listeners | 监听接口列表 - 一个逗号分隔的URI列表我们将使用指定的协议监听这些地址。指定hostname为0.0.0.0将绑定所有的接口。留空hostname将绑定到默认的接口。实例合法的监听接口列表为：PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093<br />Listener List - Comma-separated list of URIs we will listen on and their protocols. Specify hostname as 0.0.0.0 to bind to all interfaces. Leave hostname empty to bind to default interface. Examples of legal listener lists: PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093 | string | null |  | high |
-| log.dir | 日志文件存储的位置（log.dirs配置的补充）<br />The directory in which the log data is kept (supplemental for log.dirs property) | string | /tmp/kafka-logs |  | high |
-| log.dirs | 日志文件存储的位置列表，如果没有设置将使用log.dir<br />The directories in which the log data is kept. If not set, the value in log.dir is used | string | null |  | high |
+| leader.imbalance.per.broker.percentage | 每个 broker 上的 leader 不均衡比例。如果每个 broker 上的 leader 不均衡比例超过此数值控制器将触发一个 leader 均衡。这个数值按照百分比指定。（译者注：由于 Replication 机制 Partition 都有多个副本，这个副本列表 AR 第一个称为 Preferred Replica，Kafka 要保证 Preferred Replica 均匀分到 broker 上，因为对于某个 Partition 的读写操作都由这个副本完成。）<br />The ratio of leader imbalance allowed per broker. The controller would trigger a leader balance if it goes above this value per broker. The value is specified in percentage. | int | 10 |  | high |
+| listeners | 监听接口列表 - 一个逗号分隔的 URI 列表我们将使用指定的协议监听这些地址。指定 hostname 为 0.0.0.0 将绑定所有的接口。留空 hostname 将绑定到默认的接口。实例合法的监听接口列表为：PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093<br />Listener List - Comma-separated list of URIs we will listen on and their protocols. Specify hostname as 0.0.0.0 to bind to all interfaces. Leave hostname empty to bind to default interface. Examples of legal listener lists: PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093 | string | null |  | high |
+| log.dir | 日志文件存储的位置（log.dirs 配置的补充）<br />The directory in which the log data is kept (supplemental for log.dirs property) | string | /tmp/kafka-logs |  | high |
+| log.dirs | 日志文件存储的位置列表，如果没有设置将使用 log.dir<br />The directories in which the log data is kept. If not set, the value in log.dir is used | string | null |  | high |
 | log.flush.interval.messages | 在消息被刷新到磁盘之前允许在单个日志分区上堆积的消息的数量<br />The number of messages accumulated on a log partition before messages are flushed to disk | long | 9223372036854775807 | \[1,...\] | high |
-| log.flush.interval.ms | 任意topic上的消息在刷新到硬盘之前允许其保存在内存中的最大ms数。如果没有设置则使用log.flush.scheduler.interval.ms配置<br />The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used | long | null |  | high |
-| log.flush.offset.checkpoint.interval.ms | 更新最后一次flush的持久化消息为日志恢复点的频率<br />The frequency with which we update the persistent record of the last flush which acts as the log recovery point | int | 60000 | \[0,...\] | high |
-| log.flush.scheduler.interval.ms | 刷新检查是否有log需要被刷新到硬盘的频率用ms表示<br />The frequency in ms that the log flusher checks whether any log needs to be flushed to disk | long | 9223372036854775807 |  | high |
+| log.flush.interval.ms | 任意 topic 上的消息在刷新到硬盘之前允许其保存在内存中的最大 ms 数。如果没有设置则使用 log.flush.scheduler.interval.ms 配置<br />The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used | long | null |  | high |
+| log.flush.offset.checkpoint.interval.ms | 更新最后一次 flush 的持久化消息为日志恢复点的频率<br />The frequency with which we update the persistent record of the last flush which acts as the log recovery point | int | 60000 | \[0,...\] | high |
+| log.flush.scheduler.interval.ms | 刷新检查是否有 log 需要被刷新到硬盘的频率用 ms 表示<br />The frequency in ms that the log flusher checks whether any log needs to be flushed to disk | long | 9223372036854775807 |  | high |
 | log.retention.bytes | 保留的日志最大的大小<br />The maximum size of the log before deleting it | long | -1 |  | high |
-| log.retention.hours | 在删除之前日志文件保存的最长时间(小时计),相比log.retention.ms第三优先<br />The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property | int | 168 |  | high |
-| log.retention.minutes | 在删除之前日志文件保存的最长时间(分钟计)，相比log.retention.ms第二优先。如果没有设置log.retention.hours中的值将被使用<br />The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used | int | null |  | high |
-| log.retention.ms | 在删除之前日志文件保存的最长微秒数(微秒计),如果没有设置log.retention.minutes中的值将被使用<br />The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used | long | null |  | high |
-| log.roll.hours | 切分新日志段的最长时间间隔（小时计），相比log.roll.ms第二优先<br />The maximum time before a new log segment is rolled out (in hours), secondary to log.roll.ms property | int | 168 | [1,...] | high |
-| log.roll.jitter.hours | 切分新日志段时间的随机偏移量（小时计），相比log.roll.jitter.ms第二优先级（译者注：添加时间随机偏移量是为了防止惊群问题。）<br />The maximum jitter to subtract from logRollTimeMillis (in hours), secondary to log.roll.jitter.ms property | int | 0 | [0,...] | high |
-| log.roll.jitter.ms | 切分新日志段时间的随机偏移量（毫秒计），未设置则使用log.roll.jitter.hours<br />The maximum jitter to subtract from logRollTimeMillis (in milliseconds). If not set, the value in log.roll.jitter.hours is used | long | null |  | high |
-| log.roll.ms | 切分新日志段的最长时间间隔（毫秒计），如果不设置则使用log.roll.hours<br />The maximum time before a new log segment is rolled out \(in milliseconds\). If not set, the value in log.roll.hours is used | long | null |  | high |
+| log.retention.hours | 在删除之前日志文件保存的最长时间（小时计）, 相比 log.retention.ms 第三优先<br />The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property | int | 168 |  | high |
+| log.retention.minutes | 在删除之前日志文件保存的最长时间（分钟计），相比 log.retention.ms 第二优先。如果没有设置 log.retention.hours 中的值将被使用<br />The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used | int | null |  | high |
+| log.retention.ms | 在删除之前日志文件保存的最长微秒数（微秒计）, 如果没有设置 log.retention.minutes 中的值将被使用<br />The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used | long | null |  | high |
+| log.roll.hours | 切分新日志段的最长时间间隔（小时计），相比 log.roll.ms 第二优先<br />The maximum time before a new log segment is rolled out (in hours), secondary to log.roll.ms property | int | 168 | [1,...] | high |
+| log.roll.jitter.hours | 切分新日志段时间的随机偏移量（小时计），相比 log.roll.jitter.ms 第二优先级（译者注：添加时间随机偏移量是为了防止惊群问题。）<br />The maximum jitter to subtract from logRollTimeMillis (in hours), secondary to log.roll.jitter.ms property | int | 0 | [0,...] | high |
+| log.roll.jitter.ms | 切分新日志段时间的随机偏移量（毫秒计），未设置则使用 log.roll.jitter.hours<br />The maximum jitter to subtract from logRollTimeMillis (in milliseconds). If not set, the value in log.roll.jitter.hours is used | long | null |  | high |
+| log.roll.ms | 切分新日志段的最长时间间隔（毫秒计），如果不设置则使用 log.roll.hours<br />The maximum time before a new log segment is rolled out \(in milliseconds\). If not set, the value in log.roll.hours is used | long | null |  | high |
 | log.segment.bytes | 单个日志文件最大大小<br />The maximum size of a single log file | int | 1073741824 | \[14,...\] | high |
 | log.segment.delete.delay.ms | 日志分段从文件系统删除前的延迟<br />The amount of time to wait before deleting a file from the filesystem | long | 60000 | \[0,...\] | high |
 | message.max.bytes | 服务器可接受的最大消息的大小<br />The maximum size of message that the server can receive | int | 1000012 | \[0,...\] | high |
-| min.insync.replicas | 定义ACK生产者请求前ISR中最小的副本数<br />define the minimum number of replicas in ISR needed to satisfy a produce request with acks=all \(or -1\) | int | 1 | \[1,...\] | high |
-| num.io.threads | 服务器为网络请求服务的IO线程数<br />The number of io threads that the server uses for carrying out network requests | int | 8 | \[1,...\] | high |
+| min.insync.replicas | 定义 ACK 生产者请求前 ISR 中最小的副本数<br />define the minimum number of replicas in ISR needed to satisfy a produce request with acks=all \(or -1\) | int | 1 | \[1,...\] | high |
+| num.io.threads | 服务器为网络请求服务的 IO 线程数<br />The number of io threads that the server uses for carrying out network requests | int | 8 | \[1,...\] | high |
 | num.network.threads | 服务器处理网络请求的网络线程数<br />the number of network threads that the server uses for handling network requests | int | 3 | \[1,...\] | high |
-| num.recovery.threads.per.data.dir | 每个日志文件夹在启停时日志恢复使用的线程数（译者注：RAID可以增大数值）<br />The number of threads per data directory to be used for log recovery at startup and flushing at shutdown | int | 1 | \[1,...\] | high |
-| num.replica.fetchers | 从源节点抓取副本消息的抓取线程数。这个值越高从节点的IO同步性越好<br />Number of fetcher threads used to replicate messages from a source broker. Increasing this value can increase the degree of I\/O parallelism in the follower broker. | int | 1 |  | high |
-| offset.metadata.max.bytes | offset队列中元数据的最大大小（译者注： 之前版本，Kafka其实存在一个比较大的隐患，就是利用 Zookeeper 来存储记录每个消费者/组的消费进度。从0.10.1.1版本已默认将消费的 offset 迁入到了 Kafka 一个名为 __consumer_offsets 的Topic中。，这个Topic使用group、topic、partition三元组维护一个offset信息。）<br />The maximum size for a metadata entry associated with an offset commit | int | 4096 |  | high |
-| offsets.commit.required.acks | offset队列commit时需要的ack数量。一般情况下默认值-1不应该被修改（译者注： 因为这部分消息是非常重要，以至于是不能容忍丢数据的，生产者要等到所有的 ISR 都收到消息后才会得到 ack。数据安全性好自然其速度会有所影响。）<br />The required acks before the commit can be accepted. In general, the default \(-1\) should not be overridden | short | -1 |  | high |
-| offsets.commit.timeout.ms | offset队列接受commit的超时时间。这个设置与生产者请求超时时间相似<br />Offset commit will be delayed until all replicas for the offsets topic receive the commit or this timeout is reached. This is similar to the producer request timeout. | int | 5000 | \[1,...\] | high |
-| offsets.load.buffer.size | 从offset日志段读取信息到缓存的批量加载大小<br />Batch size for reading from the offsets segments when loading offsets into the cache. | int | 5242880 | \[1,...\] | high |
+| num.recovery.threads.per.data.dir | 每个日志文件夹在启停时日志恢复使用的线程数（译者注：RAID 可以增大数值）<br />The number of threads per data directory to be used for log recovery at startup and flushing at shutdown | int | 1 | \[1,...\] | high |
+| num.replica.fetchers | 从源节点抓取副本消息的抓取线程数。这个值越高从节点的 IO 同步性越好<br />Number of fetcher threads used to replicate messages from a source broker. Increasing this value can increase the degree of I\/O parallelism in the follower broker. | int | 1 |  | high |
+| offset.metadata.max.bytes | offset 队列中元数据的最大大小（译者注： 之前版本，Kafka 其实存在一个比较大的隐患，就是利用 Zookeeper 来存储记录每个消费者 / 组的消费进度。从 0.10.1.1 版本已默认将消费的 offset 迁入到了 Kafka 一个名为 `__consumer_offsets` 的 Topic 中。这个 Topic 使用 group、topic、partition 三元组维护一个 offset 信息。）<br />The maximum size for a metadata entry associated with an offset commit | int | 4096 |  | high |
+| offsets.commit.required.acks | offset 队列 commit 时需要的 ack 数量。一般情况下默认值 -1 不应该被修改（译者注： 因为这部分消息是非常重要，以至于是不能容忍丢数据的，生产者要等到所有的 ISR 都收到消息后才会得到 ack。数据安全性好自然其速度会有所影响。）<br />The required acks before the commit can be accepted. In general, the default \(-1\) should not be overridden | short | -1 |  | high |
+| offsets.commit.timeout.ms | offset 队列接受 commit 的超时时间。这个设置与生产者请求超时时间相似<br />Offset commit will be delayed until all replicas for the offsets topic receive the commit or this timeout is reached. This is similar to the producer request timeout. | int | 5000 | \[1,...\] | high |
+| offsets.load.buffer.size | 从 offset 日志段读取信息到缓存的批量加载大小<br />Batch size for reading from the offsets segments when loading offsets into the cache. | int | 5242880 | \[1,...\] | high |
 | offsets.retention.check.interval.ms | 检查旧的偏移量的频率，单位是毫秒<br />Frequency at which to check for stale offsets | long | 600000 | \[1,...\] | high |
 | offsets.retention.minutes | 偏移量主题的日志保留窗口，单位是分钟<br />Log retention window in minutes for offsets topic | int | 1440 | \[1,...\] | high |
-| offsets.topic.compression.codec | offsets topic的压缩编码，压缩编码可以用于原子化提交<br />Compression codec for the offsets topic - compression may be used to achieve "atomic" commits | int | 0 |  | high |
-| offsets.topic.num.partitions | offset topic的分区数量（在部署后不应该再修改）<br />The number of partitions for the offset commit topic \(should not change after deployment\) | int | 50 | \[1,...\] | high |
-| offsets.topic.replication.factor | offsets topic的复制因子（设置高一些要保证可用性）。为了保证offsets topic的复制因子有效，在offsets topic处理第一个请求的时候，存活的节点数必须大于或者等于复制因子。否则offsets topic创建将会失败或者使用两者之间的最小值（存活节点数、配置的复制因子）<br />The replication factor for the offsets topic \(set higher to ensure availability\). To ensure that the effective replication factor of the offsets topic is the configured value, the number of alive brokers has to be at least the replication factor at the time of the first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min\(alive brokers, configured replication factor\) | short | 3 | \[1,...\] | high |
-| offsets.topic.segment.bytes | offsets topic的段大小应该设置的相对较小来保证快速的日志压缩和缓存加载<br />The offsets topic segment bytes should be kept relatively small in order to facilitate faster log compaction and cache loads | int | 104857600 | \[1,...\] | high |
+| offsets.topic.compression.codec | offsets topic 的压缩编码，压缩编码可以用于原子化提交<br />Compression codec for the offsets topic - compression may be used to achieve "atomic" commits | int | 0 |  | high |
+| offsets.topic.num.partitions | offset topic 的分区数量（在部署后不应该再修改）<br />The number of partitions for the offset commit topic \(should not change after deployment\) | int | 50 | \[1,...\] | high |
+| offsets.topic.replication.factor | offsets topic 的复制因子（设置高一些要保证可用性）。为了保证 offsets topic 的复制因子有效，在 offsets topic 处理第一个请求的时候，存活的节点数必须大于或者等于复制因子。否则 offsets topic 创建将会失败或者使用两者之间的最小值（存活节点数、配置的复制因子）<br />The replication factor for the offsets topic \(set higher to ensure availability\). To ensure that the effective replication factor of the offsets topic is the configured value, the number of alive brokers has to be at least the replication factor at the time of the first request for the offsets topic. If not, either the offsets topic creation will fail or it will get a replication factor of min\(alive brokers, configured replication factor\) | short | 3 | \[1,...\] | high |
+| offsets.topic.segment.bytes | offsets topic 的段大小应该设置的相对较小来保证快速的日志压缩和缓存加载<br />The offsets topic segment bytes should be kept relatively small in order to facilitate faster log compaction and cache loads | int | 104857600 | \[1,...\] | high |
 | port | 已过时：仅仅当”listeners“没有被配置时有效。使用”listeners“来取代此配置。监听和接受连接的端口<br />DEPRECATED: only used when 'listeners' is not set. Use 'listeners' instead. the port to listen and accept connections on | int | 9092 |  | high |
 | queued.max.requests | 在阻塞网络线程之前允许的请求队列最大的长度<br />The number of queued requests allowed before blocking the network threads | int | 500 | \[1,...\] | high |
-| quota.consumer.default | 按照clientId/consumer group定义的任何消费者每秒允许拉取的限额（byte）<br />Any consumer distinguished by clientId\/consumer group will get throttled if it fetches more bytes than this value per-second | long | 9223372036854775807 | \[1,...\] | high |
-| quota.producer.default | 按照clientId定义的生产者每秒允许生产的限额（byte）<br />Any producer distinguished by clientId will get throttled if it produces more bytes than this value per-second | long | 9223372036854775807 | \[1,...\] | high |
+| quota.consumer.default | 按照 clientId/consumer group 定义的任何消费者每秒允许拉取的限额（byte）<br />Any consumer distinguished by clientId\/consumer group will get throttled if it fetches more bytes than this value per-second | long | 9223372036854775807 | \[1,...\] | high |
+| quota.producer.default | 按照 clientId 定义的生产者每秒允许生产的限额（byte）<br />Any producer distinguished by clientId will get throttled if it produces more bytes than this value per-second | long | 9223372036854775807 | \[1,...\] | high |
 | replica.fetch.max.bytes | 允许复制者拉取消息集的最大小小<br />The number of bytes of messages to attempt to fetch | int | 1048576 |  | high |
-| replica.fetch.min.bytes | 复制者拉取消息响应最小的大小。如果不足此大小响应延迟到replicaMaxWaitTimeMs返回（译者注：防止小包问题）<br />Minimum bytes expected for each fetch response. If not enough bytes, wait up to replicaMaxWaitTimeMs | int | 1 |  | high |
-| replica.fetch.wait.max.ms | 复制者拉取消息响应最大的等待时间。这个设置必须小于replica.lag.time.max.ms来防止低吞吐量Topic出现经常性的ISR丢失<br />max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics | int | 500 |  | high |
-| replica.high.watermark.checkpoint.interval.ms | replica将最高水位进行flush到磁盘的时间间隔<br />The frequency with which the high watermark is saved out to disk | long | 5000 |  | high |
-| replica.lag.time.max.ms | 如果在这个时间点前复制者没有发送任何拉取请求或者复制者没有消费到Leader日志最终偏移量，Leader将会将此复制者从ISR中移除<br />If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr | long | 10000 |  | high |
-| replica.socket.receive.buffer.bytes | 网络请求的Socket接收缓存<br />The socket receive buffer for network requests | int | 65536 |  | high |
-| replica.socket.timeout.ms | 网络请求的Socket超时时间。这个值应该至少大于replica.fetch.wait.max.ms<br />The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms | int | 30000 |  | high |
+| replica.fetch.min.bytes | 复制者拉取消息响应最小的大小。如果不足此大小响应延迟到 replicaMaxWaitTimeMs 返回（译者注：防止小包问题）<br />Minimum bytes expected for each fetch response. If not enough bytes, wait up to replicaMaxWaitTimeMs | int | 1 |  | high |
+| replica.fetch.wait.max.ms | 复制者拉取消息响应最大的等待时间。这个设置必须小于 replica.lag.time.max.ms 来防止低吞吐量 Topic 出现经常性的 ISR 丢失<br />max wait time for each fetcher request issued by follower replicas. This value should always be less than the replica.lag.time.max.ms at all times to prevent frequent shrinking of ISR for low throughput topics | int | 500 |  | high |
+| replica.high.watermark.checkpoint.interval.ms | replica 将最高水位进行 flush 到磁盘的时间间隔<br />The frequency with which the high watermark is saved out to disk | long | 5000 |  | high |
+| replica.lag.time.max.ms | 如果在这个时间点前复制者没有发送任何拉取请求或者复制者没有消费到 Leader 日志最终偏移量，Leader 将会将此复制者从 ISR 中移除<br />If a follower hasn't sent any fetch requests or hasn't consumed up to the leaders log end offset for at least this time, the leader will remove the follower from isr | long | 10000 |  | high |
+| replica.socket.receive.buffer.bytes | 网络请求的 Socket 接收缓存<br />The socket receive buffer for network requests | int | 65536 |  | high |
+| replica.socket.timeout.ms | 网络请求的 Socket 超时时间。这个值应该至少大于 replica.fetch.wait.max.ms<br />The socket timeout for network requests. Its value should be at least replica.fetch.wait.max.ms | int | 30000 |  | high |
 | request.timeout.ms | 这个配置控制着客户端等待请求响应的最大时间。如果在这个时间之后依旧没有收到响应，客户端将按需重发或者当禁用重试时直接认为请求失败<br />The configuration controls the maximum amount of time the client will wait for the response of a request. If the response is not received before the timeout elapses the client will resend the request if necessary or fail the request if retries are exhausted. | int | 30000 |  | high |
 | socket.receive.buffer.bytes | The SO\_RCVBUF buffer of the socket sever sockets | int | 102400 |  | high |
 | socket.request.max.bytes | The maximum number of bytes in a socket request | int | 104857600 | \[1,...\] | high |
@@ -147,9 +147,9 @@ Topic级别的配置和默认值在[下面](http://kafka.apache.org/documentatio
 | ssl.endpoint.identification.algorithm | The endpoint identification algorithm to validate server hostname using server certificate. | string | null |  | low |
 | zookeeper.sync.time.ms | How far a ZK follower can be behind a ZK leader | int | 2000 |  | low |
 
-More details about broker configuration can be found in the scala class `kafka.server.KafkaConfig`.
+更多关于 broker 的配置信息可以在 scala 类 `kafka.server.KafkaConfig` 中找到。
 
-[**Topic-level configuration**](http://kafka.apache.org/documentation.html#topic-config) Configurations pertinent to topics have both a global default as well an optional per-topic override. If no per-topic configuration is given the global default is used. The override can be set at topic creation time by giving one or more `--config` options. This example creates a topic named _my-topic_ with a custom max message size and flush rate:
+[**Topic 级别配置**](http://kafka.apache.org/documentation.html#topic-config) 与 Topic 相关的配置既包含服务器默认值，也包含可选的每个 Topic 覆盖值。如果没有给出 Topic 单独的配置，那么服务器全局配置就会被使用。Topic 的配置可以在创建时通过一个或者多个 `--config` 选项来提供。本示例使用自定义的最大消息大小和刷新率创建一个名为 _my-topic_ 的 topic:
 
 ```
  > bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic --partitions 1
@@ -157,7 +157,7 @@ More details about broker configuration can be found in the scala class `kafka.s
 
 ```
 
-Overrides can also be changed or set later using the alter topic command. This example updates the max message size for _my-topic_:
+也可以在使用 `alter configs` 命令稍后更改或设置覆盖值。本示例重置 _my-topic_ 的最大消息的大小：
 
 ```
  > bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic my-topic
@@ -165,7 +165,7 @@ Overrides can also be changed or set later using the alter topic command. This e
 
 ```
 
-To remove an override you can do
+移除一个设置可以通过如下方法：
 
 ```
  > bin/kafka-topics.sh --zookeeper localhost:2181 --alter --topic my-topic
@@ -173,9 +173,9 @@ To remove an override you can do
 
 ```
 
-The following are the topic-level configurations. The server's default configuration for this property is given under the Server Default Property heading, setting this default in the server config allows you to change the default given to topics that have no override specified.
+下面是 Topic 级别配置，服务器默认属性列是该属性的默认配置，修改该属性的服务器级别设置可以用来改变 Topic 的属性。
 
-| **PropertyDefaultServer Default PropertyDescription** |  |  |  |
+| 名称 | 默认值 | 服务器默认属性 | 描述 |
 | --- | --- | --- | --- |
 | cleanup.policy | delete | log.cleanup.policy | A string that is either "delete" or "compact". This string designates the retention policy to use on old log segments. The default policy \("delete"\) will discard old segments when their retention time or size limit has been reached. The "compact" setting will enable [**log compaction**](http://kafka.apache.org/documentation.html#compaction) on the topic. |
 | delete.retention.ms | 86400000 \(24 hours\) | log.cleaner.delete.retention.ms | The amount of time to retain delete tombstone markers for [**log compacted**](http://kafka.apache.org/documentation.html#compaction) topics. This setting also gives a bound on the time in which a consumer must complete a read if they begin from offset 0 to ensure that they get a valid snapshot of the final stage \(otherwise delete tombstones may be collected before they complete their scan\). |
@@ -192,11 +192,11 @@ The following are the topic-level configurations. The server's default configura
 | segment.ms | 7 days | log.roll.hours | This configuration controls the period of time after which Kafka will force the log to roll even if the segment file isn't full to ensure that retention can delete or compact old data. |
 | segment.jitter.ms | 0 | log.roll.jitter.{ms,hours} | The maximum jitter to subtract from logRollTimeMillis. |
 
-### [3.2 Producer Configs](#producerconfigs)<a id="producerconfigs"></a>
+### [3.2 Producer 配置](#producerconfigs)<a id="producerconfigs"></a>
 
-Below is the configuration of the Java producer:
+下面是 Java 生产者的配置：
 
-| **NameDescriptionTypeDefaultValid ValuesImportance** |  |  |  |  |  |
+| 名称 | 描述 | 类型 | 默认值 | 有效值 | 重要性 |
 | --- | --- | --- | --- | --- | --- |
 | bootstrap.servers | A list of host\/port pairs to use for establishing the initial connection to the Kafka cluster. The client will make use of all servers irrespective of which servers are specified here for bootstrapping—this list only impacts the initial hosts used to discover the full set of servers. This list should be in the form`host1:port1,host2:port2,...`. Since these servers are just used for the initial connection to discover the full cluster membership \(which may change dynamically\), this list need not contain the full set of servers \(you may want more than one, though, in case a server is down\). | list |  |  | high |
 | key.serializer | Serializer class for key that implements the`Serializer` interface. | class |  |  | high |
