@@ -4,7 +4,7 @@
 
 We designed Kafka to be able to act as a unified platform for handling all the real-time data feeds **[a large company might have](http://kafka.apache.org/documentation.html#introduction)**. To do this we had to think through a fairly broad set of use cases.
 
-我们将Kafka设计为一个能处理**[大公司可能存在的](http://kafka.apache.org/documentation.html#introduction)**所有实时数据流的统一平台。为了实现这个目标我们考虑了各式各样的应用场景。
+我们将 Kafka 设计为一个能处理**[大公司可能存在的](http://kafka.apache.org/documentation.html#introduction)**所有实时数据流的统一平台。为了实现这个目标我们考虑了各式各样的应用场景。
 
 It would have to have high-throughput to support high volume event streams such as real-time log aggregation.
 
@@ -28,19 +28,19 @@ Finally in cases where the stream is fed into other data systems for serving, we
 
 Supporting these uses led us to a design with a number of unique elements, more akin to a database log than a traditional messaging system. We will outline some elements of the design in the following sections.
 
-为了对上述应用场景的支持最终导致我们设计了一系列更相似于数据库日志而不是传统消息系统的元素。我们将在后续段落中概述其中的某些设计元素。
+为了实现对上述应用场景的支持最终导致我们设计了一系列更相似于数据库日志而不是传统消息系统的元素。我们将在后续段落中概述其中的某些设计元素。
 
 ### [4.2 持久化](#persistence)<a id="persistence"></a>
 
-#### [不要惧怕文件系统!](#design_filesystem)<a id="design_filesystem"></a>
+#### [不要惧怕文件系统！](#design_filesystem)<a id="design_filesystem"></a>
 
 Kafka relies heavily on the filesystem for storing and caching messages. There is a general perception that "disks are slow" which makes people skeptical that a persistent structure can offer competitive performance. In fact disks are both much slower and much faster than people expect depending on how they are used; and a properly designed disk structure can often be as fast as the network.
 
-Kafka在消息的存储和缓存中重度依赖文件系统。因为“磁盘慢”这个普遍性的认知，常常使人们怀疑一个这样的持久化结构是否能提供所需的性能。但实际上磁盘因为使用的方式不同，它可能比人们预想的慢很多也可能比人们预想的快很多；而且一个合理设计的磁盘文件结构常常可以使磁盘运行的和网络一样快。
+Kafka 在消息的存储和缓存中**重度依赖文件系统**。因为“磁盘慢”这个普遍性的认知，常常使人们怀疑一个这样的持久化结构是否能提供所需的性能。但实际上磁盘因为使用的方式不同，它可能比人们预想的慢很多也可能比人们预想的快很多；而且一个合理设计的磁盘文件结构常常可以使磁盘运行的和网络一样快。
 
 The key fact about disk performance is that the throughput of hard drives has been diverging from the latency of a disk seek for the last decade. As a result the performance of linear writes on a **[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** configuration with six 7200rpm SATA RAID-5 array is about 600MB\/sec but the performance of random writes is only about 100k\/sec—a difference of over 6000X. These linear reads and writes are the most predictable of all usage patterns, and are heavily optimized by the operating system. A modern operating system provides read-ahead and write-behind techniques that prefetch data in large block multiples and group smaller logical writes into large physical writes. A further discussion of this issue can be found in this **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**; they actually find that**[sequential disk access can in some cases be faster than random memory access!](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
 
-磁盘性能的核心指标在过去的十年间已经从磁盘的寻道延迟变成了硬件驱动的吞吐量。故此在一个**[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** 操作的由6张7200转磁盘组成的RAID-5阵列之上的线性写操作的性能能达到600MB\/sec左右，但是它的随机写性能却只有100k\/sec左右，两者之间相差了6000倍以上。因为线性的读操作和写操作是最常见的磁盘应用模式，并且这也被操作系统进行了高度的优化。现在的操作系统都提供了预读取和写合并技术、即预读取数倍于数据的大文件块和将多个小的逻辑写操作合并成一个大的物理写操作的技术。关于这个话题的进一步的讨论可以参照 **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**；他们发现实际上**[线性的磁盘访问在某些场景下比随机的内存访问还快!](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
+磁盘性能的核心指标在过去的十年间已经从磁盘的寻道延迟变成了硬件驱动的吞吐量。故此在一个**[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** 操作的由 6 张 7200 转磁盘组成的 RAID-5 阵列之上的线性写操作的性能能达到 600MB\/sec 左右，但是它的随机写性能却只有 100k\/sec 左右，两者之间相差了 6000 倍以上。因为线性的读操作和写操作是最常见的磁盘应用模式，并且这也被操作系统进行了高度的优化。现在的操作系统都提供了预读取和写合并技术、即预读取数倍于数据的大文件块和将多个小的逻辑写操作合并成一个大的物理写操作的技术。关于这个话题的进一步的讨论可以参照 **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**；他们发现实际上**[线性的磁盘访问在某些场景下比随机的内存访问还快！](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
 
 
 To compensate for this performance divergence, modern operating systems have become increasingly aggressive in their use of main memory for disk caching. A modern OS will happily divert _all_ free memory to disk caching with little performance penalty when the memory is reclaimed. All disk reads and writes will go through this unified cache. This feature cannot easily be turned off without using direct I\/O, so even if a process maintains an in-process cache of the data, this data will likely be duplicated in OS pagecache, effectively storing everything twice.
@@ -49,7 +49,7 @@ To compensate for this performance divergence, modern operating systems have bec
 
 Furthermore we are building on top of the JVM, and anyone who has spent any time with Java memory usage knows two things:
 
-另外我们是基于JVM进行建设的，任何一个稍微了解Java内存模型的人都知道以下两点：
+另外我们是基于 JVM 进行建设的，任何一个稍微了解 Java 内存模型的人都知道以下两点：
 
 1. The memory overhead of objects is very high, often doubling the size of the data stored \(or worse\).
 
@@ -57,19 +57,19 @@ Furthermore we are building on top of the JVM, and anyone who has spent any time
 
 2. Java garbage collection becomes increasingly fiddly and slow as the in-heap data increases.
 
-2. Java的内存回收随着堆内数据的增长会变得更加繁琐和缓慢。
+2. Java 的内存回收随着堆内数据的增长会变得更加繁琐和缓慢。
 
 As a result of these factors using the filesystem and relying on pagecache is superior to maintaining an in-memory cache or other structure—we at least double the available cache by having automatic access to all free memory, and likely double again by storing a compact byte structure rather than individual objects. Doing so will result in a cache of up to 28-30GB on a 32GB machine without GC penalties. Furthermore this cache will stay warm even if the service is restarted, whereas the in-process cache will need to be rebuilt in memory \(which for a 10GB cache may take 10 minutes\) or else it will need to start with a completely cold cache \(which likely means terrible initial performance\). This also greatly simplifies the code as all logic for maintaining coherency between the cache and filesystem is now in the OS, which tends to do so more efficiently and more correctly than one-off in-process attempts. If your disk usage favors linear reads then read-ahead is effectively pre-populating this cache with useful data on each disk read.
 
-综上所述，使用文件系统和页缓存相较于维护一个内存缓存或者其它结构更占优势--我们通过自动化的访问所有空闲内存的能力将缓存的空间扩大了至少两倍，之后又因为保存压缩的字节结构而不是单独对象结构又将此扩充了两倍以上。最终这使我们在一个32G的主机之上拥有了一个高达28-30G的没有GC问题的缓存。而且这个缓存即使在服务重启之后也能保持热度，相反进程内的缓存要么还需要重建预热（10G的缓存可能耗时10分钟）要么就从一个完全空白的缓冲开始服务（这意味着初始化期间性能将很差）。同时这也很大的简化了代码，因为所有的维护缓存和文件系统之间正确性逻辑现在都在操作系统中了，这常常比重复造轮子更加高效和正确。如果你的磁盘使用方式更倾向与线性读取，预读取技术将在每次磁盘读操作时将有效的数据高效的预填充到这些缓存中。
+综上所述，使用文件系统和页缓存相较于维护一个内存缓存或者其它结构更占优势 -- 我们通过自动化的访问所有空闲内存的能力将缓存的空间扩大了至少两倍，之后又因为保存压缩的字节结构而不是单独对象结构又将此扩充了两倍以上。最终这使我们在一个 32G 的主机之上拥有了一个高达 28-30G 的没有 GC 问题的缓存。而且这个缓存即使在服务重启之后也能保持热度，相反进程内的缓存要么还需要重建预热（10G 的缓存可能耗时 10 分钟）要么就从一个完全空白的缓冲开始服务（这意味着初始化期间性能将很差）。同时这也很大的简化了代码，因为所有的维护缓存和文件系统之间正确性逻辑现在都在操作系统中了，这常常比重复造轮子更加高效和正确。如果你的磁盘使用方式更倾向与线性读取，预读取技术将在每次磁盘读操作时将有效的数据高效的预填充到这些缓存中。
 
 This suggests a design which is very simple: rather than maintain as much as possible in-memory and flush it all out to the filesystem in a panic when we run out of space, we invert that. All data is immediately written to a persistent log on the filesystem without necessarily flushing to disk. In effect this just means that it is transferred into the kernel's pagecache.
 
-这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们Flush到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要flush磁盘操作的持久化的文件系统的log文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
+这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们 Flush 到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要 flush 磁盘操作的持久化的文件系统的 log 文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
 
 This style of pagecache-centric design is described in an **[article](http://varnish.projects.linpro.no/wiki/ArchitectNotes)** on the design of Varnish here \(along with a healthy dose of arrogance\).
 
-这种基于页缓存的设计可以参见在**[这篇关于Varnish的论文](http://varnish.projects.linpro.no/wiki/ArchitectNotes)**
+这种基于页缓存的设计可以参见在**[这篇关于 Varnish 的论文](http://varnish.projects.linpro.no/wiki/ArchitectNotes)**
 
 #### [Constant Time Suffices](#design_constanttime)<a id="design_constanttime"></a>
 
