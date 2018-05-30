@@ -52,6 +52,6 @@ Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apa
 
 如果嫌以上过程繁琐，你只是准备指出一些不当翻译，也可以点击段落后‘+’直接评论。
 
-小伙伴[@einverne]建议统一中文排版并提供了[参考规范](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.md)，希望大家尽量采纳。 
+小伙伴 [@Ein Verne](https://github.com/einverne) 建议统一中文排版并提供了[参考规范](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.md)，希望大家尽量采纳。 
 
 *JustDoIT，您的任何建议和尝试都值得尊重！*
