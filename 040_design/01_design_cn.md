@@ -8,7 +8,7 @@ We designed Kafka to be able to act as a unified platform for handling all the r
 
 It would have to have high-throughput to support high volume event streams such as real-time log aggregation.
 
-它必须有很高的吞吐量来支撑像实时日志合并这类高容量的事件流。
+它必须有很高的**吞吐量**来支撑像实时日志合并这类高容量的事件流。
 
 It would need to deal gracefully with large data backlogs to be able to support periodic data loads from offline systems.
 
@@ -16,7 +16,7 @@ It would need to deal gracefully with large data backlogs to be able to support 
 
 It also meant the system would have to handle low-latency delivery to handle more traditional messaging use-cases.
 
-同时它也需要可以处理低延迟的分发需求来支撑与传统消息机制类似的应用场景。
+同时它也需要可以处理**低延迟**的分发需求来支撑与传统消息机制类似的应用场景。
 
 We wanted to support partitioned, distributed, real-time processing of these feeds to create new, derived feeds. This motivated our partitioning and consumer model.
 
@@ -24,7 +24,7 @@ We wanted to support partitioned, distributed, real-time processing of these fee
 
 Finally in cases where the stream is fed into other data systems for serving, we knew the system would have to be able to guarantee fault-tolerance in the presence of machine failures.
 
-最后在作为信息流上游为其它数据系统提供服务的场景下，我们也深知系统必须能够提供在主机故障时的容错担保。
+最后在作为信息流上游为其它数据系统提供服务的场景下，我们也深知系统必须能够提供在主机故障时的**容错**担保。
 
 Supporting these uses led us to a design with a number of unique elements, more akin to a database log than a traditional messaging system. We will outline some elements of the design in the following sections.
 
@@ -36,24 +36,23 @@ Supporting these uses led us to a design with a number of unique elements, more 
 
 Kafka relies heavily on the filesystem for storing and caching messages. There is a general perception that "disks are slow" which makes people skeptical that a persistent structure can offer competitive performance. In fact disks are both much slower and much faster than people expect depending on how they are used; and a properly designed disk structure can often be as fast as the network.
 
-Kafka 在消息的存储和缓存中**重度依赖文件系统**。因为“磁盘慢”这个普遍性的认知，常常使人们怀疑一个这样的持久化结构是否能提供所需的性能。但实际上磁盘因为使用的方式不同，它可能比人们预想的慢很多也可能比人们预想的快很多；而且一个合理设计的磁盘文件结构常常可以使磁盘运行的和网络一样快。
+Kafka 在消息的存储和缓存中**重度依赖文件系统**。因为“磁盘慢”这个普遍性的认知，常常使人们怀疑一个这样的持久化结构是否能提供所需的性能。但实际上磁盘因为使用的方式不同，它可能比人们预想的慢很多也可能比人们预想的快很多；而且一个合理设计的磁盘文件结构常常可以使磁盘运行得和网络一样快。
 
-The key fact about disk performance is that the throughput of hard drives has been diverging from the latency of a disk seek for the last decade. As a result the performance of linear writes on a **[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** configuration with six 7200rpm SATA RAID-5 array is about 600MB\/sec but the performance of random writes is only about 100k\/sec—a difference of over 6000X. These linear reads and writes are the most predictable of all usage patterns, and are heavily optimized by the operating system. A modern operating system provides read-ahead and write-behind techniques that prefetch data in large block multiples and group smaller logical writes into large physical writes. A further discussion of this issue can be found in this **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**; they actually find that**[sequential disk access can in some cases be faster than random memory access!](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
+The key fact about disk performance is that the throughput of hard drives has been diverging from the latency of a disk seek for the last decade. As a result the performance of linear writes on a **[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** configuration with six 7200rpm SATA RAID-5 array is about 600MB/sec but the performance of random writes is only about 100k/sec—a difference of over 6000X. These linear reads and writes are the most predictable of all usage patterns, and are heavily optimized by the operating system. A modern operating system provides read-ahead and write-behind techniques that prefetch data in large block multiples and group smaller logical writes into large physical writes. A further discussion of this issue can be found in this **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**; they actually find that**[sequential disk access can in some cases be faster than random memory access!](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
 
-磁盘性能的核心指标在过去的十年间已经从磁盘的寻道延迟变成了硬件驱动的吞吐量。故此在一个**[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** 操作的由 6 张 7200 转磁盘组成的 RAID-5 阵列之上的线性写操作的性能能达到 600MB\/sec 左右，但是它的随机写性能却只有 100k\/sec 左右，两者之间相差了 6000 倍以上。因为线性的读操作和写操作是最常见的磁盘应用模式，并且这也被操作系统进行了高度的优化。现在的操作系统都提供了预读取和写合并技术、即预读取数倍于数据的大文件块和将多个小的逻辑写操作合并成一个大的物理写操作的技术。关于这个话题的进一步的讨论可以参照 **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**；他们发现实际上**[线性的磁盘访问在某些场景下比随机的内存访问还快！](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
-
+磁盘性能的核心指标在过去的十年间已经从磁盘的寻道延迟变成了硬件驱动的吞吐量。故此在一个**[JBOD](http://en.wikipedia.org/wiki/Non-RAID_drive_architectures)** 操作的由 6 张 7200 转磁盘组成的 RAID-5 阵列之上的线性写操作的性能能达到 600MB/sec 左右，但是它的随机写性能却只有 100k/sec 左右，两者之间相差了 6000 倍以上。因为线性的读操作和写操作是最常见的磁盘应用模式，并且这也被操作系统进行了高度的优化。现在的操作系统都提供了预读取和写合并技术、即预读取数倍于数据的大文件块和将多个小的逻辑写操作合并成一个大的物理写操作的技术。关于这个话题的进一步的讨论可以参照 **[ACM Queue article](http://queue.acm.org/detail.cfm?id=1563874)**；他们发现实际上**[线性的磁盘访问在某些场景下比随机的内存访问还快！](http://deliveryimages.acm.org/10.1145/1570000/1563874/jacobs3.jpg)**
 
 To compensate for this performance divergence, modern operating systems have become increasingly aggressive in their use of main memory for disk caching. A modern OS will happily divert _all_ free memory to disk caching with little performance penalty when the memory is reclaimed. All disk reads and writes will go through this unified cache. This feature cannot easily be turned off without using direct I\/O, so even if a process maintains an in-process cache of the data, this data will likely be duplicated in OS pagecache, effectively storing everything twice.
 
-为了填补这个性能的差异，现在操作系统越来越激进的使用它们的主内存来作为磁盘的缓冲。现代的操作系统都非常乐意将 _所有的_ 空闲的内存作为磁盘的缓存，虽然这将在内存重分配期间带来一点性能影响。所有的磁盘的读写操作都会经过在这块统一的缓存。而且这个特性除非使用 direct I\/O 技术很难被关闭掉，所以即使一个进程在进程内维护了数据的缓存，实际上这些数据依旧在操作系统的页缓存上存在一个副本，实际上所有的数据都被存储了两次。
+为了填补这个性能的差异，现在操作系统越来越激进地使用主内存来作为磁盘的缓冲。现代的操作系统都非常乐意将 _所有的_ 空闲的内存作为磁盘的缓存，虽然这将在内存重分配期间带来一点性能影响。所有的磁盘的读写操作都会经过这块统一的缓存。而且这个特性除非使用 direct I/O 技术很难被关闭掉，所以即使一个进程在进程内维护了数据的缓存，实际上这些数据依旧在操作系统的页缓存上存在一个副本，实际上所有的数据都被存储了两次。
 
 Furthermore we are building on top of the JVM, and anyone who has spent any time with Java memory usage knows two things:
 
 另外我们是基于 JVM 进行建设的，任何一个稍微了解 Java 内存模型的人都知道以下两点：
 
-1. The memory overhead of objects is very high, often doubling the size of the data stored \(or worse\).
+1. The memory overhead of objects is very high, often doubling the size of the data stored (or worse).
 
-1. 对象的内存占用是非常高，常常是数据存储空间的两倍以上。
+1. 对象的内存占用是非常高，常常是数据存储空间的两倍以上（甚至更差）。
 
 2. Java garbage collection becomes increasingly fiddly and slow as the in-heap data increases.
 
@@ -65,7 +64,7 @@ As a result of these factors using the filesystem and relying on pagecache is su
 
 This suggests a design which is very simple: rather than maintain as much as possible in-memory and flush it all out to the filesystem in a panic when we run out of space, we invert that. All data is immediately written to a persistent log on the filesystem without necessarily flushing to disk. In effect this just means that it is transferred into the kernel's pagecache.
 
-这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们 Flush 到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要 flush 磁盘操作的持久化的文件系统的 log 文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
+这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们 flush 到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要 flush 磁盘操作的持久化的文件系统的 log 文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
 
 This style of pagecache-centric design is described in an [**article**](http://varnish.projects.linpro.no/wiki/ArchitectNotes) on the design of Varnish here \(along with a healthy dose of arrogance\).
 
@@ -77,14 +76,13 @@ The persistent data structure used in messaging systems are often a per-consumer
 
 消息系统使用的持久化数据结构通常是和 BTree 相关联的消费者队列或者其他用于存储消息源数据的通用随机访问数据结构。BTree 是最通用的数据结构，可以在消息系统中支持各种事务性和非事务性语义。虽然 BTree 的操作复杂度是 O(logN) ，但是成本也很高。通常我们认为 O(logN) 基本等同于常数时间，但这条在磁盘操作中不成立。磁盘寻址是每 10ms 一跳，并且每个磁盘同时只能够执行一次寻址，因此并行受到了限制。因此即使是少量的磁盘寻址也会有很高的开销。由于存储系统将非常快的 cache 操作和非常慢的物理磁盘操作混在一起，当数据随着 fixed cached 增加时，可以看到树的性能通常是非线性的 ---- 比如数据翻倍时性能下降不知两倍。
 
-Intuitively a persistent queue could be built on simple reads and appends to files as is commonly the case with logging solutions. This structure has the advantage that all operations are O\(1\) and reads do not block writes or each other. This has obvious performance advantages since the performance is completely decoupled from the data size—one server can now take full advantage of a number of cheap, low-rotational speed 1+TB SATA drives. Though they have poor seek performance, these drives have acceptable performance for large reads and writes and come at 1\/3 the price and 3x the capacity.
+Intuitively a persistent queue could be built on simple reads and appends to files as is commonly the case with logging solutions. This structure has the advantage that all operations are O(1) and reads do not block writes or each other. This has obvious performance advantages since the performance is completely decoupled from the data size—one server can now take full advantage of a number of cheap, low-rotational speed 1+TB SATA drives. Though they have poor seek performance, these drives have acceptable performance for large reads and writes and come at 1/3 the price and 3x the capacity.
 
 所以直观来看，持久化队列可以建立在简单的读取和向文件后追加两种操作之上，这和日志解决方案相同。这种架构的优点在于所有的操作复杂度都是 O(1)，而且读操作不会阻塞写操作，读操作之间也不会互相影响。这有着明显的性能优势，由于性能和数据大小完全分离开来 -- 服务器现在可以充分利用大量廉价、低转速的 1+TB SATA 硬盘。 虽然这些硬盘的寻址性能很差，但他们在大规模读写方面的性能是可以接受的，而且价格是原来的三分之一、容量是原来的三倍。
 
 Having access to virtually unlimited disk space without any performance penalty means that we can provide some features not usually found in a messaging system. For example, in Kafka, instead of attempting to delete messages as soon as they are consumed, we can retain messages for a relatively long period \(say a week\). This leads to a great deal of flexibility for consumers, as we will describe.
 
 在不产生任何性能损失的情况下能够访问几乎无限的硬盘空间，这意味着我们可以提供一些其它消息系统不常见的特性。例如：在 Kafka 中，我们可以让消息保留相对较长的一段时间（比如一周），而不是试图在被消费后立即删除。正如我们后面将要提到的，这给消费者带来了很大的灵活性。
-
 
 ### [4.3 Efficiency](#maximizingefficiency)<a id="maximizingefficiency"></a>
 
@@ -96,11 +94,11 @@ We have also found, from experience building and running a number of similar sys
 
 我们还发现，从构建和运行很多相似系统的经验上来看，性能是多租户操作的关键。如果下游的基础设施服务很轻易被应用层冲击形成瓶颈，那么小的改变也会造成问题。通过非常快的（缓存）技术，能够确保应用层冲击基础设施之前，将负载稳定下来。当尝试去运行支持集中式集群上成百上千个应用程序的集中式服务时，这一点非常重要，因为应用层使用方式几乎每天都会发生变化。
 
-We discussed disk efficiency in the previous section. Once poor disk access patterns have been eliminated, there are two common causes of inefficiency in this type of system: too many small I\/O operations, and excessive byte copying.
+We discussed disk efficiency in the previous section. Once poor disk access patterns have been eliminated, there are two common causes of inefficiency in this type of system: too many small I/O operations, and excessive byte copying.
 
 我们在上一节讨论了磁盘性能。 一旦消除了磁盘访问模式不佳的情况，该类系统性能低下的主要原因就剩下了两个：大量的小型 I/O 操作，以及过多的字节拷贝。
 
-The small I\/O problem happens both between the client and the server and in the server's own persistent operations.
+The small I/O problem happens both between the client and the server and in the server's own persistent operations.
 
 小型的 I/O 操作发生在客户端和服务端之间以及服务端自身的持久化操作中。
 
@@ -163,7 +161,6 @@ Kafka 以高效的批处理格式支持一批消息可以压缩在一起发送�
 Kafka supports GZIP, Snappy and LZ4 compression protocols. More details on compression can be found **[here](https://cwiki.apache.org/confluence/display/KAFKA/Compression)**.
 
 Kafka 支持 GZIP，Snappy 和 LZ4 压缩协议，更多有关压缩的资料参看[这里](https://cwiki.apache.org/confluence/display/KAFKA/Compression)。
-
 
 ### [4.4 The Producer](#theproducer)<a id="theproducer"></a>
 
@@ -328,6 +325,8 @@ In distributed systems terminology we only attempt to handle a "fail\/recover" m
 
 A message is considered "committed" when all in sync replicas for that partition have applied it to their log. Only committed messages are ever given out to the consumer. This means that the consumer need not worry about potentially seeing a message that could be lost if the leader fails. Producers, on the other hand, have the option of either waiting for the message to be committed or not, depending on their preference for tradeoff between latency and durability. This preference is controlled by the acks setting that the producer uses.
 
+当所有的分区上 in sync repicas 都应用到 log 上时，消息可以认为是 "committed"，只有 committed 消息才会给 consumer。这意味着 consumer 不需要担心潜在因为 leader 失败而丢失消息。而对于 producer 来说，可以依据 latency 和 durability 来权衡选择是否等待消息被 committed ，这个行动由 producer 使用的 acks 设置来决定。
+
 The guarantee that Kafka offers is that a committed message will not be lost, as long as there is at least one in sync replica alive, at all times.
 
 在所有时间里，Kafka 保证只要有至少一个同步中的节点存活，提交的消息就不会丢失。
@@ -354,7 +353,7 @@ This majority vote approach has a very nice property: the latency is dependent o
 
 There are a rich variety of algorithms in this family including ZooKeeper's **[Zab](http://www.stanford.edu/class/cs347/reading/zab.pdf)**, **[Raft](https://ramcloud.stanford.edu/wiki/download/attachments/11370504/raft.pdf)**, and **[Viewstamped Replication](http://pmg.csail.mit.edu/papers/vr-revisited.pdf)**. The most similar academic publication we are aware of to Kafka's actual implementation is**[PacificA](http://research.microsoft.com/apps/pubs/default.aspx?id=66814)** from Microsoft.
 
-The downside of majority vote is that it doesn't take many failures to leave you with no electable leaders. To tolerate one failure requires three copies of the data, and to tolerate two failures requires five copies of the data. In our experience having only enough redundancy to tolerate a single failure is not enough for a practical system, but doing every write five times, with 5x the disk space requirements and 1[/5th the throughput, is not very practical for large volume data problems. This is likely why quorum algorithms more commonly appear for shared cluster configuration such as ZooKeeper but are less common for primary data storage. For example in HDFS the namenode's high-availability feature is built on a **[majority-vote-based journal](http://blog.cloudera.com/blog/2012/10/quorum-based-journaling-in-cdh4-1)**, but this more expensive approach is not used for the data itself.
+The downside of majority vote is that it doesn't take many failures to leave you with no electable leaders. To tolerate one failure requires three copies of the data, and to tolerate two failures requires five copies of the data. In our experience having only enough redundancy to tolerate a single failure is not enough for a practical system, but doing every write five times, with 5x the disk space requirements and 1/5th the throughput, is not very practical for large volume data problems. This is likely why quorum algorithms more commonly appear for shared cluster configuration such as ZooKeeper but are less common for primary data storage. For example in HDFS the namenode's high-availability feature is built on a **[majority-vote-based journal](http://blog.cloudera.com/blog/2012/10/quorum-based-journaling-in-cdh4-1)**, but this more expensive approach is not used for the data itself.
 
 大多数投票的缺点是，多数的节点挂掉让你不能选择 leader。要冗余单点故障需要三份数据，并且要冗余两个故障需要五份的数据。根据我们的经验，在一个系统中，仅仅靠冗余来避免单点故障是不够的，但是每写 5 次，对磁盘空间需求是 5 倍， 吞吐量下降到 1/5，这对于处理海量数据问题是不切实际的。这可能是为什么 quorum 算法更常用于共享集群配置（如 ZooKeeper ）， 而不适用于原始数据存储的原因，例如 HDFS 中 namenode 的高可用是建立在[基于投票的元数据](http://blog.cloudera.com/blog/2012/10/quorum-based-journaling-in-cdh4-1)，这种代价高昂的存储方式不适用数据本身。
 
@@ -362,7 +361,7 @@ Kafka takes a slightly different approach to choosing its quorum set. Instead of
 
 Kafka 采取了一种稍微不同的方法来选择它的投票集。 Kafka 不是用大多数投票选择 leader 。Kafka 动态维护了一个同步状态的备份的集合 （a set of in-sync replicas）， 简称 ISR ，在这个集合中的节点都是和 leader 保持高度一致的，只有这个集合的成员才 有资格被选举为 leader，一条消息必须被这个集合 所有 节点读取并追加到日志中了，这条消息才能视为提交。这个 ISR 集合发生变化会在 ZooKeeper 持久化，正因为如此，这个集合中的任何一个节点都有资格被选为 leader 。这对于 Kafka 使用模型中，有很多分区和并确保主从关系是很重要的。因为 ISR 模型和 f+1 副本，一个 Kafka topic 冗余 f 个节点故障而不会丢失任何已经提交的消息。
 
-For most use cases we hope to handle, we think this tradeoff is a reasonable one. In practice, to tolerate \_f\_failures, both the majority vote and the ISR approach will wait for the same number of replicas to acknowledge before committing a message \(e.g. to survive one failure a majority quorum needs three replicas and one acknowledgement and the ISR approach requires two replicas and one acknowledgement\). The ability to commit without the slowest servers is an advantage of the majority vote approach. However, we think it is ameliorated by allowing the client to choose whether they block on the message commit or not, and the additional throughput and disk space due to the lower required replication factor is worth it.
+For most use cases we hope to handle, we think this tradeoff is a reasonable one. In practice, to tolerate \_f\_failures, both the majority vote and the ISR approach will wait for the same number of replicas to acknowledge before committing a message (e.g. to survive one failure a majority quorum needs three replicas and one acknowledgement and the ISR approach requires two replicas and one acknowledgement). The ability to commit without the slowest servers is an advantage of the majority vote approach. However, we think it is ameliorated by allowing the client to choose whether they block on the message commit or not, and the additional throughput and disk space due to the lower required replication factor is worth it.
 
 我们认为对于希望处理的大多数场景这种策略是合理的。在实际中，为了冗余 f 节点故障，大多数投票和 ISR 都会在提交消息前确认相同数量的备份被收到（例如在一次故障生存之后，大多数的 quorum 需要三个备份节点和一次确认，ISR 只需要两个备份节点和一次确认），多数投票方法的一个优点是提交时能避免最慢的服务器。但是，我们认为通过允许客户端选择是否阻塞消息提交来改善，和所需的备份数较低而产生的额外的吞吐量和磁盘空间是值得的。
 
@@ -380,8 +379,8 @@ However a practical system needs to do something reasonable when all the replica
 
 但是，实际在运行的系统需要去考虑假设一旦所有的备份都挂了，怎么去保证数据不会丢失，这里有两种实现的方法
 
-1. Wait for a replica in the ISR to come back to life and choose this replica as the leader \(hopefully it still has all its data\).
-2. Choose the first replica \(not necessarily in the ISR\) that comes back to life as the leader.
+1. Wait for a replica in the ISR to come back to life and choose this replica as the leader (hopefully it still has all its data).
+2. Choose the first replica (not necessarily in the ISR) that comes back to life as the leader.
 
 1. 等待一个 ISR 的副本重新恢复正常服务，并选择这个副本作为领 leader （它有极大可能拥有全部数据）。
 2. 选择第一个重新恢复正常服务的副本（不一定是 ISR 中的）作为 leader。
@@ -398,28 +397,38 @@ This dilemma is not specific to Kafka. It exists in any quorum-based scheme. For
 
 When writing to Kafka, producers can choose whether they wait for the message to be acknowledged by 0,1 or all \(-1\) replicas. Note that "acknowledgement by all replicas" does not guarantee that the full set of assigned replicas have received the message. By default, when acks=all, acknowledgement happens as soon as all the current in-sync replicas have received the message. For example, if a topic is configured with only two replicas and one fails \(i.e., only one in sync replica remains\), then writes that specify acks=all will succeed. However, these writes could be lost if the remaining replica also fails. Although this ensures maximum availability of the partition, this behavior may be undesirable to some users who prefer durability over availability. Therefore, we provide two topic-level configurations that can be used to prefer message durability over availability:
 
+向 Kafka 写数据时，producers 设置 ack 是否提交完成，0：不等待 broker 返回确认消息，1: leader 保存成功返回或，-1(all): 所有备份都保存成功返回。请注意。设置 “ack = all” 并不能保证所有的副本都写入了消息。默认情况下，当 acks = all 时，只要 ISR 副本同步完成，就会返回消息已经写入。例如，一个 topic 仅仅设置了两个副本，那么只有一个 ISR 副本，那么当设置 acks = all 时返回写入成功时，剩下了的那个副本数据也可能数据没有写入。尽管这确保了分区的最大可用性，但是对于偏好数据持久性而不是可用性的一些用户，可能不想用这种策略，因此，我们提供了两个 topic 配置，可用于优先配置消息数据持久性：
+
 1. Disable unclean leader election - if all replicas become unavailable, then the partition will remain unavailable until the most recent leader becomes available again. This effectively prefers unavailability over the risk of message loss. See the previous section on Unclean Leader Election for clarification.
 2. Specify a minimum ISR size - the partition will only accept writes if the size of the ISR is above a certain minimum, in order to prevent the loss of messages that were written to just a single replica, which subsequently becomes unavailable. This setting only takes effect if the producer uses acks=all and guarantees that the message will be acknowledged by at least this many in-sync replicas. This setting offers a trade-off between consistency and availability. A higher setting for minimum ISR size guarantees better consistency since the message is guaranteed to be written to more replicas which reduces the probability that it will be lost. However, it reduces availability since the partition will be unavailable for writes if the number of in-sync replicas drops below the minimum threshold.
 
-向 Kafka 写数据时，producers 设置 ack 是否提交完成，0：不等待 broker 返回确认消息，1: leader 保存成功返回或，-1(all): 所有备份都保存成功返回。请注意。设置 “ack = all” 并不能保证所有的副本都写入了消息。默认情况下，当 acks = all 时，只要 ISR 副本同步完成，就会返回消息已经写入。例如，一个 topic 仅仅设置了两个副本，那么只有一个 ISR 副本，那么当设置 acks = all 时返回写入成功时，剩下了的那个副本数据也可能数据没有写入。尽管这确保了分区的最大可用性，但是对于偏好数据持久性而不是可用性的一些用户，可能不想用这种策略，因此，我们提供了两个 topic 配置，可用于优先配置消息数据持久性：
 
 - 禁用 unclean leader 选举机制 - 如果所有的备份节点都挂了，分区数据就会不可用，直到最近的 leader 恢复正常。这种策略优先于数据丢失的风险，参看上一节的 unclean leader 选举机制。
 - 指定最小的 ISR 集合大小，只有当 ISR 的大小大于最小值，分区才能接受写入操作，以防止仅写入单个备份的消息丢失造成消息不可用的情况，这个设置只有在生产者使用 acks = all 的情况下才会生效，这至少保证消息被 ISR 副本写入。此设置是一致性和可用性 之间的折衷，对于设置更大的最小 ISR 大小保证了更好的一致性，因为它保证将消息被写入了更多的备份，减少了消息丢失的可能性。但是，这会降低可用性，因为如果 ISR 副本的数量低于最小阈值，那么分区将无法写入。
-
 
 #### [备份管理](#design_replicamanagment)<a id="design_replicamanagment"></a>
 
 The above discussion on replicated logs really covers only a single log, i.e. one topic partition. However a Kafka cluster will manage hundreds or thousands of these partitions. We attempt to balance partitions within a cluster in a round-robin fashion to avoid clustering all partitions for high-volume topics on a small number of nodes. Likewise we try to balance leadership so that each node is the leader for a proportional share of its partitions.
 
+上面关于 replicated logs 的讨论仅仅局限于单一 log ，比如一个 topic 分区。但是 Kafka 集群需要管理成百上千个这样的分区。我们尝试轮流的方式来在集群中平衡分区来避免在小节点上处理大容量的 topic。Likewise we try to balance leadership so that each node is the leader for a proportional share of its partitions.
+
 It is also important to optimize the leadership election process as that is the critical window of unavailability. A naive implementation of leader election would end up running an election per partition for all partitions a node hosted when that node failed. Instead, we elect one of the brokers as the "controller". This controller detects failures at the broker level and is responsible for changing the leader of all affected partitions in a failed broker. The result is that we are able to batch together many of the required leadership change notifications which makes the election process far cheaper and faster for a large number of partitions. If the controller fails, one of the surviving brokers will become the new controller.
+
+同样关于 leadership 选举的过程也同样的重要，这段时间可能是无法服务的间隔。一个原始的 leader 选举实现是当一个节点失败时会在所有的分区节点中选主。相反，我们选用 broker 之一作为 "controller", 这个 controller 检测 broker 失败，并且为所有受到影响的分区改变 leader。这个结果是我们能够将许多需要变更 leadership 的通知整合到一起，让选举过程变得更加容易和快速。如果 controller 失败了，存活的 broker 之一会变成新的 controller。
 
 ### [4.8 日志压缩](#compaction)<a id="compaction"></a>
 
 Log compaction ensures that Kafka will always retain at least the last known value for each message key within the log of data for a single topic partition. It addresses use cases and scenarios such as restoring state after application crashes or system failure, or reloading caches after application restarts during operational maintenance. Let's dive into these use cases in more detail and then describe how compaction works.
 
+日志压缩可确保 Kafka 始终至少为单个 topic partition 的数据日志中的每个 message key 保留最新的已知值。这样的设计解决了应用程序崩溃、系统故障后恢复或者应用在运行维护过程中重启后重新加载缓存的场景。接下来让我们深入讨论这些在使用过程中的更多细节，阐述在这个过程中它是如何进行日志压缩的。
+
 So far we have described only the simpler approach to data retention where old log data is discarded after a fixed period of time or when the log reaches some predetermined size. This works well for temporal event data such as logging where each record stands alone. However an important class of data streams are the log of changes to keyed, mutable data \(for example, the changes to a database table\).
 
+迄今为止，我们只介绍了简单的日志保留方法（当旧的数据保留时间超过指定时间、日志文件大小达到设置大小后就丢弃）。这样的策略非常适用于处理那些暂存的数据，例如记录每条消息之间相互独立的日志。然而在实际使用过程中还有一种非常重要的场景 -- 根据 key 进行数据变更（例如更改数据库表内容），使用以上的方式显然不行。
+
 Let's discuss a concrete example of such a stream. Say we have a topic containing user email addresses; every time a user updates their email address we send a message to this topic using their user id as the primary key. Now say we send the following messages over some time period for a user with id 123, each message corresponding to a change in email address \(messages for other ids are omitted\):
+
+让我们来讨论一个关于处理这样流式数据的具体的例子。假设我们有一个 topic，里面的内容包含用户的 email 地址；每次用户更新他们的 email 地址时，我们发送一条消息到这个 topic，这里使用用户 Id 作为消息的 key 值。现在，我们在一段时间内为 id 为 123 的用户发送一些消息，每个消息对应 email 地址的改变（其他 ID 消息省略）:
 
 ```
     123 => bill@microsoft.com
@@ -436,7 +445,11 @@ Let's discuss a concrete example of such a stream. Say we have a topic containin
 
 Log compaction gives us a more granular retention mechanism so that we are guaranteed to retain at least the last update for each primary key \(e.g. `bill@gmail.com`\). By doing this we guarantee that the log contains a full snapshot of the final value for every key not just keys that changed recently. This means downstream consumers can restore their own state off this topic without us having to retain a complete log of all changes.
 
+日志压缩为我们提供了更精细的保留机制，所以我们至少保留每个 key 的最后一次更新（例如：bill@gmail.com）。这样我们保证日志包含每一个 key 的最终值而不只是最近变更的完整快照。这意味着下游的消费者可以获得最终的状态而无需拿到所有的变化的消息信息。
+
 Let's start by looking at a few use cases where this is useful, then we'll see how it can be used.
+
+让我们先看几个有用的使用场景，然后再看看如何使用它。
 
 1. _Database change subscription_. It is often necessary to have a data set in multiple data systems, and often one of these systems is a database of some kind \(either a RDBMS or perhaps a new-fangled key-value store\). For example you might have a database, a cache, a search cluster, and a Hadoop cluster. Each change to the database will need to be reflected in the cache, the search cluster, and eventually in Hadoop. In the case that one is only handling the real-time updates you only need recent log. But if you want to be able to reload the cache or restore a failed search node you may need a complete data set.
 2. _Event sourcing_. This is a style of application design which co-locates query processing with application design and uses a log of changes as the primary store for the application.
@@ -448,33 +461,50 @@ Let's start by looking at a few use cases where this is useful, then we'll see h
 
 In each of these cases one needs primarily to handle the real-time feed of changes, but occasionally, when a machine crashes or data needs to be re-loaded or re-processed, one needs to do a full load. Log compaction allows feeding both of these use cases off the same backing topic. This style of usage of a log is described in more detail in **[this blog post](http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)**.
 
+在这些场景中，主要需要处理变化的实时 feed，但是偶尔当机器崩溃或需要重新加载或重新处理数据时，需要处理所有数据。日志压缩允许在同一 topic 下同时使用这两个用例。这种日志使用方式更详细的描述请看[这篇博客](http://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying)。
+
 The general idea is quite simple. If we had infinite log retention, and we logged each change in the above cases, then we would have captured the state of the system at each time from when it first began. Using this complete log, we could restore to any point in time by replaying the first N records in the log. This hypothetical complete log is not very practical for systems that update a single record many times as the log will grow without bound even for a stable dataset. The simple log retention mechanism which throws away old updates will bound space but the log is no longer a way to restore the current state—now restoring from the beginning of the log no longer recreates the current state as old updates may not be captured at all.
+
+想法很简单，我们有无限的日志，以上每种情况记录变更日志，我们从一开始就捕获每一次变更。使用这个完整的日志，我们可以通过回放日志来恢复到任何一个时间点的状态。然而这种假设的情况下，完整的日志是不实际的，对于那些每一行记录会变更多次的系统，即使数据集很小，日志也会无限的增长下去。丢弃旧日志的简单操作可以限制空间的增长，但是无法重建状态——因为旧的日志被丢弃，可能一部分记录的状态会无法重建（这些记录所有的状态变更都在旧日志中）。
 
 Log compaction is a mechanism to give finer-grained per-record retention, rather than the coarser-grained time-based retention. The idea is to selectively remove records where we have a more recent update with the same primary key. This way the log is guaranteed to have at least the last state for each key.
 
+日志压缩机制是更细粒度的、每个记录都保留的机制，而不是基于时间的粗粒度。这个理念是选择性删除那些有更新的变更的记录的日志。这样最终日志至少包含每个 key 的记录的最后一个状态。
+
 This retention policy can be set per-topic, so a single cluster can have some topics where retention is enforced by size or time and other topics where retention is enforced by compaction.
+
+这种保留策略可以针对每一个 topci 进行设置，遮掩一个集群中，可以让部分 topic 通过时间和大小保留日志，另一些可以通过压缩策略保留。
 
 This functionality is inspired by one of LinkedIn's oldest and most successful pieces of infrastructure—a database changelog caching service called **[Databus](https://github.com/linkedin/databus)**. Unlike most log-structured storage systems Kafka is built for subscription and organizes data for fast linear reads and writes. Unlike Databus, Kafka acts as a source-of-truth store so it is useful even in situations where the upstream data source would not otherwise be replayable.
 
-这个功能的灵感来自于 LinkedIn 的最古老且最成功的基础设置 -- 一个称为 Databus 的数据库变更日志缓存系统。不像大多数的日志存储系统，Kafka 是专门为订阅和快速线性的读和写的组织数据。和 Databus 不同，Kafka 作为真实的存储，压缩日志是非常有用的，这非常有利于上游数据源不能重放的情况。
+这个功能的灵感来自于 LinkedIn 的最古老且最成功的基础设置 -- 一个称为 [**Databus**](https://github.com/linkedin/databus) 的数据库变更日志缓存系统。不像大多数的日志存储系统，Kafka 是专门为订阅和快速线性的读和写组织数据而设计。和 Databus 不同，Kafka 作为真实的存储，压缩日志是非常有用的，这非常有利于上游数据源不能重放的情况。
 
-#### [Log Compaction Basics](#design_compactionbasics)<a id="design_compactionbasics"></a>
+#### [日志压缩基础](#design_compactionbasics)<a id="design_compactionbasics"></a>
 
 Here is a high-level picture that shows the logical structure of a Kafka log with the offset for each message.
+
+这是一个高级别的日志逻辑图，展示了 kafka 日志的每条消息的 offset 逻辑结构。
 
 ![](/images/log_cleaner_anatomy.png)
 
 The head of the log is identical to a traditional Kafka log. It has dense, sequential offsets and retains all messages. Log compaction adds an option for handling the tail of the log. The picture above shows a log with a compacted tail. Note that the messages in the tail of the log retain the original offset assigned when they were first written—that never changes. Note also that all offsets remain valid positions in the log, even if the message with that offset has been compacted away; in this case this position is indistinguishable from the next highest offset that does appear in the log. For example, in the picture above the offsets 36, 37, and 38 are all equivalent positions and a read beginning at any of these offsets would return a message set beginning with 38.
 
+Log head 中包含传统的 Kafka 日志，它包含了连续的 offset 和所有的消息。日志压缩增加了处理 tail Log 的选项。上图展示了日志压缩的的 Log tail 的情况。tail 中的消息保存了初次写入时的 offset。 即使该 offset 的消息被压缩，所有 offset 仍然在日志中是有效的。在这个场景中，无法区分和下一个出现的更高 offset 的位置。如上面的例子中，36、37、38 是属于相同位置的，从他们开始读取日志都将从 38 开始。
+
 Compaction also allows for deletes. A message with a key and a null payload will be treated as a delete from the log. This delete marker will cause any prior message with that key to be removed \(as would any new message with that key\), but delete markers are special in that they will themselves be cleaned out of the log after a period of time to free up space. The point in time at which deletes are no longer retained is marked as the "delete retention point" in the above diagram.
 
+压缩也允许删除。通过消息的 key 和空负载（null payload）来标识该消息可从日志中删除。这个删除标记将会引起所有之前拥有相同 key 的消息被移除（包括拥有 key 相同的新消息）。但是删除标记比较特殊，它将在一定周期后被从日志中删除来释放空间。这个时间点被称为“delete retention point”，如上图。
+
 The compaction is done in the background by periodically recopying log segments. Cleaning does not block reads and can be throttled to use no more than a configurable amount of I\/O throughput to avoid impacting producers and consumers. The actual process of compacting a log segment looks something like this:
+
+压缩操作通过后台周期性的拷贝日志段来完成。清除操作不会阻塞读取，并且可以被配置不超过一定 IO 吞吐来避免影响 Producer 和 Consumer。实际的日志段压缩过程有点像这样：
 
 ![](/images/log_compaction.png)
 
 #### [What guarantees does log compaction provide?](#design_compactionguarantees)<a id="design_compactionguarantees"></a>
 
 Log compaction guarantees the following:
+日志压缩的保障措施：
 
 1. Any consumer that stays caught-up to within the head of the log will see every message that is written; these messages will have sequential offsets.
 2. Ordering of messages is always maintained. Compaction will never re-order messages, just remove some.
@@ -482,18 +512,32 @@ Log compaction guarantees the following:
 4. Any read progressing from offset 0 will see at least the final state of all records in the order they were written. All delete markers for deleted records will be seen provided the reader reaches the head of the log in a time period less than the topic's delete.retention.ms setting \(the default is 24 hours\). This is important as delete marker removal happens concurrently with read \(and thus it is important that we not remove any delete marker prior to the reader seeing it\).
 5. Any consumer progressing from the start of the log will see at least the _final_ state of all records in the order they were written. All delete markers for deleted records will be seen provided the consumer reaches the head of the log in a time period less than the topic's `delete.retention.ms` setting \(the default is 24 hours\). This is important as delete marker removal happens concurrently with read, and thus it is important that we do not remove any delete marker prior to the consumer seeing it.
 
+1. 任何滞留在日志 head 中的所有消费者能看到写入的所有消息；这些消息都是有序的 offset。 topic 使用 min.compaction.lag.ms 来保障消息写入之前必须经过的最小时间长度，才能被压缩。 这限制了一条消息在 Log Head 中的最短存在时间。
+2. 消息始终保持有序。压缩永远不会重新排序消息，只是删除了一些。
+3. 消息的 Offset 永远不会变更。这是消息在日志中的永久标志。
+4. 任何从头开始处理日志的 Consumer 至少会拿到每个 key 的_最终_状态。另外，只要 Consumer 在小于 Topic 的 `delete.retention.ms` 设置（默认 24 小时）的时间段内到达 Log head，将会看到所有删除记录的所有删除标记。换句话说，因为移除删除标记和读取是同时发生的，Consumer 可能会因为落后超过 delete.retention.ms 而导致错过删除标记。
+
 #### [Log 压缩细节](#design_compactiondetails)<a id="design_compactiondetails"></a>
 
 Log compaction is handled by the log cleaner, a pool of background threads that recopy log segment files, removing records whose key appears in the head of the log. Each compactor thread works as follows:
+
+日志压缩由 log cleaner 执行，log cleaner 是一个后台线程池，它会 recopy 日志段文件，移除那些 key 存在于 Log Head 中的记录。每个压缩线程工作的步骤如下：
 
 1. It chooses the log that has the highest ratio of log head to log tail
 2. It creates a succinct summary of the last offset for each key in the head of the log
 3. It recopies the log from beginning to end removing keys which have a later occurrence in the log. New, clean segments are swapped into the log immediately so the additional disk space required is just one additional log segment \(not a fully copy of the log\).
 4. The summary of the log head is essentially just a space-compact hash table. It uses exactly 24 bytes per entry. As a result with 8GB of cleaner buffer one cleaner iteration can clean around 366GB of log head \(assuming 1k messages\).
 
+1. 选择 log head 与 log tail 比率最高的日志
+2. 在 head log 中为每个 key 最后 offset 创建一个简单概要
+3. 从日志的开始到结束，删除那些在日志中最新出现的 key 的旧值。新的、干净的日志会被立即提交到日志中，所以只需要一个额外的日志段空间（不是日志的完整副本）
+4. 日志 head 的概念本质上是一个空间密集的 hash 表，每个条目使用 24 个字节。所以如果有 8G 的整理缓冲区，则能迭代处理大约 336G 的 log head （假设消息大小为 1k）
+
 #### [配置 Log Cleaner](#design_compactionconfig)<a id="design_compactionconfig"></a>
 
 The log cleaner is disabled by default. To enable it set the server config
+
+log cleaner 默认是关闭的，可以通过以下服务端配置开启：
 
 ```
   log.cleaner.enable=true
@@ -501,13 +545,17 @@ The log cleaner is disabled by default. To enable it set the server config
 
 This will start the pool of cleaner threads. To enable log cleaning on a particular topic you can add the log-specific property
 
+这会启动清理线程池。如果要开启特定 topic 的清理功能，需要开启特定的 log-specific 属性
+
 ```
   log.cleanup.policy=compact
 ```
 
 This can be done either at topic creation time or using the alter topic command.
 
-Further cleaner configurations are described **[here](http://kafka.apache.org/documentation.html#brokerconfigs)**.
+这个可以通过创建 topic 时配置或者之后使用 topic 命令实现。
+
+更多的关于 cleaner 的配置可以从**[这里](http://kafka.apache.org/documentation.html#brokerconfigs)**找到。
 
 #### [Log Compaction Limitations](#design_compactionlimitations)<a id="design_compactionlimitations"></a>
 
@@ -519,17 +567,21 @@ Starting in 0.9, the Kafka cluster has the ability to enforce quotas on produce 
 
 #### [Why are quotas necessary?](#design_quotasnecessary)<a id="design_quotasnecessary"></a>
 
-It is possible for producers and consumers to produce\/consume very high volumes of data and thus monopolize broker resources, cause network saturation and generally DOS other clients and the brokers themselves. Having quotas protects against these issues and is all the more important in large multi-tenant clusters where a small set of badly behaved clients can degrade user experience for the well behaved ones. In fact, when running Kafka as a service this even makes it possible to enforce API limits according to an agreed upon contract.
+It is possible for producers and consumers to produce/consume very high volumes of data and thus monopolize broker resources, cause network saturation and generally DOS other clients and the brokers themselves. Having quotas protects against these issues and is all the more important in large multi-tenant clusters where a small set of badly behaved clients can degrade user experience for the well behaved ones. In fact, when running Kafka as a service this even makes it possible to enforce API limits according to an agreed upon contract.
+
+producers 和 consumer 可能会产生和消费大量的消息从而导致独占 broker 资源，进而引起网络饱和，对其他 client 和 broker 造成 DOS 攻击。资源的配额保护可以有效的防止这些问题，大型的多租户集群中，因为一小部分表现不佳的客户端降低了良好的用户体验，这种情况下非常需要资源的配额保护。实际情况中，当把 Kafka 当做一种服务提供时，可以根据客户端和服务端的契约对 API 调用做限制。
 
 #### [Enforcement](#design_quotasenforcement)<a id="design_quotasenforcement"></a>
 
-By default, each unique client-id receives a fixed quota in bytes\/sec as configured by the cluster \(quota.producer.default, quota.consumer.default\). This quota is defined on a per-broker basis. Each client can publish\/fetch a maximum of X bytes\/sec per broker before it gets throttled. We decided that defining these quotas per broker is much better than having a fixed cluster wide bandwidth per client because that would require a mechanism to share client quota usage among all the brokers. This can be harder to get right than the quota implementation itself!
+By default, each unique client-id receives a fixed quota in bytes/sec as configured by the cluster (quota.producer.default, quota.consumer.default). This quota is defined on a per-broker basis. Each client can publish/fetch a maximum of X bytes/sec per broker before it gets throttled. We decided that defining these quotas per broker is much better than having a fixed cluster wide bandwidth per client because that would require a mechanism to share client quota usage among all the brokers. This can be harder to get right than the quota implementation itself!
 
-How does a broker react when it detects a quota violation? In our solution, the broker does not return an error rather it attempts to slow down a client exceeding its quota. It computes the amount of delay needed to bring a guilty client under it's quota and delays the response for that time. This approach keeps the quota violation transparent to clients \(outside of client-side metrics\). This also keeps them from having to implement any special backoff and retry behavior which can get tricky. In fact, bad client behavior \(retry without backoff\) can exacerbate the very problem quotas are trying to solve.
+How does a broker react when it detects a quota violation? In our solution, the broker does not return an error rather it attempts to slow down a client exceeding its quota. It computes the amount of delay needed to bring a guilty client under it's quota and delays the response for that time. This approach keeps the quota violation transparent to clients (outside of client-side metrics). This also keeps them from having to implement any special backoff and retry behavior which can get tricky. In fact, bad client behavior (retry without backoff) can exacerbate the very problem quotas are trying to solve.
 
-Client byte rate is measured over multiple small windows \(e.g. 30 windows of 1 second each\) in order to detect and correct quota violations quickly. Typically, having large measurement windows \(for e.g. 10 windows of 30 seconds each\) leads to large bursts of traffic followed by long delays which is not great in terms of user experience.
+当 broker 检测到超过配额时如何反应？在我们的解决方案中，broker 不会返回错误，相反他会尝试降低超过限额的客户端速度，它计算将超过限额客户端拉回到正常水平的时间，并响应的延迟响应时间。这个方法让超出配额的处理变得透明化。这个方法同样让客户端免于处理棘手的重试和特殊的补救措施。事实上，错误的补救措施可能加重限额这个问题。
+
+Client byte rate is measured over multiple small windows (e.g. 30 windows of 1 second each) in order to detect and correct quota violations quickly. Typically, having large measurement windows (for e.g. 10 windows of 30 seconds each) leads to large bursts of traffic followed by long delays which is not great in terms of user experience.
 
 #### [Quota overrides](#design_quotasoverrides)<a id="design_quotasoverrides"></a>
 
-It is possible to override the default quota for client-ids that need a higher \(or even lower\) quota. The mechanism is similar to the per-topic log config overrides. Client-id overrides are written to ZooKeeper under**_\/config\/clients_**. These overrides are read by all brokers and are effective immediately. This lets us change quotas without having to do a rolling restart of the entire cluster. See **[here](http://kafka.apache.org/documentation.html#quotas)** for details.
+It is possible to override the default quota for client-ids that need a higher (or even lower) quota. The mechanism is similar to the per-topic log config overrides. Client-id overrides are written to ZooKeeper under**_[/config\/clients_**. These overrides are read by all brokers and are effective immediately. This lets us change quotas without having to do a rolling restart of the entire cluster. See **[here](http://kafka.apache.org/documentation.html#quotas)** for details.
 
