@@ -54,14 +54,14 @@ Furthermore we are building on top of the JVM, and anyone who has spent any time
 
 1. 对象的内存占用是非常高，常常是数据存储空间的两倍以上（甚至更差）。
 
-2. Java garbage collection becomes increasingly fiddly and slow as the in-heap data increases.
+2Å. Java garbage collection becomes increasingly fiddly and slow as the in-heap data increases.
 
 2. Java 的内存回收随着堆内数据的增长会变得更加繁琐和缓慢。
 
 As a result of these factors using the filesystem and relying on pagecache is superior to maintaining an in-memory cache or other structure—we at least double the available cache by having automatic access to all free memory, and likely double again by storing a compact byte structure rather than individual objects. Doing so will result in a cache of up to 28-30GB on a 32GB machine without GC penalties. Furthermore this cache will stay warm even if the service is restarted, whereas the in-process cache will need to be rebuilt in memory \(which for a 10GB cache may take 10 minutes\) or else it will need to start with a completely cold cache \(which likely means terrible initial performance\). This also greatly simplifies the code as all logic for maintaining coherency between the cache and filesystem is now in the OS, which tends to do so more efficiently and more correctly than one-off in-process attempts. If your disk usage favors linear reads then read-ahead is effectively pre-populating this cache with useful data on each disk read.
 
 综上所述，使用文件系统和页缓存相较于维护一个内存缓存或者其它结构更占优势 -- 我们通过自动化的访问所有空闲内存的能力将缓存的空间扩大了至少两倍，之后又因为保存压缩的字节结构而不是单独对象结构又将此扩充了两倍以上。最终这使我们在一个 32G 的主机之上拥有了一个高达 28-30G 的没有 GC 问题的缓存。而且这个缓存即使在服务重启之后也能保持热度，相反进程内的缓存要么还需要重建预热（10G 的缓存可能耗时 10 分钟）要么就从一个完全空白的缓冲开始服务（这意味着初始化期间性能将很差）。同时这也很大的简化了代码，因为所有的维护缓存和文件系统之间正确性逻辑现在都在操作系统中了，这常常比重复造轮子更加高效和正确。如果你的磁盘使用方式更倾向与线性读取，预读取技术将在每次磁盘读操作时将有效的数据高效的预填充到这些缓存中。
-
+[MaÄ[MaÄ]]
 This suggests a design which is very simple: rather than maintain as much as possible in-memory and flush it all out to the filesystem in a panic when we run out of space, we invert that. All data is immediately written to a persistent log on the filesystem without necessarily flushing to disk. In effect this just means that it is transferred into the kernel's pagecache.
 
 这使人想到一个非常简单的设计：相对于尽可能多的维护内存内结构而且要时刻注意在空间不足时谨记要将它们 flush 到文件系统中，我们可以颠覆这种做法。所有的数据被立即写入一个不需要 flush 磁盘操作的持久化的文件系统的 log 文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
@@ -575,13 +575,18 @@ producers 和 consumer 可能会产生和消费大量的消息从而导致独占
 
 By default, each unique client-id receives a fixed quota in bytes/sec as configured by the cluster (quota.producer.default, quota.consumer.default). This quota is defined on a per-broker basis. Each client can publish/fetch a maximum of X bytes/sec per broker before it gets throttled. We decided that defining these quotas per broker is much better than having a fixed cluster wide bandwidth per client because that would require a mechanism to share client quota usage among all the brokers. This can be harder to get right than the quota implementation itself!
 
+默认情况下，每个唯一的客户端分组在集群上配置一个固定的限额，这个限额是基于每台服务器的 (quota.producer.default, quota.consumer.default)，每个客户端能发布或获取每台服务器都的最大速率，我们按服务器 (broker) 定义配置，而不是按整个集群定义，是因为如果是集群范围需要额外的机制来共享配额的使用情况，这会导致配额机制的实现比较难。
+
 How does a broker react when it detects a quota violation? In our solution, the broker does not return an error rather it attempts to slow down a client exceeding its quota. It computes the amount of delay needed to bring a guilty client under it's quota and delays the response for that time. This approach keeps the quota violation transparent to clients (outside of client-side metrics). This also keeps them from having to implement any special backoff and retry behavior which can get tricky. In fact, bad client behavior (retry without backoff) can exacerbate the very problem quotas are trying to solve.
 
-当 broker 检测到超过配额时如何反应？在我们的解决方案中，broker 不会返回错误，相反他会尝试降低超过限额的客户端速度，它计算将超过限额客户端拉回到正常水平的时间，并响应的延迟响应时间。这个方法让超出配额的处理变得透明化。这个方法同样让客户端免于处理棘手的重试和特殊的补救措施。事实上，错误的补救措施可能加重限额这个问题。
+当 broker 检测到超过配额时如何反应？在我们的解决方案中，broker 不会返回错误，相反他会尝试降低超过限额的客户端速度，它计算将超过限额客户端拉回到正常水平的时间，并相应的延迟响应时间。这个方法让超出配额的处理变得透明化。这个方法同样让客户端免于处理棘手的重试和特殊的补救措施。事实上，错误的补救措施可能加重限额这个问题。
 
 Client byte rate is measured over multiple small windows (e.g. 30 windows of 1 second each) in order to detect and correct quota violations quickly. Typically, having large measurement windows (for e.g. 10 windows of 30 seconds each) leads to large bursts of traffic followed by long delays which is not great in terms of user experience.
 
+客户端的字节限速使用多个小时间窗口（每秒 30 个窗口）来快速检测和更正配额越界。如果使用太大的配额窗口（例如 30 秒 10 个窗口），容易导致在较长时间内有巨大的流量突增，这个在实际中用户体验并不好。
+
 #### [Quota overrides](#design_quotasoverrides)<a id="design_quotasoverrides"></a>
 
-It is possible to override the default quota for client-ids that need a higher (or even lower) quota. The mechanism is similar to the per-topic log config overrides. Client-id overrides are written to ZooKeeper under**_[/config\/clients_**. These overrides are read by all brokers and are effective immediately. This lets us change quotas without having to do a rolling restart of the entire cluster. See **[here](http://kafka.apache.org/documentation.html#quotas)** for details.
+It is possible to override the default quota for client-ids that need a higher (or even lower) quota. The mechanism is similar to the per-topic log config overrides. Client-id overrides are written to ZooKeeper under**_/config/clients_**. These overrides are read by all brokers and are effective immediately. This lets us change quotas without having to do a rolling restart of the entire cluster. See **[here](http://kafka.apache.org/documentation.html#quotas)** for details.
 
+覆盖 client-ids 默认的配额是可行的。这个机制类似于每一个 topic 日志的配置覆盖。client-id 覆盖会被写到 ZooKeeper，这个覆盖会被所有的 broker 读取并且迅速加载生效。这样使得我们可以不需要重启集群中的机器而快速的改变配额。点击 [这里](http://kafka.apache.org/documentation.html#quotas) 查看更多的信息。
