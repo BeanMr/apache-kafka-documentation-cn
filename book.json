@@ -8,7 +8,8 @@
         "prism",
         "-highlight",
         "baidu_gio",
-        "ga"
+        "ga",
+        "expandable-chapters-small"
     ],
     "pluginsConfig": {
         "baidu_gio": {
