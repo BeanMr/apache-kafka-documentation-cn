@@ -20,3 +20,6 @@ Replicated Logs | 副本日志
 In-Sync Replicas | 同步副本
 LEO             | 日志文件最近偏移
 HW              |
+rebalance       |
+registry        | 注册表
+rack            |
