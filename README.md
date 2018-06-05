@@ -26,7 +26,7 @@ Gitbook: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfeng/apa
 
 ---
 
-译者：[@D2Feng](https://github.com/BeanMr)
+译者：[@D2Feng](https://github.com/BeanMr) [@Ein Verne](https://github.com/einverne)
 
 翻译采用章节中英文对照的形式进行，未翻译的章节保持原文。
 
