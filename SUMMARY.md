@@ -1,6 +1,7 @@
 # Summary
 
 * [About Book](README.md)
+* [术语表](000_glossary/01_glossary.md)
 * [入门](010_getting_started/01_introduction_cn.md)
     * [简介](010_getting_started/01_introduction_cn.md)
     * [Introduction](010_getting_started/01_introduction.md)
