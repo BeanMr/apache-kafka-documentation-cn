@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url> <loc>http://kafkadoc.beanmr.com/./</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/000_glossary/01_glossary.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/01_introduction_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/01_introduction.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/05_uses_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/05_uses.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/10_quickstart_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/10_quickstart.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/15_ecosystem_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/15_ecosystem.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/20_upgrade_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/010_getting_started/20_upgrade.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/020_api/01_api_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/020_api/01_api.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/030_configuration/01_configuration_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/030_configuration/01_configuration.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/040_design/01_design_cn.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/040_design/01_design.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/050_implementation/01_implementation.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/060_operations/01_ops.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/070_security/01_security.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/080_connect/01_connect.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+<url> <loc>http://kafkadoc.beanmr.com/GLOSSARY.html</loc> <changefreq>weekly</changefreq> <priority>0.5</priority> </url>
+</urlset>
