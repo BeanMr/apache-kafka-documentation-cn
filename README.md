@@ -54,4 +54,10 @@ Gitbook下载: [Apache Kafka Documentation CN](https://www.gitbook.com/book/ddfe
 
 小伙伴 [@Ein Verne](https://github.com/einverne) 建议统一中文排版并提供了[参考规范](https://github.com/sparanoid/chinese-copywriting-guidelines/blob/master/README.md)，希望大家尽量采纳。 
 
-*JustDoIT，您的任何建议和尝试都值得尊重！*
+JustDoIT，您的任何建议和尝试都值得尊重！*
+
+----
+
+因为在我天朝Gitbook比Github还不稳定，所以本人做了个 Hook 来将 Gitbook 生成的内容发布到 Github Pages 上。
+
+在发布的过程会保留 /docs 目录下的 CNAME 文件，如果你要发布到自己的 Github Pages 请注意修改。
