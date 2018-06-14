@@ -42,27 +42,19 @@ This style of pagecache-centric design is described in an [**article**](http://v
 
 #### [常量时间就足够](#design_constanttime)<a id="design_constanttime"></a>
 
-The persistent data structure used in messaging systems are often a per-consumer queue with an associated BTree or other general-purpose random access data structures to maintain metadata about messages. BTrees are the most versatile data structure available, and make it possible to support a wide variety of transactional and non-transactional semantics in the messaging system. They do come with a fairly high cost, though: Btree operations are O(log N). Normally O(log N) is considered essentially equivalent to constant time, but this is not true for disk operations. Disk seeks come at 10 ms a pop, and each disk can do only one seek at a time so parallelism is limited. Hence even a handful of disk seeks leads to very high overhead. Since storage systems mix very fast cached operations with very slow physical disk operations, the observed performance of tree structures is often superlinear as data increases with fixed cache--i.e. doubling your data makes things much worse then twice as slow.
+消息系统使用的持久化数据结构通常是和 BTree 相关联的消费者队列或者其他用于存储消息元数据的通用随机访问数据结构。BTree 是最通用的数据结构选择，它可以在消息系统中支持各种事务性和非事务性语义。虽然 BTree 的操作复杂度是 O(logN) ，但是成本也很高。通常我们认为 O(logN) 基本等同于常数时间，但这条在磁盘操作中不成立。磁盘寻址是每 10ms 一跳，并且每个磁盘同时只能够执行一次寻址，因此并行受到了限制。因此即使是少量的磁盘寻址也会有很高的开销。由于存储系统将非常快的缓存操作和非常慢的物理磁盘操作混在一起，在确定缓存大小的情况下树结构的实际性能随着数据的增长是非线性的 -- 比如数据翻倍时性能下降不止两倍。
 
-消息系统使用的持久化数据结构通常是和 BTree 相关联的消费者队列或者其他用于存储消息源数据的通用随机访问数据结构。BTree 是最通用的数据结构，可以在消息系统中支持各种事务性和非事务性语义。虽然 BTree 的操作复杂度是 O(logN) ，但是成本也很高。通常我们认为 O(logN) 基本等同于常数时间，但这条在磁盘操作中不成立。磁盘寻址是每 10ms 一跳，并且每个磁盘同时只能够执行一次寻址，因此并行受到了限制。因此即使是少量的磁盘寻址也会有很高的开销。由于存储系统将非常快的 cache 操作和非常慢的物理磁盘操作混在一起，当数据随着 fixed cached 增加时，可以看到树的性能通常是非线性的 ---- 比如数据翻倍时性能下降不知两倍。
-
-Intuitively a persistent queue could be built on simple reads and appends to files as is commonly the case with logging solutions. This structure has the advantage that all operations are O(1) and reads do not block writes or each other. This has obvious performance advantages since the performance is completely decoupled from the data size—one server can now take full advantage of a number of cheap, low-rotational speed 1+TB SATA drives. Though they have poor seek performance, these drives have acceptable performance for large reads and writes and come at 1/3 the price and 3x the capacity.
-
-所以直观来看，持久化队列可以建立在简单的读取和向文件后追加两种操作之上，这和日志解决方案相同。这种架构的优点在于所有的操作复杂度都是 O(1)，而且读操作不会阻塞写操作，读操作之间也不会互相影响。这有着明显的性能优势，由于性能和数据大小完全分离开来 -- 服务器现在可以充分利用大量廉价、低转速的 1+TB SATA 硬盘。 虽然这些硬盘的寻址性能很差，但他们在大规模读写方面的性能是可以接受的，而且价格是原来的三分之一、容量是原来的三倍。
-
-Having access to virtually unlimited disk space without any performance penalty means that we can provide some features not usually found in a messaging system. For example, in Kafka, instead of attempting to delete messages as soon as they are consumed, we can retain messages for a relatively long period (say a week). This leads to a great deal of flexibility for consumers, as we will describe.
+所以直观来看，持久化队列可以建立在简单的读取和向文件后追加两种操作之上，这和日志解决方案相同。这种结构的优点在于所有的操作复杂度都是 O(1)，而且读操作不会阻塞写操作，读操作之间也不会互相影响。这有着明显的性能优势，由于性能和数据大小完全不相关 -- 服务器现在可以充分利用大量廉价、低转速的 1+TB SATA 硬盘。 虽然这些硬盘的寻址性能很差，但他们在大规模读写方面的性能是可以接受的，而且价格是原来的三分之一、容量是原来的三倍。
 
 在不产生任何性能损失的情况下能够访问几乎无限的硬盘空间，这意味着我们可以提供一些其它消息系统不常见的特性。例如：在 Kafka 中，我们可以让消息保留相对较长的一段时间（比如一周），而不是试图在被消费后立即删除。正如我们后面将要提到的，这给消费者带来了很大的灵活性。
 
-### [4.3 Efficiency](#maximizingefficiency)<a id="maximizingefficiency"></a>
+### [4.3 性能 Efficiency](#maximizingefficiency)<a id="maximizingefficiency"></a>
 
-We have put significant effort into efficiency. One of our primary use cases is handling web activity data, which is very high volume: each page view may generate dozens of writes. Furthermore we assume each message published is read by at least one consumer (often many), hence we strive to make consumption as cheap as possible.
-
-我们在性能提升上做了很大的努力。我们的主要使用场景之一是处理网页活动信息，这个数据量非常巨大，因为每个页面都可能有大量的写入。此外我们假设没发布一个 message 至少被一个 consumer （通常是多个） 来消费，因此我们尽可能去降低消费的代价。
+我们在性能提升上做了很大的努力。我们的主要使用场景之一是处理网页活动信息，这个数据量非常巨大，因为每个页面都可能有大量的写入。此外我们假设发布每个 message 至少被一个 consumer （通常是多个） 来消费，因此我们尽可能去降低消费的代价。
 
 We have also found, from experience building and running a number of similar systems, that efficiency is a key to effective multi-tenant operations. If the downstream infrastructure service can easily become a bottleneck due to a small bump in usage by the application, such small changes will often create problems. By being very fast we help ensure that the application will tip-over under load before the infrastructure. This is particularly important when trying to run a centralized service that supports dozens or hundreds of applications on a centralized cluster as changes in usage patterns are a near-daily occurrence.
 
-我们还发现，从构建和运行很多相似系统的经验上来看，性能是多租户操作的关键。如果下游的基础设施服务很轻易被应用层冲击形成瓶颈，那么小的改变也会造成问题。通过非常快的（缓存）技术，能够确保应用层冲击基础设施之前，将负载稳定下来。当尝试去运行支持集中式集群上成百上千个应用程序的集中式服务时，这一点非常重要，因为应用层使用方式几乎每天都会发生变化。
+从构建和运行很多相似系统的经验中我们还发现，性能是多租户操作的关键。如果下游的基础设施服务很轻易被应用层冲击形成瓶颈，那么小的改变也会造成问题。通过非常快的（缓存）技术，能够确保应用层冲击基础设施之前，将负载稳定下来。当尝试去运行支持集中式集群上成百上千个应用程序的集中式服务时，这一点非常重要，因为应用层使用方式几乎每天都会发生变化。
 
 We discussed disk efficiency in the previous section. Once poor disk access patterns have been eliminated, there are two common causes of inefficiency in this type of system: too many small I/O operations, and excessive byte copying.
 
