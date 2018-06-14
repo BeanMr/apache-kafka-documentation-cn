@@ -18,6 +18,8 @@ Kafka在国内很多公司都有大规模的应用，但关于它的中文资料
 
 阅读地址：[Apache Kafka 官方文档中文版](http://kafkadoc.beanmr.com/)
 
+电子书下载:
+
 源地址：[Kafka 0.10.0 Documentation](http://kafka.apache.org/documentation.html)
 
 Github: [BeanMr](https://github.com/BeanMr)/[apache-kafka-documentation-cn](https://github.com/BeanMr/apache-kafka-documentation-cn)
