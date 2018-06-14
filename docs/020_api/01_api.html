@@ -1,0 +1,1916 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>Producer API · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-coy.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="01_api_cn.html" />
+    
+    
+    <link rel="prev" href="01_api_cn.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    About Book
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../000_glossary/01_glossary.html">
+            
+                <a href="../000_glossary/01_glossary.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../010_getting_started/01_introduction_cn.html">
+            
+                <a href="../010_getting_started/01_introduction_cn.html">
+            
+                    
+                    入门
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../010_getting_started/01_introduction_cn.html">
+            
+                <a href="../010_getting_started/01_introduction_cn.html">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../010_getting_started/01_introduction.html">
+            
+                <a href="../010_getting_started/01_introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../010_getting_started/05_uses_cn.html">
+            
+                <a href="../010_getting_started/05_uses_cn.html">
+            
+                    
+                    应用场景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../010_getting_started/05_uses.html">
+            
+                <a href="../010_getting_started/05_uses.html">
+            
+                    
+                    Use Cases
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../010_getting_started/10_quickstart_cn.html">
+            
+                <a href="../010_getting_started/10_quickstart_cn.html">
+            
+                    
+                    快速入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../010_getting_started/10_quickstart.html">
+            
+                <a href="../010_getting_started/10_quickstart.html">
+            
+                    
+                    Quick Start
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../010_getting_started/15_ecosystem_cn.html">
+            
+                <a href="../010_getting_started/15_ecosystem_cn.html">
+            
+                    
+                    软件生态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../010_getting_started/15_ecosystem.html">
+            
+                <a href="../010_getting_started/15_ecosystem.html">
+            
+                    
+                    Ecosystem
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../010_getting_started/20_upgrade_cn.html">
+            
+                <a href="../010_getting_started/20_upgrade_cn.html">
+            
+                    
+                    升级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../010_getting_started/20_upgrade.html">
+            
+                <a href="../010_getting_started/20_upgrade.html">
+            
+                    
+                    Upgrading
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html">
+            
+                    
+                    API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#producerapi">
+            
+                    
+                    生产者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="01_api.html">
+            
+                <a href="01_api.html#producerapi">
+            
+                    
+                    Producer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#consumerapi">
+            
+                    
+                    消费者API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.3.1" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#highlevelconsumerapi">
+            
+                    
+                    老的上层消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.2" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#simpleconsumerapi">
+            
+                    
+                    老的简单消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#newconsumerapi">
+            
+                    
+                    新的消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="01_api.html">
+            
+                <a href="01_api.html#consumerapi">
+            
+                    
+                    Consumer API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.4.1" data-path="01_api.html">
+            
+                <a href="01_api.html#highlevelconsumerapi">
+            
+                    
+                    Old High Level Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.2" data-path="01_api.html">
+            
+                <a href="01_api.html#simpleconsumerapi">
+            
+                    
+                    Old Simple Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.3" data-path="01_api.html">
+            
+                <a href="01_api.html#newconsumerapi">
+            
+                    
+                    New Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="01_api_cn.html">
+            
+                <a href="01_api_cn.html#streamsapi">
+            
+                    
+                    流处理API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="01_api.html">
+            
+                <a href="01_api.html#streamsapi">
+            
+                    
+                    Streams API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html">
+            
+                    
+                    配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#brokerconfigs">
+            
+                    
+                    Broker配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#brokerconfigs">
+            
+                    
+                    Broker Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#producerconfigs">
+            
+                    
+                    生产者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#producerconfigs">
+            
+                    
+                    Producer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#consumerconfigs">
+            
+                    
+                    消费者配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.5.1" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#oldconsumerconfigs">
+            
+                    
+                    老的消费者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5.2" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#newconsumerconfigs">
+            
+                    
+                    新的消费者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#consumerconfigs">
+            
+                    
+                    Consumer Configs
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.6.1" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#oldconsumerconfigs">
+            
+                    
+                    Old Consumer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6.2" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#newconsumerconfigs">
+            
+                    
+                    New Consumer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#connectconfigs">
+            
+                    
+                    Kafka Connect配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#connectconfigs">
+            
+                    
+                    Kafka Connect Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#streamsconfigs">
+            
+                    
+                    Kafka Streams配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#streamsconfigs">
+            
+                    
+                    Kafka Streams Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html">
+            
+                    
+                    设计
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#majordesignelements">
+            
+                    
+                    设计初衷
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#majordesignelements">
+            
+                    
+                    Motivation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#persistence">
+            
+                    
+                    持久化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#persistence">
+            
+                    
+                    Persistence
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#maximizingefficiency">
+            
+                    
+                    性能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#maximizingefficiency">
+            
+                    
+                    Efficiency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#theproducer">
+            
+                    
+                    生产者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#theproducer">
+            
+                    
+                    The Producer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#theconsumer">
+            
+                    
+                    消费者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#theconsumer">
+            
+                    
+                    The Consumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.11" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#semantics">
+            
+                    
+                    消息投递语义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.12" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#semantics">
+            
+                    
+                    Message Delivery Semantics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.13" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#replication">
+            
+                    
+                    复制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.14" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#replication">
+            
+                    
+                    Replication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.15" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#compaction">
+            
+                    
+                    日志压缩
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.16" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#compaction">
+            
+                    
+                    Log Compaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.17" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#design_quotas">
+            
+                    
+                    配额
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.18" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#design_quotas">
+            
+                    
+                    Quotas
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html">
+            
+                    
+                    Implementation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#apidesign">
+            
+                    
+                    API Design
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#networklayer">
+            
+                    
+                    Network Layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#messages">
+            
+                    
+                    Messages
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#messageformat">
+            
+                    
+                    Message format
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#log">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#distributionimpl">
+            
+                    
+                    Distribution
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html">
+            
+                    
+                    Operations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops">
+            
+                    
+                    Basic Kafka Operations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_add_topic">
+            
+                    
+                    Adding and removing topics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_modify_topic">
+            
+                    
+                    Modifying topics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_restarting">
+            
+                    
+                    Graceful shutdown
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_leader_balancing">
+            
+                    
+                    Balancing leadership
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_consumer_lag">
+            
+                    
+                    Checking consumer position
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.6" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_mirror_maker">
+            
+                    
+                    Mirroring data between clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.7" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_cluster_expansion">
+            
+                    
+                    Expanding your cluster
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.8" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_decommissioning_brokers">
+            
+                    
+                    Decommissioning brokers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.9" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_increase_replication_factor">
+            
+                    
+                    Increasing replication factor
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#datacenters">
+            
+                    
+                    Datacenters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#config">
+            
+                    
+                    Important Configs
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.3.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#serverconfig">
+            
+                    
+                    Important Server Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#clientconfig">
+            
+                    
+                    Important Client Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#prodconfig">
+            
+                    
+                    A Production Server Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#java">
+            
+                    
+                    Java Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#hwandos">
+            
+                    
+                    Hardware and OS
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.5.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#os">
+            
+                    
+                    OS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#diskandfs">
+            
+                    
+                    Disks and Filesystems
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#appvsosflush">
+            
+                    
+                    Application vs OS Flush Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#linuxflush">
+            
+                    
+                    Linux Flush Behavior
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#ext4">
+            
+                    
+                    Ext4 Notes
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#monitoring">
+            
+                    
+                    Monitoring
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.6.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#selector_monitoring">
+            
+                    
+                    Common monitoring metrics for producer/consumer/connect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#new_producer_monitoring">
+            
+                    
+                    New producer monitoring
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#new_consumer_monitoring">
+            
+                    
+                    New consumer monitoring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zk">
+            
+                    
+                    ZooKeeper
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.7.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zkversion">
+            
+                    
+                    Stable Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zkops">
+            
+                    
+                    Operationalization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html">
+            
+                    
+                    Security
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#security_overview">
+            
+                    
+                    Security Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#security_ssl">
+            
+                    
+                    Encryption and Authentication using SSL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#security_sasl">
+            
+                    
+                    Authentication using SASL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#security_authz">
+            
+                    
+                    Authorization and ACLs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#security_rolling_upgrade">
+            
+                    
+                    Incorporating Security Features in a Running Cluster
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#zk_authz">
+            
+                    
+                    ZooKeeper Authentication
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.6.1" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#zk_authz_new">
+            
+                    
+                    New Clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6.2" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#zk_authz_migration">
+            
+                    
+                    Migrating Clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6.3" data-path="../070_security/01_security.html">
+            
+                <a href="../070_security/01_security.html#zk_authz_ensemble">
+            
+                    
+                    Migrating the ZooKeeper Ensemble
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html">
+            
+                    
+                    Kafka Connect
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_overview">
+            
+                    
+                    Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_user">
+            
+                    
+                    User Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_development">
+            
+                    
+                    Connector Development Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Producer API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="2-api"><a name="2-api" class="plugin-anchor" href="#2-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#">2. API</a></h2><p>Apache Kafka includes new java clients (in the org.apache.kafka.clients package). These are meant to supplant the older Scala clients, but for compatibility they will co-exist for some time. These clients are available in a separate jar with minimal dependencies, while the old Scala clients remain packaged with the server.</p><h3 id="21-producer-api"><a name="21-producer-api" class="plugin-anchor" href="#21-producer-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#producerapi">2.1 Producer API</a><a id="producerapi"></a></h3><p>We encourage all new development to use the new Java producer. This client is production tested and generally both faster and more fully featured than the previous Scala client. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates (you can change the version numbers with new releases):</p><pre class="language-"><code>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.kafka<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>kafka-clients<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>0.10.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Examples showing how to use the producer are given in the <a title="Kafka 0.10.0 Javadoc" href="http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/producer/KafkaProducer.html" target="_blank"><strong>javadocs</strong></a>.</p><p>For those interested in the legacy Scala producer api, information can be found <a href="http://kafka.apache.org/081/documentation.html#producerapi" target="_blank"><strong>here</strong></a>.</p><h3 id="22-consumer-api"><a name="22-consumer-api" class="plugin-anchor" href="#22-consumer-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#consumerapi">2.2 Consumer API</a><a id="consumerapi"></a></h3><p>As of the 0.9.0 release we have added a new Java consumer to replace our existing high-level ZooKeeper-based consumer and low-level consumer APIs. This client is considered beta quality. To ensure a smooth upgrade path for users, we still maintain the old 0.8 consumer clients that continue to work on an 0.9 Kafka cluster. In the following sections we introduce both the old 0.8 consumer APIs (both high-level ConsumerConnector and low-level SimpleConsumer) and the new Java consumer API respectively.</p><h4 id="221-old-high-level-consumer-api"><a name="221-old-high-level-consumer-api" class="plugin-anchor" href="#221-old-high-level-consumer-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#highlevelconsumerapi">2.2.1 Old High Level Consumer API</a><a id="highlevelconsumerapi"></a></h4><pre class="language-"><code class="lang-java"><span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/**
+   *  Create a ConsumerConnector
+   *
+   *  @param config  at the minimum, need to specify the groupid of the consumer and the zookeeper
+   *                 connection string zookeeper.connect.
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> kafka<span class="token punctuation">.</span>javaapi<span class="token punctuation">.</span>consumer<span class="token punctuation">.</span>ConsumerConnector <span class="token function">createJavaConsumerConnector</span><span class="token punctuation">(</span>ConsumerConfig config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/**
+ *  V: type of the message
+ *  K: type of the optional key associated with the message
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">kafka<span class="token punctuation">.</span>javaapi<span class="token punctuation">.</span>consumer<span class="token punctuation">.</span>ConsumerConnector</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/**
+   *  Create a list of message streams of type T for each topic.
+   *
+   *  @param topicCountMap  a map of (topic, #streams) pair
+   *  @param decoder a decoder that converts from Message to T
+   *  @return a map of (topic, list of  KafkaStream) pairs.
+   *          The number of items in the list is #streams. Each stream supports
+   *          an iterator over message/metadata pairs.
+   */</span>
+  <span class="token keyword">public</span> <span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">&gt;</span> Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>KafkaStream<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">&gt;&gt;&gt;</span>
+    <span class="token function">createMessageStreams</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">&gt;</span> topicCountMap<span class="token punctuation">,</span> Decoder<span class="token operator">&lt;</span>K<span class="token operator">&gt;</span> keyDecoder<span class="token punctuation">,</span> Decoder<span class="token operator">&lt;</span>V<span class="token operator">&gt;</span> valueDecoder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Create a list of message streams of type T for each topic, using the default decoder.
+   */</span>
+  <span class="token keyword">public</span> Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> List<span class="token operator">&lt;</span>KafkaStream<span class="token operator">&lt;</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;&gt;&gt;</span> <span class="token function">createMessageStreams</span><span class="token punctuation">(</span>Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Integer<span class="token operator">&gt;</span> topicCountMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Create a list of message streams for topics matching a wildcard.
+   *
+   *  @param topicFilter a TopicFilter that specifies which topics to
+   *                    subscribe to (encapsulates a whitelist or a blacklist).
+   *  @param numStreams the number of message streams to return.
+   *  @param keyDecoder a decoder that decodes the message key
+   *  @param valueDecoder a decoder that decodes the message itself
+   *  @return a list of KafkaStream. Each stream supports an
+   *          iterator over its MessageAndMetadata elements.
+   */</span>
+  <span class="token keyword">public</span> <span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">&gt;</span> List<span class="token operator">&lt;</span>KafkaStream<span class="token operator">&lt;</span>K<span class="token punctuation">,</span>V<span class="token operator">&gt;&gt;</span>
+    <span class="token function">createMessageStreamsByFilter</span><span class="token punctuation">(</span>TopicFilter topicFilter<span class="token punctuation">,</span> <span class="token keyword">int</span> numStreams<span class="token punctuation">,</span> Decoder<span class="token operator">&lt;</span>K<span class="token operator">&gt;</span> keyDecoder<span class="token punctuation">,</span> Decoder<span class="token operator">&lt;</span>V<span class="token operator">&gt;</span> valueDecoder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Create a list of message streams for topics matching a wildcard, using the default decoder.
+   */</span>
+  <span class="token keyword">public</span> List<span class="token operator">&lt;</span>KafkaStream<span class="token operator">&lt;</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;&gt;</span> <span class="token function">createMessageStreamsByFilter</span><span class="token punctuation">(</span>TopicFilter topicFilter<span class="token punctuation">,</span> <span class="token keyword">int</span> numStreams<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Create a list of message streams for topics matching a wildcard, using the default decoder, with one stream.
+   */</span>
+  <span class="token keyword">public</span> List<span class="token operator">&lt;</span>KafkaStream<span class="token operator">&lt;</span><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;&gt;</span> <span class="token function">createMessageStreamsByFilter</span><span class="token punctuation">(</span>TopicFilter topicFilter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Commit the offsets of all topic/partitions connected by this connector.
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">commitOffsets</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/**
+   *  Shut down the connector
+   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p>You can follow <a title="Kafka 0.8 consumer example" href="https://cwiki.apache.org/confluence/display/KAFKA/Consumer+Group+Example" target="_blank"><strong>this example</strong></a> to learn how to use the high level consumer api.</p><h4 id="222-old-simple-consumer-api"><a name="222-old-simple-consumer-api" class="plugin-anchor" href="#222-old-simple-consumer-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#simpleconsumerapi">2.2.2 Old Simple Consumer API</a><a id="simpleconsumerapi"></a></h4><pre class="language-"><code>class kafka.javaapi.consumer.SimpleConsumer {
+  /**
+   *  Fetch a set of messages from a topic.
+   *
+   *  @param request specifies the topic name, topic partition, starting byte offset, maximum bytes to be fetched.
+   *  @return a set of fetched messages
+   */
+  public FetchResponse fetch(kafka.javaapi.FetchRequest request);
+
+  /**
+   *  Fetch metadata for a sequence of topics.
+   *
+   *  @param request specifies the versionId, clientId, sequence of topics.
+   *  @return metadata for each topic in the request.
+   */
+  public kafka.javaapi.TopicMetadataResponse send(kafka.javaapi.TopicMetadataRequest request);
+
+  /**
+   *  Get a list of valid offsets (up to maxSize) before the given time.
+   *
+   *  @param request a [[kafka.javaapi.OffsetRequest]] object.
+   *  @return a [[kafka.javaapi.OffsetResponse]] object.
+   */
+  public kafka.javaapi.OffsetResponse getOffsetsBefore(OffsetRequest request);
+
+  /**
+   * Close the SimpleConsumer.
+   */
+  public void close();
+}
+</code></pre>
+<p>For most applications, the high level consumer Api is good enough. Some applications want features not exposed to the high level consumer yet (e.g., set initial offset when restarting the consumer). They can instead use our low level SimpleConsumer Api. The logic will be a bit more complicated and you can follow the example in <a title="Kafka 0.8 SimpleConsumer example" href="https://cwiki.apache.org/confluence/display/KAFKA/0.8.0+SimpleConsumer+Example" target="_blank"><strong>here</strong></a>.</p><h4 id="223-new-consumer-api"><a name="223-new-consumer-api" class="plugin-anchor" href="#223-new-consumer-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#newconsumerapi">2.2.3 New Consumer API</a><a id="newconsumerapi"></a></h4><p>This new unified consumer API removes the distinction between the 0.8 high-level and low-level consumer APIs. You can use this client by adding a dependency on the client jar using the following example maven co-ordinates (you can change the version numbers with new releases):</p><pre class="language-"><code>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.kafka<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>kafka-clients<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>0.10.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Examples showing how to use the consumer are given in the <a title="Kafka 0.9.0 Javadoc" href="http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank"><strong>javadocs</strong></a>.</p><h3 id="23-streams-api"><a name="23-streams-api" class="plugin-anchor" href="#23-streams-api"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#streamsapi">2.3 Streams API</a><a id="streamsapi"></a></h3><p>As of the 0.10.0 release we have added a new client library named <strong>Kafka Streams</strong> to let users implement their stream processing applications with data stored in Kafka topics. Kafka Streams is considered alpha quality and its public APIs are likely to change in future releases. You can use Kafka Streams by adding a dependency on the streams jar using the following example maven co-ordinates (you can change the version numbers with new releases):</p><pre class="language-"><code>    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.apache.kafka<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>kafka-streams<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>0.10.0.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre>
+<p>Examples showing how to use this library are given in the <a title="Kafka 0.10.0 Javadoc" href="http://kafka.apache.org/0100/javadoc/index.html?org/apache/kafka/streams/KafkaStreams.html" target="_blank"><strong>javadocs</strong></a> (note those classes annotated with<strong>@InterfaceStability.Unstable</strong>, indicating their public APIs may change without backward-compatibility in future releases).</p>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="01_api_cn.html#producerapi" class="navigation navigation-prev " aria-label="Previous page: 生产者API">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="01_api_cn.html#consumerapi" class="navigation navigation-next " aria-label="Next page: 消费者API">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Producer API","level":"1.4.2","depth":2,"next":{"title":"消费者API","level":"1.4.3","depth":2,"anchor":"#consumerapi","path":"020_api/01_api_cn.md","ref":"020_api/01_api_cn.md#consumerapi","articles":[{"title":"老的上层消费者API","level":"1.4.3.1","depth":3,"anchor":"#highlevelconsumerapi","path":"020_api/01_api_cn.md","ref":"020_api/01_api_cn.md#highlevelconsumerapi","articles":[]},{"title":"老的简单消费者API","level":"1.4.3.2","depth":3,"anchor":"#simpleconsumerapi","path":"020_api/01_api_cn.md","ref":"020_api/01_api_cn.md#simpleconsumerapi","articles":[]},{"title":"新的消费者API","level":"1.4.3.3","depth":3,"anchor":"#newconsumerapi","path":"020_api/01_api_cn.md","ref":"020_api/01_api_cn.md#newconsumerapi","articles":[]}]},"previous":{"title":"生产者API","level":"1.4.1","depth":2,"anchor":"#producerapi","path":"020_api/01_api_cn.md","ref":"020_api/01_api_cn.md#producerapi","articles":[]},"dir":"ltr"},"config":{"gitbook":">=3.0.0","theme":"default","variables":{},"plugins":["splitter","github","anchors","sitemap","prism","-highlight","baidu_gio","ga","expandable-chapters-small"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-coy.css"]},"github":{"url":"https://github.com/BeanMr/apache-kafka-documentation-cn"},"splitter":{},"search":{},"baidu_gio":{"token":"f11ab3e8c5f25638fa247efa47a6b1f6"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"http://kafkadoc.beanmr.com/"},"expandable-chapters-small":{},"ga":{"configuration":"auto","token":"UA-83895646-1"},"sharing":{"facebook":true,"twitter":true,"google":true,"weibo":true,"instapaper":true,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"020_api/01_api.md","mtime":"2018-04-24T13:50:31.309Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-06-14T08:49:38.504Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu_gio/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
