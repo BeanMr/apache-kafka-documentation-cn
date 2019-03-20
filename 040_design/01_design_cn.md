@@ -36,8 +36,6 @@ Kafka 在消息的存储和缓存中**重度依赖文件系统**。因为“磁�
 
 这使人想到一个非常简单的设计：相对于竭尽所能的维护内存内结构而且要时刻注意在空间不足时谨记要将它们 flush 到文件系统中，我们可以颠覆这种做法。所有的数据被直接写入文件系统上一个可暂不执行磁盘 flush 操作的持久化日志文件中。实际上这意味着这些数据是被传送到了内核的页缓存上。
 
-This style of pagecache-centric design is described in an [**article**](http://varnish.projects.linpro.no/wiki/ArchitectNotes) on the design of Varnish here (along with a healthy dose of arrogance).
-
 这种基于页缓存的设计可以参见在 [**这篇关于 Varnish 的论文**](http://varnish.projects.linpro.no/wiki/ArchitectNotes)
 
 #### [常量时间就足够](#design_constanttime)<a id="design_constanttime"></a>
@@ -83,15 +81,9 @@ Java 中更多关于 sendfile 方法和 zero-copy （零拷贝） 相关的资�
 
 #### [端到端批量压缩](#design_compression)<a id="design_compression"></a>
 
-In some cases the bottleneck is actually not CPU or disk but network bandwidth. This is particularly true for a data pipeline that needs to send messages between data centers over a wide-area network. Of course the user can always compress its messages one at a time without any support needed from Kafka, but this can lead to very poor compression ratios as much of the redundancy is due to repetition between messages of the same type (e.g. field names in JSON or user agents in web logs or common string values). Efficient compression requires compressing multiple messages together rather than compressing each message individually.
-
 某些情况下，数据传输的瓶颈并不是 CPU或者磁盘，而是网络带宽。尤其是当数据消息通道需要在数据中心通过广域网进行传输时。当然用户可以在不需要 Kafka 支持下一次一个压缩消息，但这样会造成非常差的压缩率和消息重复类型冗余，比如 JSON 中字段名称或者是 Web 日志中用户代理或者是公共字符串值。高性能的压缩是一次压缩多个消息，而不是单独压缩。
 
-Kafka supports this by allowing recursive message sets. A batch of messages can be clumped together compressed and sent to the server in this form. This batch of messages will be written in compressed form and will remain compressed in the log and will only be decompressed by the consumer.
-
 Kafka 以高效的批处理格式支持一批消息可以压缩在一起发送到服务器。这批消息将以压缩格式写入，并且在日志中保持压缩，只会在 consumer 消费时解压缩。
-
-Kafka supports GZIP, Snappy and LZ4 compression protocols. More details on compression can be found **[here](https://cwiki.apache.org/confluence/display/KAFKA/Compression)**.
 
 Kafka 支持 GZIP，Snappy 和 LZ4 压缩协议，更多有关压缩的资料参看[这里](https://cwiki.apache.org/confluence/display/KAFKA/Compression)。
 
