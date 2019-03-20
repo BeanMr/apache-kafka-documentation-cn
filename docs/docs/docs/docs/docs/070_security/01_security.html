@@ -1,0 +1,2172 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>Security · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.0">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-coy.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="01_security.html" />
+    
+    
+    <link rel="prev" href="../060_operations/01_ops.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    About Book
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../000_glossary/01_glossary.html">
+            
+                <a href="../000_glossary/01_glossary.html">
+            
+                    
+                    术语表
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../010_getting_started/01_introduction_cn.html">
+            
+                <a href="../010_getting_started/01_introduction_cn.html">
+            
+                    
+                    入门
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../010_getting_started/01_introduction_cn.html">
+            
+                <a href="../010_getting_started/01_introduction_cn.html">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../010_getting_started/01_introduction.html">
+            
+                <a href="../010_getting_started/01_introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../010_getting_started/05_uses_cn.html">
+            
+                <a href="../010_getting_started/05_uses_cn.html">
+            
+                    
+                    应用场景
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../010_getting_started/05_uses.html">
+            
+                <a href="../010_getting_started/05_uses.html">
+            
+                    
+                    Use Cases
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../010_getting_started/10_quickstart_cn.html">
+            
+                <a href="../010_getting_started/10_quickstart_cn.html">
+            
+                    
+                    快速入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../010_getting_started/10_quickstart.html">
+            
+                <a href="../010_getting_started/10_quickstart.html">
+            
+                    
+                    Quick Start
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../010_getting_started/15_ecosystem_cn.html">
+            
+                <a href="../010_getting_started/15_ecosystem_cn.html">
+            
+                    
+                    软件生态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../010_getting_started/15_ecosystem.html">
+            
+                <a href="../010_getting_started/15_ecosystem.html">
+            
+                    
+                    Ecosystem
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../010_getting_started/20_upgrade_cn.html">
+            
+                <a href="../010_getting_started/20_upgrade_cn.html">
+            
+                    
+                    升级
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.10" data-path="../010_getting_started/20_upgrade.html">
+            
+                <a href="../010_getting_started/20_upgrade.html">
+            
+                    
+                    Upgrading
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html">
+            
+                    
+                    API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#producerapi">
+            
+                    
+                    生产者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#producerapi">
+            
+                    
+                    Producer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#consumerapi">
+            
+                    
+                    消费者API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.3.1" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#highlevelconsumerapi">
+            
+                    
+                    老的上层消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.2" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#simpleconsumerapi">
+            
+                    
+                    老的简单消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3.3" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#newconsumerapi">
+            
+                    
+                    新的消费者API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#consumerapi">
+            
+                    
+                    Consumer API
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.4.1" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#highlevelconsumerapi">
+            
+                    
+                    Old High Level Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.2" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#simpleconsumerapi">
+            
+                    
+                    Old Simple Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4.3" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#newconsumerapi">
+            
+                    
+                    New Consumer API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../020_api/01_api_cn.html">
+            
+                <a href="../020_api/01_api_cn.html#streamsapi">
+            
+                    
+                    流处理API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../020_api/01_api.html">
+            
+                <a href="../020_api/01_api.html#streamsapi">
+            
+                    
+                    Streams API
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html">
+            
+                    
+                    配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#brokerconfigs">
+            
+                    
+                    Broker配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#brokerconfigs">
+            
+                    
+                    Broker Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#producerconfigs">
+            
+                    
+                    生产者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#producerconfigs">
+            
+                    
+                    Producer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#consumerconfigs">
+            
+                    
+                    消费者配置
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.5.1" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#oldconsumerconfigs">
+            
+                    
+                    老的消费者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5.2" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#newconsumerconfigs">
+            
+                    
+                    新的消费者配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#consumerconfigs">
+            
+                    
+                    Consumer Configs
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.6.1" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#oldconsumerconfigs">
+            
+                    
+                    Old Consumer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6.2" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#newconsumerconfigs">
+            
+                    
+                    New Consumer Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#connectconfigs">
+            
+                    
+                    Kafka Connect配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#connectconfigs">
+            
+                    
+                    Kafka Connect Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../030_configuration/01_configuration_cn.html">
+            
+                <a href="../030_configuration/01_configuration_cn.html#streamsconfigs">
+            
+                    
+                    Kafka Streams配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../030_configuration/01_configuration.html">
+            
+                <a href="../030_configuration/01_configuration.html#streamsconfigs">
+            
+                    
+                    Kafka Streams Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html">
+            
+                    
+                    设计
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#majordesignelements">
+            
+                    
+                    设计初衷
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#majordesignelements">
+            
+                    
+                    Motivation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#persistence">
+            
+                    
+                    持久化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#persistence">
+            
+                    
+                    Persistence
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#maximizingefficiency">
+            
+                    
+                    性能
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.6" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#maximizingefficiency">
+            
+                    
+                    Efficiency
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.7" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#theproducer">
+            
+                    
+                    生产者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.8" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#theproducer">
+            
+                    
+                    The Producer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.9" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#theconsumer">
+            
+                    
+                    消费者
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.10" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#theconsumer">
+            
+                    
+                    The Consumer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.11" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#semantics">
+            
+                    
+                    消息投递语义
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.12" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#semantics">
+            
+                    
+                    Message Delivery Semantics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.13" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#replication">
+            
+                    
+                    复制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.14" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#replication">
+            
+                    
+                    Replication
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.15" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#compaction">
+            
+                    
+                    日志压缩
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.16" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#compaction">
+            
+                    
+                    Log Compaction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.17" data-path="../040_design/01_design_cn.html">
+            
+                <a href="../040_design/01_design_cn.html#design_quotas">
+            
+                    
+                    配额
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.18" data-path="../040_design/01_design.html">
+            
+                <a href="../040_design/01_design.html#design_quotas">
+            
+                    
+                    Quotas
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html">
+            
+                    
+                    Implementation
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#apidesign">
+            
+                    
+                    API Design
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.2" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#networklayer">
+            
+                    
+                    Network Layer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.3" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#messages">
+            
+                    
+                    Messages
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.4" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#messageformat">
+            
+                    
+                    Message format
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.5" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#log">
+            
+                    
+                    Log
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7.6" data-path="../050_implementation/01_implementation.html">
+            
+                <a href="../050_implementation/01_implementation.html#distributionimpl">
+            
+                    
+                    Distribution
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html">
+            
+                    
+                    Operations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops">
+            
+                    
+                    Basic Kafka Operations
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_add_topic">
+            
+                    
+                    Adding and removing topics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_modify_topic">
+            
+                    
+                    Modifying topics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_restarting">
+            
+                    
+                    Graceful shutdown
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_leader_balancing">
+            
+                    
+                    Balancing leadership
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_consumer_lag">
+            
+                    
+                    Checking consumer position
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.6" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_mirror_maker">
+            
+                    
+                    Mirroring data between clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.7" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_cluster_expansion">
+            
+                    
+                    Expanding your cluster
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.8" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_decommissioning_brokers">
+            
+                    
+                    Decommissioning brokers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.1.9" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#basic_ops_increase_replication_factor">
+            
+                    
+                    Increasing replication factor
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#datacenters">
+            
+                    
+                    Datacenters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#config">
+            
+                    
+                    Important Configs
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.3.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#serverconfig">
+            
+                    
+                    Important Server Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#clientconfig">
+            
+                    
+                    Important Client Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#prodconfig">
+            
+                    
+                    A Production Server Configs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#java">
+            
+                    
+                    Java Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#hwandos">
+            
+                    
+                    Hardware and OS
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.5.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#os">
+            
+                    
+                    OS
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#diskandfs">
+            
+                    
+                    Disks and Filesystems
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#appvsosflush">
+            
+                    
+                    Application vs OS Flush Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.4" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#linuxflush">
+            
+                    
+                    Linux Flush Behavior
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5.5" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#ext4">
+            
+                    
+                    Ext4 Notes
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#monitoring">
+            
+                    
+                    Monitoring
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.6.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#selector_monitoring">
+            
+                    
+                    Common monitoring metrics for producer/consumer/connect
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#new_producer_monitoring">
+            
+                    
+                    New producer monitoring
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6.3" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#new_consumer_monitoring">
+            
+                    
+                    New consumer monitoring
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zk">
+            
+                    
+                    ZooKeeper
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.7.1" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zkversion">
+            
+                    
+                    Stable Version
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7.2" data-path="../060_operations/01_ops.html">
+            
+                <a href="../060_operations/01_ops.html#zkops">
+            
+                    
+                    Operationalization
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9" data-path="01_security.html">
+            
+                <a href="01_security.html">
+            
+                    
+                    Security
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="01_security.html">
+            
+                <a href="01_security.html#security_overview">
+            
+                    
+                    Security Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="01_security.html">
+            
+                <a href="01_security.html#security_ssl">
+            
+                    
+                    Encryption and Authentication using SSL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="01_security.html">
+            
+                <a href="01_security.html#security_sasl">
+            
+                    
+                    Authentication using SASL
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="01_security.html">
+            
+                <a href="01_security.html#security_authz">
+            
+                    
+                    Authorization and ACLs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="01_security.html">
+            
+                <a href="01_security.html#security_rolling_upgrade">
+            
+                    
+                    Incorporating Security Features in a Running Cluster
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="01_security.html">
+            
+                <a href="01_security.html#zk_authz">
+            
+                    
+                    ZooKeeper Authentication
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.6.1" data-path="01_security.html">
+            
+                <a href="01_security.html#zk_authz_new">
+            
+                    
+                    New Clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6.2" data-path="01_security.html">
+            
+                <a href="01_security.html#zk_authz_migration">
+            
+                    
+                    Migrating Clusters
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6.3" data-path="01_security.html">
+            
+                <a href="01_security.html#zk_authz_ensemble">
+            
+                    
+                    Migrating the ZooKeeper Ensemble
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html">
+            
+                    
+                    Kafka Connect
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_overview">
+            
+                    
+                    Overview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_user">
+            
+                    
+                    User Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../080_connect/01_connect.html">
+            
+                <a href="../080_connect/01_connect.html#connect_development">
+            
+                    
+                    Connector Development Guide
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Security</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="7-security"><a name="7-security" class="plugin-anchor" href="#7-security"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security">7. Security</a><a id="security"></a></h2><h3 id="71-security-overview"><a name="71-security-overview" class="plugin-anchor" href="#71-security-overview"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_overview">7.1 Security Overview</a><a id="security_overview"></a></h3><p>In release 0.9.0.0, the Kafka community added a number of features that, used either separately or together, increases security in a Kafka cluster. These features are considered to be of beta quality. The following security measures are currently supported:</p><ol><li>Authentication of connections to brokers from clients (producers and consumers), other brokers and tools, using either SSL or SASL (Kerberos). SASL/PLAIN can also be used from release 0.10.0.0 onwards.
+</li>
+<li>Authentication of connections from brokers to ZooKeeper
+</li>
+<li>Encryption of data transferred between brokers and clients, between brokers, or between brokers and tools using SSL (Note that there is a performance degradation when SSL is enabled, the magnitude of which depends on the CPU type and the JVM implementation.)
+</li>
+<li>Authorization of read / write operations by clients
+</li>
+<li>Authorization is pluggable and integration with external authorization services is supported
+</li></ol>
+<p>It&apos;s worth noting that security is optional - non-secured clusters are supported, as well as a mix of authenticated, unauthenticated, encrypted and non-encrypted clients. The guides below explain how to configure and use the security features in both clients and brokers.</p><h3 id="72-encryption-and-authentication-using-ssl"><a name="72-encryption-and-authentication-using-ssl" class="plugin-anchor" href="#72-encryption-and-authentication-using-ssl"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_ssl">7.2 Encryption and Authentication using SSL</a><a id="security_ssl"></a></h3><p>Apache Kafka allows clients to connect over SSL. By default SSL is disabled but can be turned on as needed.</p><ol><li><h4 id="generate-ssl-key-and-certificate-for-each-kafka-broker"><a name="generate-ssl-key-and-certificate-for-each-kafka-broker" class="plugin-anchor" href="#generate-ssl-key-and-certificate-for-each-kafka-broker"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_ssl_key" target="_blank"><strong>Generate SSL key and certificate for each Kafka broker</strong></a></h4><p>The first step of deploying HTTPS is to generate the key and the certificate for each machine in the cluster. You can use Java&apos;s keytool utility to accomplish this task. We will generate the key into a temporary keystore initially so that we can export and sign it later with CA.</p><pre class="language-"><code>       keytool -keystore server.keystore.jks -alias localhost -validity {validity} -genkey</code></pre>
+<p>You need to specify two parameters in the above command:
+1. keystore: the keystore file that stores the certificate. The keystore file contains the private key of the certificate; therefore, it needs to be kept safely.
+2. validity: the valid time of the certificate in days.</p></li></ol>
+<p>Note: By default the property <code>ssl.endpoint.identification.algorithm</code> is not defined, so hostname verification is not performed. In order to enable hostname verification, set the following property:</p><pre class="language-"><code>      ssl.endpoint.identification.algorithm=HTTPS</code></pre>
+<p>Once enabled, clients will verify the server&apos;s fully qualified domain name (FQDN) against one of the following two fields:
+  1. Common Name (CN)
+  2. Subject Alternative Name (SAN)</p><p>Both fields are valid, RFC-2818 recommends the use of SAN however. SAN is also more flexible, allowing for multiple DNS entries to be declared. Another advantage is that the CN can be set to a more meaningful value for authorization purposes. To add a SAN field append the following argument <code>-ext SAN=DNS:{FQDN}</code>to the keytool command:</p><pre class="language-"><code>      keytool -keystore server.keystore.jks -alias localhost -validity {validity} -genkey -ext SAN=DNS:{FQDN}
+</code></pre>
+<p>The following command can be run afterwards to verify the contents of the generated certificate:</p><pre class="language-"><code>      keytool -list -v -keystore server.keystore.jks
+</code></pre>
+<ol><li><h4 id="creating-your-own-ca"><a name="creating-your-own-ca" class="plugin-anchor" href="#creating-your-own-ca"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_ssl_ca" target="_blank"><strong>Creating your own CA</strong></a></h4><p>After the first step, each machine in the cluster has a public-private key pair, and a certificate to identify the machine. The certificate, however, is unsigned, which means that an attacker can create such a certificate to pretend to be any machine.
+Therefore, it is important to prevent forged certificates by signing them for each machine in the cluster. A certificate authority (CA) is responsible for signing certificates. CA works likes a government that issues passports&#x2014;the government stamps (signs) each passport so that the passport becomes difficult to forge. Other governments verify the stamps to ensure the passport is authentic. Similarly, the CA signs the certificates, and the cryptography guarantees that a signed certificate is computationally difficult to forge. Thus, as long as the CA is a genuine and trusted authority, the clients have high assurance that they are connecting to the authentic machines.</p><pre class="language-"><code>       openssl req -new -x509 -keyout ca-key -out ca-cert -days 365</code></pre>
+<p>The generated CA is simply a public-private key pair and certificate, and it is intended to sign other certificates.</p><p>The next step is to add the generated CA to the <strong>clients&apos; truststore</strong> so that the clients can trust this CA:</p><pre class="language-"><code>       keytool -keystore server.truststore.jks -alias CARoot -import -file ca-cert</code></pre>
+<p><strong>Note:</strong> If you configure the Kafka brokers to require client authentication by setting ssl.client.auth to be &quot;requested&quot; or &quot;required&quot; on the <a href="http://kafka.apache.org/documentation.html#config_broker" target="_blank"><strong>Kafka brokers config</strong></a> then you must provide a truststore for the Kafka brokers as well and it should have all the CA certificates that clients keys were signed by.</p><pre class="language-"><code>       keytool -keystore client.truststore.jks -alias CARoot -import -file ca-cert</code></pre>
+<p>In contrast to the keystore in step 1 that stores each machine&apos;s own identity, the truststore of a client stores all the certificates that the client should trust. Importing a certificate into one&apos;s truststore also means trusting all certificates that are signed by that certificate. As the analogy above, trusting the government (CA) also means trusting all passports (certificates) that it has issued. This attribute is called the chain of trust, and it is particularly useful when deploying SSL on a large Kafka cluster. You can sign all certificates in the cluster with a single CA, and have all machines share the same truststore that trusts the CA. That way all machines can authenticate all other machines.</p></li>
+<li><h4 id="signing-the-certificate"><a name="signing-the-certificate" class="plugin-anchor" href="#signing-the-certificate"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_ssl_signing" target="_blank"><strong>Signing the certificate</strong></a></h4><p>The next step is to sign all certificates generated by step 1 with the CA generated in step 2. First, you need to export the certificate from the keystore:</p><pre class="language-"><code>       keytool -keystore server.keystore.jks -alias localhost -certreq -file cert-file</code></pre>
+<p>Then sign it with the CA:</p><pre class="language-"><code>       openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days {validity} -CAcreateserial -passin pass:{ca-password}</code></pre>
+<p>Finally, you need to import both the certificate of the CA and the signed certificate into the keystore:</p><pre class="language-"><code>       keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
+       keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed</code></pre>
+<p>The definitions of the parameters are the following:
+1. keystore: the location of the keystore
+2. ca-cert: the certificate of the CA
+3. ca-key: the private key of the CA
+4. ca-password: the passphrase of the CA
+5. cert-file: the exported, unsigned certificate of the server
+6. cert-signed: the signed certificate of the server</p><p>Here is an example of a bash script with all above steps. Note that one of the commands assumes a password of <code>test1234</code>, so either use that password or edit the command before running it.</p><pre class="language-"><code>       #!/bin/bash
+       #Step 1
+       keytool -keystore server.keystore.jks -alias localhost -validity 365 -keyalg RSA -genkey
+       #Step 2
+       openssl req -new -x509 -keyout ca-key -out ca-cert -days 365
+       keytool -keystore server.truststore.jks -alias CARoot -import -file ca-cert
+       keytool -keystore client.truststore.jks -alias CARoot -import -file ca-cert
+       #Step 3
+       keytool -keystore server.keystore.jks -alias localhost -certreq -file cert-file
+       openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 365 -CAcreateserial -passin pass:test1234
+       keytool -keystore server.keystore.jks -alias CARoot -import -file ca-cert
+       keytool -keystore server.keystore.jks -alias localhost -import -file cert-signed</code></pre>
+<ol><li><h4 id="configuring-kafka-brokers"><a name="configuring-kafka-brokers" class="plugin-anchor" href="#configuring-kafka-brokers"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_configbroker" target="_blank"><strong>Configuring Kafka Brokers</strong></a></h4></li></ol>
+<p>Kafka Brokers support listening for connections on multiple ports. We need to configure the following property in server.properties, which must have one or more comma-separated values:</p><pre class="language-"><code>listeners</code></pre>
+<p>If SSL is not enabled for inter-broker communication (see below for how to enable it), both PLAINTEXT and SSL ports will be necessary.</p><pre class="language-"><code>       listeners=PLAINTEXT://host.name:port,SSL://host.name:port</code></pre>
+<p>Following SSL configs are needed on the broker side</p><pre class="language-"><code>       ssl.keystore.location=/var/private/ssl/kafka.server.keystore.jks
+       ssl.keystore.password=test1234
+       ssl.key.password=test1234
+       ssl.truststore.location=/var/private/ssl/kafka.server.truststore.jks
+       ssl.truststore.password=test1234</code></pre>
+<p>Optional settings that are worth considering:
+1. ssl.client.auth=none (&quot;required&quot; =&gt; client authentication is required, &quot;requested&quot; =&gt; client authentication is requested and client without certs can still connect. The usage of &quot;requested&quot; is discouraged as it provides a false sense of security and misconfigured clients will still connect successfully.)
+2. ssl.cipher.suites (Optional). A cipher suite is a named combination of authentication, encryption, MAC and key exchange algorithm used to negotiate the security settings for a network connection using TLS or SSL network protocol. (Default is an empty list)
+3. ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1 (list out the SSL protocols that you are going to accept from clients. Do note that SSL is deprecated in favor of TLS and using SSL in production is not recommended)
+4. ssl.keystore.type=JKS
+5. ssl.truststore.type=JKS</p><p>If you want to enable SSL for inter-broker communication, add the following to the broker properties file (it defaults to PLAINTEXT)</p><pre class="language-"><code>       security.inter.broker.protocol=SSL</code></pre>
+<p>Due to import regulations in some countries, the Oracle implementation limits the strength of cryptographic algorithms available by default. If stronger algorithms are needed (for example, AES with 256-bit keys), the <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank"><strong>JCE Unlimited Strength Jurisdiction Policy Files</strong></a> must be obtained and installed in the JDK/JRE. See the <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/SunProviders.html" target="_blank"><strong>JCA Providers Documentation</strong></a> for more information.</p><p>Once you start the broker you should be able to see in the server.log</p><pre class="language-"><code>       with addresses: PLAINTEXT -&gt; EndPoint(192.168.64.1,9092,PLAINTEXT),SSL -&gt; EndPoint(192.168.64.1,9093,SSL)</code></pre>
+<p>To check quickly if the server keystore and truststore are setup properly you can run the following command</p><pre class="language-"><code>openssl s_client -debug -connect localhost:9093 -tls1</code></pre>
+<p>(Note: TLSv1 should be listed under ssl.enabled.protocols)</p><p>In the output of this command you should see server&apos;s certificate:</p><pre class="language-"><code>       -----BEGIN CERTIFICATE-----
+       {variable sized random bytes}
+       -----END CERTIFICATE-----
+       subject=/C=US/ST=CA/L=Santa Clara/O=org/OU=org/CN=Sriharsha Chintalapani
+       issuer=/C=US/ST=CA/L=Santa Clara/O=org/OU=org/CN=kafka/emailAddress=test@test.com</code></pre>
+<p>If the certificate does not show up or if there are any other error messages then your keystore is not setup properly.</p></li>
+<li><h4 id="configuring-kafka-clients"><a name="configuring-kafka-clients" class="plugin-anchor" href="#configuring-kafka-clients"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_configclients" target="_blank"><strong>Configuring Kafka Clients</strong></a></h4><p>SSL is supported only for the new Kafka Producer and Consumer, the older API is not supported. The configs for SSL will be the same for both producer and consumer.</p><p>If client authentication is not required in the broker, then the following is a minimal configuration example:</p><pre class="language-"><code>       security.protocol=SSL
+       ssl.truststore.location=/var/private/ssl/kafka.client.truststore.jks
+       ssl.truststore.password=test1234</code></pre>
+<p>If client authentication is required, then a keystore must be created like in step 1 and the following must also be configured:</p><pre class="language-"><code>       ssl.keystore.location=/var/private/ssl/kafka.client.keystore.jks
+       ssl.keystore.password=test1234
+       ssl.key.password=test1234</code></pre>
+<p>Other configuration settings that may also be needed depending on our requirements and the broker configuration:
+1. ssl.provider (Optional). The name of the security provider used for SSL connections. Default value is the default security provider of the JVM.
+2. ssl.cipher.suites (Optional). A cipher suite is a named combination of authentication, encryption, MAC and key exchange algorithm used to negotiate the security settings for a network connection using TLS or SSL network protocol.
+3. ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1. It should list at least one of the protocols configured on the broker side
+4. ssl.truststore.type=JKS
+5. ssl.keystore.type=JKS</p></li></ol>
+<p>Examples using console-producer and console-consumer:</p><pre class="language-"><code>          kafka-console-producer.sh --broker-list localhost:9093 --topic test --producer.config client-ssl.properties
+          kafka-console-consumer.sh --bootstrap-server localhost:9093 --topic test --new-consumer --consumer.config client-ssl.properties</code></pre>
+<h3 id="73-authentication-using-sasl"><a name="73-authentication-using-sasl" class="plugin-anchor" href="#73-authentication-using-sasl"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_sasl">7.3 Authentication using SASL</a><a id="security_sasl"></a></h3><ol><li><h4 id="sasl-configuration-for-kafka-brokers"><a name="sasl-configuration-for-kafka-brokers" class="plugin-anchor" href="#sasl-configuration-for-kafka-brokers"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_brokerconfig" target="_blank"><strong>SASL configuration for Kafka brokers</strong></a></h4><ol><li>Select one or more supported mechanisms to enable in the broker. GSSAPI and PLAIN are the mechanisms currently supported in Kafka.
+</li>
+<li>Add a JAAS config file for the selected mechanisms as described in the examples for setting up<a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_brokerconfig" target="_blank"><strong>GSSAPI (Kerberos)</strong></a> or <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_brokerconfig" target="_blank"><strong>PLAIN</strong></a>.
+</li>
+<li><p>Pass the JAAS config file location as JVM parameter to each Kafka broker. For example:</p><pre class="language-"><code>  -Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf</code></pre>
+<ol><li>Configure a SASL port in server.properties, by adding at least one of SASL<em>PLAINTEXT or SASL_SSL to the _listeners</em> parameter, which contains one or more comma-separated values:
+</li></ol>
+<pre class="language-"><code>  listeners=SASL_PLAINTEXT://host.name:port</code></pre>
+<p>If SASL_SSL is used, then <a href="http://kafka.apache.org/documentation.html#security_ssl" target="_blank"><strong>SSL must also be configured</strong></a>. If you are only configuring a SASL port (or if you want the Kafka brokers to authenticate each other using SASL) then make sure you set the same SASL protocol for inter-broker communication:</p><pre class="language-"><code>  security.inter.broker.protocol=SASL_PLAINTEXT (or SASL_SSL)</code></pre>
+<ol><li>Enable one or more SASL mechanisms in server.properties:
+</li></ol>
+<pre class="language-"><code>  sasl.enabled.mechanisms=GSSAPI (,PLAIN)</code></pre>
+<ol><li>Configure the SASL mechanism for inter-broker communication in server.properties if using SASL for inter-broker communication:
+</li></ol>
+<pre class="language-"><code>  sasl.mechanism.inter.broker.protocol=GSSAPI (or PLAIN)</code></pre>
+<ol><li>Follow the steps in <a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_brokerconfig" target="_blank"><strong>GSSAPI (Kerberos)</strong></a> or <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_brokerconfig" target="_blank"><strong>PLAIN</strong></a> to configure SASL for the enabled mechanisms. To enable multiple mechanisms in the broker, follow the steps <a href="http://kafka.apache.org/documentation.html#security_sasl_multimechanism" target="_blank"><strong>here</strong></a>.
+</li></ol>
+</li>
+<li><p><a href="http://kafka.apache.org/documentation.html#security_sasl_brokernotes" target="_blank"><strong>Important notes:</strong></a>
+1. KafkaServer is the section name in the JAAS file used by each KafkaServer/Broker. This section provides SASL configuration options for the broker including any SASL client connections made by the broker for inter-broker communication.
+2. Client section is used to authenticate a SASL connection with zookeeper. It also allows the brokers to set SASL ACL on zookeeper nodes which locks these nodes down so that only the brokers can modify it. It is necessary to have the same principal name across all brokers. If you want to use a section name other than Client, set the system propertyzookeeper.sasl.client to the appropriate name (<em>e.g.</em>, -Dzookeeper.sasl.client=ZkClient).
+3. ZooKeeper uses &quot;zookeeper&quot; as the service name by default. If you want to change this, set the system property zookeeper.sasl.client.username to the appropriate name (<em>e.g.</em>, -Dzookeeper.sasl.client.username=zk).</p></li></ol>
+</li></ol>
+<ol><li><h4 id="sasl-configuration-for-kafka-clients"><a name="sasl-configuration-for-kafka-clients" class="plugin-anchor" href="#sasl-configuration-for-kafka-clients"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_clientconfig" target="_blank"><strong>SASL configuration for Kafka clients</strong></a></h4><p>SASL authentication is only supported for the new Java Kafka producer and consumer, the older API is not supported. To configure SASL authentication on the clients:
+1. Select a SASL mechanism for authentication.
+2. Add a JAAS config file for the selected mechanism as described in the examples for setting up<a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_clientconfig" target="_blank"><strong>GSSAPI (Kerberos)</strong></a> or <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_clientconfig" target="_blank"><strong>PLAIN</strong></a>. KafkaClient is the section name in the JAAS file used by Kafka clients.
+3. Pass the JAAS config file location as JVM parameter to each client JVM. For example:</p><pre class="language-"><code>     -Djava.security.auth.login.config=/etc/kafka/kafka_client_jaas.conf</code></pre>
+<ol><li><p>Configure the following properties in producer.properties or consumer.properties:</p><pre class="language-"><code>  security.protocol=SASL_PLAINTEXT (or SASL_SSL)
+  sasl.mechanism=GSSAPI (or PLAIN)</code></pre>
+<ol><li>Follow the steps in <a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_clientconfig" target="_blank"><strong>GSSAPI (Kerberos)</strong></a> or <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_clientconfig" target="_blank"><strong>PLAIN</strong></a> to configure SASL for the selected mechanism.
+</li></ol>
+</li></ol>
+</li></ol>
+<ol><li><h4 id="authentication-using-saslkerberos"><a name="authentication-using-saslkerberos" class="plugin-anchor" href="#authentication-using-saslkerberos"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos" target="_blank"><strong>Authentication using SASL/Kerberos</strong></a></h4><ol><li><h5 id="prerequisites"><a name="prerequisites" class="plugin-anchor" href="#prerequisites"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_prereq" target="_blank"><strong>Prerequisites</strong></a></h5><ol><li><strong>Kerberos</strong>
+</li></ol>
+<p>If your organization is already using a Kerberos server (for example, by using Active Directory), there is no need to install a new server just for Kafka. Otherwise you will need to install one, your Linux vendor likely has packages for Kerberos and a short guide on how to install and configure it (<a href="https://help.ubuntu.com/community/Kerberos" target="_blank"><strong>Ubuntu</strong></a>, <a href="https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Managing_Smart_Cards/installing-kerberos.html" target="_blank"><strong>Redhat</strong></a>). Note that if you are using Oracle Java, you will need to download JCE policy files for your Java version and copy them to $JAVA_HOME/jre/lib/security.
+2. <strong>Create Kerberos Principals</strong></p><p>If you are using the organization&apos;s Kerberos or Active Directory server, ask your Kerberos administrator for a principal for each Kafka broker in your cluster and for every operating system user that will access Kafka with Kerberos authentication (via clients and tools).</p><p>If you have installed your own Kerberos, you will need to create these principals yourself using the following commands:</p><pre class="language-"><code>    sudo /usr/sbin/kadmin.local -q &apos;addprinc -randkey kafka/{hostname}@{REALM}&apos;
+    sudo /usr/sbin/kadmin.local -q &quot;ktadd -k /etc/security/keytabs/{keytabname}.keytab kafka/{hostname}@{REALM}&quot;</code></pre>
+<ol><li><strong>Make sure all hosts can be reachable using hostnames</strong> - it is a Kerberos requirement that all your hosts can be resolved with their FQDNs.
+</li></ol>
+</li>
+<li><h5 id="configuring-kafka-brokers"><a name="configuring-kafka-brokers" class="plugin-anchor" href="#configuring-kafka-brokers"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_brokerconfig" target="_blank"><strong>Configuring Kafka Brokers</strong></a></h5><ol><li><p>Add a suitably modified JAAS file similar to the one below to each Kafka broker&apos;s config directory, let&apos;s call it kafka_server_jaas.conf for this example (note that each broker should have its own keytab):</p><pre class="language-"><code> KafkaServer {
+     com.sun.security.auth.module.Krb5LoginModule required
+     useKeyTab=true
+     storeKey=true
+     keyTab=&quot;/etc/security/keytabs/kafka_server.keytab&quot;
+     principal=&quot;kafka/kafka1.hostname.com@EXAMPLE.COM&quot;;
+ };
+
+ // Zookeeper client authentication
+ Client {
+    com.sun.security.auth.module.Krb5LoginModule required
+    useKeyTab=true
+    storeKey=true
+    keyTab=&quot;/etc/security/keytabs/kafka_server.keytab&quot;
+    principal=&quot;kafka/kafka1.hostname.com@EXAMPLE.COM&quot;;
+ };</code></pre>
+<ol><li>KafkaServer section in the JAAS file tells the broker which principal to use and the location of the keytab where this principal is stored. It allows the broker to login using the keytab specified in this section. See <a href="http://kafka.apache.org/documentation.html#security_sasl_brokernotes" target="_blank"><strong>notes</strong></a> for more details on Zookeeper SASL configuration.
+</li></ol>
+</li>
+<li><p>Pass the JAAS and optionally the krb5 file locations as JVM parameters to each Kafka broker (see <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/tutorials/KerberosReq.html" target="_blank"><strong>here</strong></a> for more details):</p><pre class="language-"><code> -Djava.security.krb5.conf=/etc/kafka/krb5.conf
+ -Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf</code></pre>
+<ol><li>Make sure the keytabs configured in the JAAS file are readable by the operating system user who is starting kafka broker.
+</li></ol>
+</li>
+<li><p>Configure SASL port and SASL mechanisms in server.properties as described <a href="http://kafka.apache.org/documentation.html#security_sasl_brokerconfig" target="_blank"><strong>here</strong></a>. For example:
+```
+ listeners=SASL_PLAINTEXT://host.name:port
+ security.inter.broker.protocol=SASL_PLAINTEXT
+ sasl.mechanism.inter.broker.protocol=GSSAPI
+ sasl.enabled.mechanisms=GSSAPI</p></li></ol>
+<pre class="language-"><code>
+6. We must also configure the service name in server.properties, which should match the principal name of the kafka brokers. In the above example, principal is &quot;kafka/kafka1.hostname.com@EXAMPLE.com&quot;, so:</code></pre>
+<pre class="language-"><code>sasl.kerberos.service.name=kafka</code></pre>
+<p>```</p></li></ol>
+</li></ol>
+<ol><li><h5 id="configuring-kafka-clients"><a name="configuring-kafka-clients" class="plugin-anchor" href="#configuring-kafka-clients"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_kerberos_sasl_clientconfig" target="_blank"><strong>Configuring Kafka Clients</strong></a></h5><p>To configure SASL authentication on the clients:
+1. Clients (producers, consumers, connect workers, etc) will authenticate to the cluster with their own principal (usually with the same name as the user running the client), so obtain or create these principals as needed. Then create a JAAS file for each principal. The KafkaClient section describes how the clients like producer and consumer can connect to the Kafka Broker. The following is an example configuration for a client using a keytab (recommended for long-running processes):</p><pre class="language-"><code>     KafkaClient {
+         com.sun.security.auth.module.Krb5LoginModule required
+         useKeyTab=true
+         storeKey=true
+         keyTab=&quot;/etc/security/keytabs/kafka_client.keytab&quot;
+         principal=&quot;kafka-client-1@EXAMPLE.COM&quot;;
+     };</code></pre>
+<p>For command-line utilities like kafka-console-consumer or kafka-console-producer, kinit can be used along with &quot;useTicketCache=true&quot; as in:</p><pre class="language-"><code>     KafkaClient {
+         com.sun.security.auth.module.Krb5LoginModule required
+         useTicketCache=true;
+     };</code></pre>
+<ol><li><p>Pass the JAAS and optionally krb5 file locations as JVM parameters to each client JVM (see<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/security/jgss/tutorials/KerberosReq.html" target="_blank"><strong>here</strong></a> for more details):</p><pre class="language-"><code>  -Djava.security.krb5.conf=/etc/kafka/krb5.conf
+  -Djava.security.auth.login.config=/etc/kafka/kafka_client_jaas.conf</code></pre>
+<ol><li>Make sure the keytabs configured in the kafka_client_jaas.conf are readable by the operating system user who is starting kafka client.
+</li></ol>
+</li>
+<li><p>Configure the following properties in producer.properties or consumer.properties:</p><pre class="language-"><code>  security.protocol=SASL_PLAINTEXT (or SASL_SSL)
+  sasl.mechanism=GSSAPI
+  sasl.kerberos.service.name=kafka</code></pre>
+</li></ol>
+</li></ol>
+<ol><li><h4 id="authentication-using-saslplain"><a name="authentication-using-saslplain" class="plugin-anchor" href="#authentication-using-saslplain"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_plain" target="_blank"><strong>Authentication using SASL/PLAIN</strong></a></h4><p>SASL/PLAIN is a simple username/password authentication mechanism that is typically used with TLS for encryption to implement secure authentication. Kafka supports a default implementation for SASL/PLAIN which can be extended for production use as described <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_production" target="_blank"><strong>here</strong></a>.</p><p>The username is used as the authenticated <code>Principal</code> for configuration of ACLs etc.
+1. ##### <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_brokerconfig" target="_blank"><strong>Configuring Kafka Brokers</strong></a></p><ol><li><p>Add a suitably modified JAAS file similar to the one below to each Kafka broker&apos;s config directory, let&apos;s call it kafka_server_jaas.conf for this example:</p><pre class="language-"><code>   KafkaServer {
+       org.apache.kafka.common.security.plain.PlainLoginModule required
+       username=&quot;admin&quot;
+       password=&quot;admin-secret&quot;
+       user_admin=&quot;admin-secret&quot;
+       user_alice=&quot;alice-secret&quot;;
+   };</code></pre>
+<p>This configuration defines two users (<em>admin</em> and <em>alice</em>). The properties username andpassword in the KafkaServer section are used by the broker to initiate connections to other brokers. In this example, <em>admin</em> is the user for inter-broker communication. The set of properties user<em>_userName</em> defines the passwords for all users that connect to the broker and the broker validates all client connections including those from other brokers using these properties.</p></li>
+<li><p>Pass the JAAS config file location as JVM parameter to each Kafka broker:</p><pre class="language-"><code>   -Djava.security.auth.login.config=/etc/kafka/kafka_server_jaas.conf</code></pre>
+<ol><li>Configure SASL port and SASL mechanisms in server.properties as described <a href="http://kafka.apache.org/documentation.html#security_sasl_brokerconfig" target="_blank"><strong>here</strong></a>. For example:
+</li></ol>
+<pre class="language-"><code>   listeners=SASL_SSL://host.name:port
+   security.inter.broker.protocol=SASL_SSL
+   sasl.mechanism.inter.broker.protocol=PLAIN
+   sasl.enabled.mechanisms=PLAIN</code></pre>
+</li></ol>
+</li></ol>
+<ol><li><h5 id="configuring-kafka-clients"><a name="configuring-kafka-clients" class="plugin-anchor" href="#configuring-kafka-clients"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_plain_clientconfig" target="_blank"><strong>Configuring Kafka Clients</strong></a></h5><p>To configure SASL authentication on the clients:
+1. The KafkaClient section describes how the clients like producer and consumer can connect to the Kafka Broker. The following is an example configuration for a client for the PLAIN mechanism:</p><pre class="language-"><code>     KafkaClient {
+         org.apache.kafka.common.security.plain.PlainLoginModule required
+         username=&quot;alice&quot;
+         password=&quot;alice-secret&quot;;
+     };</code></pre>
+<p>The properties username and password in the KafkaClient section are used by clients to configure the user for client connections. In this example, clients connect to the broker as user <em>alice</em>.
+2. Pass the JAAS config file location as JVM parameter to each client JVM:</p><pre class="language-"><code>     -Djava.security.auth.login.config=/etc/kafka/kafka_client_jaas.conf</code></pre>
+<ol><li>Configure the following properties in producer.properties or consumer.properties:
+<pre class="language-"><code>  security.protocol=SASL_SSL
+  sasl.mechanism=PLAIN</code></pre>
+</li></ol>
+</li></ol>
+<ol><li><h5 id="use-of-saslplain-in-production"><a name="use-of-saslplain-in-production" class="plugin-anchor" href="#use-of-saslplain-in-production"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_plain_production" target="_blank"><strong>Use of SASL/PLAIN in production</strong></a></h5><ul><li>SASL/PLAIN should be used only with SSL as transport layer to ensure that clear passwords are not transmitted on the wire without encryption.
+</li>
+<li>The default implementation of SASL/PLAIN in Kafka specifies usernames and passwords in the JAAS configuration file as shown <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_brokerconfig" target="_blank"><strong>here</strong></a>. To avoid storing passwords on disk, you can plugin your own implementation of <code>javax.security.auth.spi.LoginModule</code> that provides usernames and passwords from an external source. The login module implementation should provide username as the public credential and password as the private credential of the<code>Subject</code>. The default implementation<code>org.apache.kafka.common.security.plain.PlainLoginModule</code> can be used as an example.
+</li>
+<li><p>In production systems, external authentication servers may implement password authentication. Kafka brokers can be integrated with these servers by adding your own implementation of <code>javax.security.sasl.SaslServer</code>. The default implementation included in Kafka in the package <code>org.apache.kafka.common.security.plain</code> can be used as an example to get started.</p><ul><li>New providers must be installed and registered in the JVM. Providers can be installed by adding provider classes to the normal CLASSPATH or bundled as a jar file and added to<em>JAVA_HOME</em>/lib/ext.
+</li>
+<li><p>Providers can be registered statically by adding a provider to the security properties file<em>JAVA_HOME</em>/lib/security/java.security.</p><pre class="language-"><code>   security.provider.n=providerClassName</code></pre>
+<p>where <em>providerClassName</em> is the fully qualified name of the new provider and <em>n</em> is the preference order with lower numbers indicating higher preference.</p></li>
+<li><p>Alternatively, you can register providers dynamically at runtime by invoking<code>Security.addProvider</code> at the beginning of the client application or in a static initializer in the login module. For example:</p><pre class="language-"><code>   Security.addProvider(new PlainSaslServerProvider());</code></pre>
+<ul><li>For more details, see <a href="http://docs.oracle.com/javase/8/docs/technotes/guides/security/crypto/CryptoSpec.html" target="_blank"><strong>JCA Reference</strong></a>.
+</li></ul>
+</li></ul>
+</li></ul>
+</li></ol>
+<ol><li><h4 id="enabling-multiple-sasl-mechanisms-in-a-broker"><a name="enabling-multiple-sasl-mechanisms-in-a-broker" class="plugin-anchor" href="#enabling-multiple-sasl-mechanisms-in-a-broker"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#security_sasl_multimechanism" target="_blank"><strong>Enabling multiple SASL mechanisms in a broker</strong></a></h4><ol><li><p>Specify configuration for the login modules of all enabled mechanisms in the KafkaServersection of the JAAS config file. For example:</p><pre class="language-"><code>  KafkaServer {
+      com.sun.security.auth.module.Krb5LoginModule required
+      useKeyTab=true
+      storeKey=true
+      keyTab=&quot;/etc/security/keytabs/kafka_server.keytab&quot;
+      principal=&quot;kafka/kafka1.hostname.com@EXAMPLE.COM&quot;;
+
+      org.apache.kafka.common.security.plain.PlainLoginModule required
+      username=&quot;admin&quot;
+      password=&quot;admin-secret&quot;
+      user_admin=&quot;admin-secret&quot;
+      user_alice=&quot;alice-secret&quot;;
+  };</code></pre>
+<ol><li>Enable the SASL mechanisms in server.properties:
+</li></ol>
+<pre class="language-"><code>  sasl.enabled.mechanisms=GSSAPI,PLAIN</code></pre>
+<ol><li>Specify the SASL security protocol and mechanism for inter-broker communication in server.properties if required:
+</li></ol>
+<pre class="language-"><code>  security.inter.broker.protocol=SASL_PLAINTEXT (or SASL_SSL)
+  sasl.mechanism.inter.broker.protocol=GSSAPI (or PLAIN)</code></pre>
+<ol><li>Follow the mechanism-specific steps in <a href="http://kafka.apache.org/documentation.html#security_sasl_kerberos_brokerconfig" target="_blank"><strong>GSSAPI (Kerberos)</strong></a> and <a href="http://kafka.apache.org/documentation.html#security_sasl_plain_brokerconfig" target="_blank"><strong>PLAIN</strong></a> to configure SASL for the enabled mechanisms.
+</li></ol>
+</li></ol>
+</li></ol>
+<ol><li><h4 id="modifying-sasl-mechanism-in-a-running-cluster"><a name="modifying-sasl-mechanism-in-a-running-cluster" class="plugin-anchor" href="#modifying-sasl-mechanism-in-a-running-cluster"><i class="fa fa-link" aria-hidden="true"></i></a><a href="http://kafka.apache.org/documentation.html#saslmechanism_rolling_upgrade" target="_blank"><strong>Modifying SASL mechanism in a Running Cluster</strong></a></h4><p>SASL mechanism can be modified in a running cluster using the following sequence:</p><ol><li>Enable new SASL mechanism by adding the mechanism to sasl.enabled.mechanisms in server.properties for each broker. Update JAAS config file to include both mechanisms as described<a href="http://kafka.apache.org/documentation.html#security_sasl_multimechanism" target="_blank"><strong>here</strong></a>. Incrementally bounce the cluster nodes.
+</li>
+<li>Restart clients using the new mechanism.
+</li>
+<li>To change the mechanism of inter-broker communication (if this is required), setsasl.mechanism.inter.broker.protocol in server.properties to the new mechanism and incrementally bounce the cluster again.
+</li>
+<li>To remove old mechanism (if this is required), remove the old mechanism fromsasl.enabled.mechanisms in server.properties and remove the entries for the old mechanism from JAAS config file. Incrementally bounce the cluster again.
+</li></ol>
+</li></ol>
+<h3 id="74-authorization-and-acls"><a name="74-authorization-and-acls" class="plugin-anchor" href="#74-authorization-and-acls"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_authz">7.4 Authorization and ACLs</a><a id="security_authz"></a></h3><p>Kafka ships with a pluggable Authorizer and an out-of-box authorizer implementation that uses zookeeper to store all the acls. Kafka acls are defined in the general format of &quot;Principal P is [Allowed/Denied] Operation O From Host H On Resource R&quot;. You can read more about the acl structure on KIP-11. In order to add, remove or list acls you can use the Kafka authorizer CLI. By default, if a Resource R has no associated acls, no one other than super users is allowed to access R. If you want to change that behavior, you can include the following in broker.properties.</p><pre class="language-"><code>allow.everyone.if.no.acl.found=true</code></pre>
+<p>One can also add super users in broker.properties like the following (note that the delimiter is semicolon since SSL user names may contain comma).</p><pre class="language-"><code>super.users=User:Bob;User:Alice</code></pre>
+<p>By default, the SSL user name will be of the form &quot;CN=writeuser,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown&quot;. One can change that by setting a customized PrincipalBuilder in broker.properties like the following.</p><pre class="language-"><code>principal.builder.class=CustomizedPrincipalBuilderClass</code></pre>
+<p>By default, the SASL user name will be the primary part of the Kerberos principal. One can change that by setting <code>sasl.kerberos.principal.to.local.rules</code> to a customized rule in broker.properties. The format of <code>sasl.kerberos.principal.to.local.rules</code> is a list where each rule works in the same way as the auth_to_local in <a href="http://web.mit.edu/Kerberos/krb5-latest/doc/admin/conf_files/krb5_conf.html" target="_blank"><strong>Kerberos configuration file (krb5.conf)</strong></a>. Each rules starts with RULE: and contains an expression in the format <a href="regexp">n:string</a>s/pattern/replacement/g. See the kerberos documentation for more details. An example of adding a rule to properly translate user@MYDOMAIN.COM to user while also keeping the default rule in place is:</p><pre class="language-"><code>sasl.kerberos.principal.to.local.rules=RULE:[1:$1@$0](.*@MYDOMAIN.COM)s/@.*//,DEFAULT</code></pre>
+<h4 id="command-line-interface"><a name="command-line-interface" class="plugin-anchor" href="#command-line-interface"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_authz_cli">Command Line Interface</a><a id="security_authz_cli"></a></h4><p>Kafka Authorization management CLI can be found under bin directory with all the other CLIs. The CLI script is called <strong>kafka-acls.sh</strong>. Following lists all the options that the script supports:</p><table>
+<thead>
+<tr><th><strong>OptionDescriptionDefaultOption type</strong></th>
+<th></th>
+<th></th>
+<th></th>
+</tr></thead><tbody>
+<tr><td>--add</td>
+<td>Indicates to the script that user is trying to add an acl.</td>
+<td></td>
+<td>Action</td>
+</tr><tr><td>--remove</td>
+<td>Indicates to the script that user is trying to remove an acl.</td>
+<td></td>
+<td>Action</td>
+</tr><tr><td>--list</td>
+<td>Indicates to the script that user is trying to list acls.</td>
+<td></td>
+<td>Action</td>
+</tr><tr><td>--authorizer</td>
+<td>Fully qualified class name of the authorizer.</td>
+<td>kafka.security.auth.SimpleAclAuthorizer</td>
+<td>Configuration</td>
+</tr><tr><td>--authorizer-properties</td>
+<td>key=val pairs that will be passed to authorizer for initialization. For the default authorizer the example values are: zookeeper.connect=localhost:2181</td>
+<td></td>
+<td>Configuration</td>
+</tr><tr><td>--cluster</td>
+<td>Specifies cluster as resource.</td>
+<td></td>
+<td>Resource</td>
+</tr><tr><td>--topic [topic-name]</td>
+<td>Specifies the topic as resource.</td>
+<td></td>
+<td>Resource</td>
+</tr><tr><td>--group [group-name]</td>
+<td>Specifies the consumer-group as resource.</td>
+<td></td>
+<td>Resource</td>
+</tr><tr><td>--allow-principal</td>
+<td>Principal is in PrincipalType:name format that will be added to ACL with Allow permission.</td>
+</tr></tbody></table>
+
+<p>You can specify multiple --allow-principal in a single command. |  | Principal |
+| --deny-principal | Principal is in PrincipalType:name format that will be added to ACL with Deny permission.</p><p>You can specify multiple --deny-principal in a single command. |  | Principal |
+| --allow-host | IP address from which principals listed in --allow-principal will have access. | if --allow-principal is specified defaults to <em> which translates to &quot;all hosts&quot; | Host |
+| --deny-host | IP address from which principals listed in --deny-principal will be denied access. | if --deny-principal is specified defaults to </em> which translates to &quot;all hosts&quot; | Host |
+| --operation | Operation that will be allowed or denied.</p><p>Valid values are : Read, Write, Create, Delete, Alter, Describe, ClusterAction, All | All | Operation |
+| --producer | Convenience option to add/remove acls for producer role. This will generate acls that allows WRITE, DESCRIBE on topic and CREATE on cluster. |  | Convenience |
+| --consumer | Convenience option to add/remove acls for consumer role. This will generate acls that allows READ, DESCRIBE on topic and READ on consumer-group. |  | Convenience |</p><h4 id="examples"><a name="examples" class="plugin-anchor" href="#examples"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_authz_examples">Examples</a><a id="security_authz_examples"></a></h4><ul><li><p><strong>Adding Acls</strong></p><p>Suppose you want to add an acl &quot;Principals User:Bob and User:Alice are allowed to perform Operation Read and Write on Topic Test-Topic from IP 198.51.100.0 and IP 198.51.100.1&quot;. You can do that by executing the CLI with following options:</p><pre class="language-"><code>bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --allow-principal User:Alice --allow-host 198.51.100.0 --allow-host 198.51.100.1 --operation Read --operation Write --topic Test-topic</code></pre>
+<p>By default all principals that don&apos;t have an explicit acl that allows access for an operation to a resource are denied. In rare cases where an allow acl is defined that allows access to all but some principal we will have to use the --deny-principal and --deny-host option. For example, if we want to allow all users to Read from Test-topic but only deny User:BadBob from IP 198.51.100.3 we can do so using following commands:</p><pre class="language-"><code>bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:* --allow-host * --deny-principal User:BadBob --deny-host 198.51.100.3 --operation Read --topic Test-topic</code></pre>
+<p>Note that <code>--allow-host</code> and <code>deny-host</code> only support IP addresses (hostnames are not supported). Above examples add acls to a topic by specifying --topic [topic-name] as the resource option. Similarly user can add acls to cluster by specifying --cluster and to a consumer group by specifying --group [group-name].</p></li>
+<li><p><strong>Removing Acls</strong></p><p>Removing acls is pretty much the same. The only difference is instead of --add option users will have to specify --remove option. To remove the acls added by the first example above we can execute the CLI with following options:</p><pre class="language-"><code> bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --remove --allow-principal User:Bob --allow-principal User:Alice --allow-host 198.51.100.0 --allow-host 198.51.100.1 --operation Read --operation Write --topic Test-topic</code></pre>
+<ul><li><strong>List Acls</strong>
+</li></ul>
+<p>We can list acls for any resource by specifying the --list option with the resource. To list all acls for Test-topic we can execute the CLI with following options:</p><pre class="language-"><code>bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --list --topic Test-topic</code></pre>
+<ul><li><strong>Adding or removing a principal as producer or consumer</strong>
+</li></ul>
+<p>The most common use case for acl management are adding/removing a principal as producer or consumer so we added convenience options to handle these cases. In order to add User:Bob as a producer of Test-topic we can execute the following command:</p><pre class="language-"><code> bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --producer --topic Test-topic</code></pre>
+<p>Similarly to add Alice as a consumer of Test-topic with consumer group Group-1 we just have to pass --consumer option:</p><pre class="language-"><code> bin/kafka-acls.sh --authorizer-properties zookeeper.connect=localhost:2181 --add --allow-principal User:Bob --consumer --topic test-topic --group Group-1</code></pre>
+<p>Note that for consumer option we must also specify the consumer group. In order to remove a principal from producer or consumer role we just need to pass --remove option.</p></li></ul>
+<h3 id="75-incorporating-security-features-in-a-running-cluster"><a name="75-incorporating-security-features-in-a-running-cluster" class="plugin-anchor" href="#75-incorporating-security-features-in-a-running-cluster"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#security_rolling_upgrade">7.5 Incorporating Security Features in a Running Cluster</a><a id="security_rolling_upgrade"></a></h3><p>You can secure a running cluster via one or more of the supported protocols discussed previously. This is done in phases:</p><ul><li>Incrementally bounce the cluster nodes to open additional secured port(s).
+</li>
+<li>Restart clients using the secured rather than PLAINTEXT port (assuming you are securing the client-broker connection).
+</li>
+<li>Incrementally bounce the cluster again to enable broker-to-broker security (if this is required)
+</li>
+<li>A final incremental bounce to close the PLAINTEXT port.
+</li></ul>
+<p>The specific steps for configuring SSL and SASL are described in sections <a href="http://kafka.apache.org/documentation.html#security_ssl" target="_blank"><strong>7.2</strong></a> and <a href="http://kafka.apache.org/documentation.html#security_sasl" target="_blank"><strong>7.3</strong></a>. Follow these steps to enable security for your desired protocol(s).</p><p>The security implementation lets you configure different protocols for both broker-client and broker-broker communication. These must be enabled in separate bounces. A PLAINTEXT port must be left open throughout so brokers and/or clients can continue to communicate.</p><p>When performing an incremental bounce stop the brokers cleanly via a SIGTERM. It&apos;s also good practice to wait for restarted replicas to return to the ISR list before moving onto the next node.</p><p>As an example, say we wish to encrypt both broker-client and broker-broker communication with SSL. In the first incremental bounce, a SSL port is opened on each node:</p><pre class="language-"><code>         listeners=PLAINTEXT://broker1:9091,SSL://broker1:9092</code></pre>
+<p>We then restart the clients, changing their config to point at the newly opened, secured port:</p><pre class="language-"><code>        bootstrap.servers = [broker1:9092,...]
+        security.protocol = SSL
+        ...etc</code></pre>
+<p>In the second incremental server bounce we instruct Kafka to use SSL as the broker-broker protocol (which will use the same SSL port):</p><pre class="language-"><code>        listeners=PLAINTEXT://broker1:9091,SSL://broker1:9092
+        security.inter.broker.protocol=SSL</code></pre>
+<p>In the final bounce we secure the cluster by closing the PLAINTEXT port:</p><pre class="language-"><code>        listeners=SSL://broker1:9092
+        security.inter.broker.protocol=SSL</code></pre>
+<p>Alternatively we might choose to open multiple ports so that different protocols can be used for broker-broker and broker-client communication. Say we wished to use SSL encryption throughout (i.e. for broker-broker and broker-client communication) but we&apos;d like to add SASL authentication to the broker-client connection also. We would achieve this by opening two additional ports during the first bounce:</p><pre class="language-"><code>        listeners=PLAINTEXT://broker1:9091,SSL://broker1:9092,SASL_SSL://broker1:9093</code></pre>
+<p>We would then restart the clients, changing their config to point at the newly opened, SASL &amp; SSL secured port:</p><pre class="language-"><code>        bootstrap.servers = [broker1:9093,...]
+        security.protocol = SASL_SSL
+        ...etc</code></pre>
+<p>The second server bounce would switch the cluster to use encrypted broker-broker communication via the SSL port we previously opened on port 9092:</p><pre class="language-"><code>        listeners=PLAINTEXT://broker1:9091,SSL://broker1:9092,SASL_SSL://broker1:9093
+        security.inter.broker.protocol=SSL</code></pre>
+<p>The final bounce secures the cluster by closing the PLAINTEXT port.</p><pre class="language-"><code>       listeners=SSL://broker1:9092,SASL_SSL://broker1:9093
+       security.inter.broker.protocol=SSL</code></pre>
+<p>ZooKeeper can be secured independently of the Kafka cluster. The steps for doing this are covered in section<a href="http://kafka.apache.org/documentation.html#zk_authz_migration" target="_blank"><strong>7.6.2</strong></a>.</p><h3 id="76-zookeeper-authentication"><a name="76-zookeeper-authentication" class="plugin-anchor" href="#76-zookeeper-authentication"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#zk_authz">7.6 ZooKeeper Authentication</a><a id="zk_authz"></a></h3><h4 id="761-new-clusters"><a name="761-new-clusters" class="plugin-anchor" href="#761-new-clusters"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#zk_authz_new">7.6.1 New clusters</a><a id="zk_authz_new"></a></h4><p>To enable ZooKeeper authentication on brokers, there are two necessary steps:</p><ol><li>Create a JAAS login file and set the appropriate system property to point to it as described above
+</li>
+<li>Set the configuration property zookeeper.set.acl in each broker to true
+</li></ol>
+<p>The metadata stored in ZooKeeper is such that only brokers will be able to modify the corresponding znodes, but znodes are world readable. The rationale behind this decision is that the data stored in ZooKeeper is not sensitive, but inappropriate manipulation of znodes can cause cluster disruption. We also recommend limiting the access to ZooKeeper via network segmentation (only brokers and some admin tools need access to ZooKeeper if the new consumer and new producer are used).</p><h4 id="762-migrating-clusters"><a name="762-migrating-clusters" class="plugin-anchor" href="#762-migrating-clusters"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#zk_authz_migration">7.6.2 Migrating clusters</a><a id="zk_authz_migration"></a></h4><p>If you are running a version of Kafka that does not support security or simply with security disabled, and you want to make the cluster secure, then you need to execute the following steps to enable ZooKeeper authentication with minimal disruption to your operations:</p><ol><li>Perform a rolling restart setting the JAAS login file, which enables brokers to authenticate. At the end of the rolling restart, brokers are able to manipulate znodes with strict ACLs, but they will not create znodes with those ACLs
+</li>
+<li>Perform a second rolling restart of brokers, this time setting the configuration parameterzookeeper.set.acl to true, which enables the use of secure ACLs when creating znodes
+</li>
+<li>Execute the ZkSecurityMigrator tool. To execute the tool, there is this script: ./bin/zookeeper-security-migration.sh with zookeeper.acl set to secure. This tool traverses the corresponding sub-trees changing the ACLs of the znodes
+</li></ol>
+<p>It is also possible to turn off authentication in a secure cluster. To do it, follow these steps:</p><ol><li>Perform a rolling restart of brokers setting the JAAS login file, which enables brokers to authenticate, but setting zookeeper.set.acl to false. At the end of the rolling restart, brokers stop creating znodes with secure ACLs, but are still able to authenticate and manipulate all znodes
+</li>
+<li>Execute the ZkSecurityMigrator tool. To execute the tool, run this script ./bin/zookeeper-security-migration.sh with zookeeper.acl set to unsecure. This tool traverses the corresponding sub-trees changing the ACLs of the znodes
+</li>
+<li>Perform a second rolling restart of brokers, this time omitting the system property that sets the JAAS login file
+</li></ol>
+<p>Here is an example of how to run the migration tool:</p><pre class="language-"><code>./bin/zookeeper-security-migration --zookeeper.acl=secure --zookeeper.connection=localhost:2181
+</code></pre>
+<p>Run this to see the full list of parameters:</p><pre class="language-"><code>./bin/zookeeper-security-migration --help
+</code></pre>
+<h4 id="763-migrating-the-zookeeper-ensemble"><a name="763-migrating-the-zookeeper-ensemble" class="plugin-anchor" href="#763-migrating-the-zookeeper-ensemble"><i class="fa fa-link" aria-hidden="true"></i></a><a href="#zk_authz_ensemble">7.6.3 Migrating the ZooKeeper ensemble</a><a id="zk_authz_ensemble"></a></h4><p>It is also necessary to enable authentication on the ZooKeeper ensemble. To do it, we need to perform a rolling restart of the server and set a few properties. Please refer to the ZooKeeper documentation for more detail:</p><ol><li><a href="http://zookeeper.apache.org/doc/r3.4.6/zookeeperProgrammers.html#sc_ZooKeeperAccessControl" target="_blank"><strong>Apache ZooKeeper documentation</strong></a>
+</li>
+<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zookeeper+and+SASL" target="_blank"><strong>Apache ZooKeeper wiki</strong></a>
+</li></ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../060_operations/01_ops.html#zkops" class="navigation navigation-prev " aria-label="Previous page: Operationalization">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="01_security.html#security_overview" class="navigation navigation-next " aria-label="Next page: Security Overview">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Security","level":"1.9","depth":1,"next":{"title":"Security Overview","level":"1.9.1","depth":2,"anchor":"#security_overview","path":"070_security/01_security.md","ref":"070_security/01_security.md#security_overview","articles":[]},"previous":{"title":"Operationalization","level":"1.8.7.2","depth":3,"anchor":"#zkops","path":"060_operations/01_ops.md","ref":"060_operations/01_ops.md#zkops","articles":[]},"dir":"ltr"},"config":{"gitbook":">=3.0.0","theme":"default","variables":{},"plugins":["splitter","github","anchors","sitemap","prism","-highlight","baidu_gio","ga","expandable-chapters-small"],"pluginsConfig":{"prism":{"css":["prismjs/themes/prism-coy.css"]},"github":{"url":"https://github.com/BeanMr/apache-kafka-documentation-cn"},"splitter":{},"search":{},"baidu_gio":{"token":"f11ab3e8c5f25638fa247efa47a6b1f6"},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sitemap":{"hostname":"http://kafkadoc.beanmr.com/"},"expandable-chapters-small":{},"ga":{"configuration":"auto","token":"UA-83895646-1"},"sharing":{"facebook":true,"twitter":true,"google":true,"weibo":true,"instapaper":true,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"070_security/01_security.md","mtime":"2018-06-13T07:15:20.546Z","type":"markdown"},"gitbook":{"version":"3.2.0","time":"2018-06-14T09:44:20.062Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-baidu_gio/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters-small/expandable-chapters-small.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
